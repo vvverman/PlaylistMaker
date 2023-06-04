@@ -9,7 +9,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        val searchButton = findViewById<Button>(R.id.search)
+        val searchButton = findViewById<Button>(R.id.editTextSearch)
 
         searchButton.setOnClickListener {
             val intent = Intent(this, SearchActivity::class.java)

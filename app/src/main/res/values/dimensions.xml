@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="cornerRadius">16dp</dimen>
+    <dimen name="layout_marginTop">32dp</dimen>
+    <dimen name="iconPadding">10dp</dimen>
+    <dimen name="paddingVertical">20dp</dimen>
+</resources>

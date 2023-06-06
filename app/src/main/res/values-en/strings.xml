@@ -1,12 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string name="search_button">Search</string>
+    <string name="medialibrary_button">Media Library</string>
+    <string name="settings_button">Settings</string>
     <string name="settings_title">Settings</string>
     <string name="color_theme">Dark Theme</string>
     <string name="share_button">Share</string>
     <string name="support_button">Write to Support</string>
     <string name="terms_of_use_button">Terms of Use</string>
-    <string name="settings_button">Settings</string>
-    <string name="search_button">Search</string>
-    <string name="medialibrary_button">Media Library</string>
     <string name="setting_button">Settings</string>
+    <string name="app_name" translatable="false">Playlist Maker</string>
+
+    <string name="shareButtonText" translatable="false">https://practicum.yandex.ru/android-developer/</string>
+    <string name="supportButtonMessage">«Thank you developers and developers for a cool app!»</string>
+    <string name="supportButtonText">«Message to the Developers and Developers of the Playlist Maker App»</string>
+    <string name="termsOfUse" translatable="false">https://yandex.ru/legal/practicum_offer/</string>
 </resources>

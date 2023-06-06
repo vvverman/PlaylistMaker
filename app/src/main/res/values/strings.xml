@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search_button">Поиск</string>
     <string name="medialibrary_button">Медиатека</string>
@@ -9,6 +10,13 @@
     <string name="terms_of_use_button">Пользовательское соглашение</string>
     <string name="setting_button">Настройки</string>
     <string name="app_name" translatable="false">Playlist Maker</string>
+
+    <string name="shareButtonText" translatable="false">https://practicum.yandex.ru/android-developer/</string>
+    <string name="supportButtonMessage">«Спасибо разработчикам и разработчицам за крутое приложение!»</string>
+    <string name="supportButtonText">«Сообщение разработчикам и разработчицам приложения Playlist Maker»</string>
+    <string name="termsOfUseArticle" translatable="false">https://yandex.ru/legal/practicum_offer/</string>
+
+
     <string name="title_activity_settings">SettingsActivity</string>
 
     <!-- Preference Titles -->

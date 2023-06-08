@@ -6,4 +6,10 @@
     <color name="grey">#FFAEAFB4</color>
     <color name="deepgrey">#FF1A1B22</color>
 
+    <color name="prime_neutral">#FFFFFFF0</color>
+    <color name="prime_positive">#FF00FF00</color>
+    <color name="prime_negative">#FFFF0000</color>
+
+    <color name="SearchLineBG">#FFE6E8EB</color>
+
 </resources>

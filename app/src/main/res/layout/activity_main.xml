@@ -18,8 +18,8 @@
         android:orientation="vertical">
 
         <Button
-            style="@style/ActivityMainButtonStyle"
             android:id="@+id/editTextSearch"
+            style="@style/ActivityMainButtonStyle"
             android:text="@string/search_button"
             app:icon="@drawable/search_button" />
 

@@ -11,10 +11,13 @@
     <string name="setting_button">Настройки</string>
     <string name="app_name" translatable="false">Playlist Maker</string>
 
+    <string name="search_title">Поиск</string>
     <string name="shareButtonText" translatable="false">https://practicum.yandex.ru/android-developer/</string>
     <string name="supportButtonMessage">«Спасибо разработчикам и разработчицам за крутое приложение!»</string>
     <string name="supportButtonText">«Сообщение разработчикам и разработчицам приложения Playlist Maker»</string>
     <string name="termsOfUseArticle" translatable="false">https://yandex.ru/legal/practicum_offer/</string>
+
+    <string name="input_hint">Поиск</string>
 
 
     <string name="title_activity_settings">SettingsActivity</string>

@@ -12,6 +12,10 @@ import android.widget.ImageView
 import android.widget.LinearLayout
 
 class SearchActivity : AppCompatActivity() {
+
+    var inputEditText = ""
+    var valueInSearchString = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
@@ -36,24 +40,31 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-//                if (s.isNullOrEmpty()) {
-//                    linearLayout.setBackgroundColor(getColor(R.color.prime_neutral))
-//                } else {
-//                    val input = s.toString()
-//                    if (isPrime(input.toInt())) {
-//                        linearLayout.setBackgroundColor(getColor(R.color.prime_positive))
-//                    } else {
-//                        linearLayout.setBackgroundColor(getColor(R.color.prime_negative))
-//                    }
-//                }
+
+                valueInSearchString = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
             }
 
             override fun afterTextChanged(s: Editable?) {
                 // empty
+
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
+    }
+
+    companion object {
+        const val REQUEST_TEXT = "REQUEST_TEXT"
+    }
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+        outState.putString(REQUEST_TEXT, valueInSearchString)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
+        inputEditText = valueInSearchString
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {

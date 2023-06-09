@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ActivitySettingsGeneralStyle">
 
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +37,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="16dp">
+        android:paddingTop="29dp">
 
         <EditText
             android:id="@+id/inputEditText"
@@ -51,7 +50,6 @@
             android:hint="@string/input_hint"
             android:textColorHint="@color/black"
             android:textColor="@color/black"
-            android:inputType="number"
             android:maxLength="5"
             android:maxLines="1"
             android:paddingVertical="10dp"/>
@@ -68,40 +66,7 @@
             android:visibility="gone"/>
     </FrameLayout>
 
-<!--    <LinearLayout-->
-<!--        android:id="@+id/container"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_marginTop="16dp"-->
-<!--        android:orientation="horizontal"-->
-<!--        tools:context=".MainActivity">-->
-
-<!--        <EditText-->
-<!--            android:id="@+id/inputEditText"-->
-<!--            android:paddingLeft="40dp"-->
-<!--            android:layout_width="0dp"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_weight="1"-->
-<!--            android:hint="@string/input_hint"-->
-<!--            android:inputType="number"-->
-<!--            android:maxLength="5"-->
-<!--            android:maxLines="1"-->
-<!--            android:textColor="@color/black"-->
-<!--            android:textColorHint="#FFAEAFB4"-->
-<!--            android:background="@drawable/search_bg" />-->
-
-<!--        <ImageView-->
-<!--            android:id="@+id/clearIcon"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_gravity="center"-->
-<!--            android:contentDescription="This is button of clear string"-->
-<!--            android:src="@drawable/clear_button"-->
-<!--            android:visibility="gone"-->
-<!--            />-->
-
-
-    </LinearLayout>
+</LinearLayout>
 
 
 

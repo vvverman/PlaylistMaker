@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ActivitySettingsGeneralStyle">
 
-
     <LinearLayout
 
         android:layout_width="match_parent"
@@ -42,7 +41,6 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingVertical"
         android:paddingVertical="@dimen/paddingVertical"
-        android:paddingEnd="-10dp"
         android:text="@string/color_theme" />
 
     <LinearLayout

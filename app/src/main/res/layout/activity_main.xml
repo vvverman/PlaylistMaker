@@ -18,10 +18,23 @@
         android:orientation="vertical">
 
         <Button
+            style="@style/Widget.MaterialComponents.Button.UnelevatedButton"
             android:id="@+id/editTextSearch"
-            style="@style/ActivityMainButtonStyle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/white"
+            android:textAllCaps="false"
+            android:textColor="@color/black"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/iconPadding"
+            app:iconTint="@color/black"
+            app:cornerRadius="@dimen/cornerRadius"
+            android:fontFamily="@font/ys_display_medium"
+            android:textFontWeight="500"
+            android:textSize="@dimen/titleFontSize"
             android:text="@string/search_button"
-            app:icon="@drawable/search_button" />
+            android:icon="@drawable/search_button" />
 
         <Button
             style="@style/ActivityMainButtonStyle"

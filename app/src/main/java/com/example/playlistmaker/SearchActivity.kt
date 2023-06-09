@@ -1,10 +1,13 @@
 package com.example.playlistmaker
 
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -32,6 +35,8 @@ class SearchActivity : AppCompatActivity() {
 
         clearButton.setOnClickListener {
             inputEditText.setText("")
+            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
         }
 
         val simpleTextWatcher = object : TextWatcher {
@@ -65,6 +70,11 @@ class SearchActivity : AppCompatActivity() {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
         inputEditText = valueInSearchString
+
+        Log.d("REQUEST_TEXT", "valueInSearchString before $valueInSearchString")
+        valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
+        Log.d("REQUEST_TEXT", "valueInSearchString after $valueInSearchString")
+
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {

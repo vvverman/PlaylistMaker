@@ -10,6 +10,5 @@
     <color name="prime_positive">#FF00FF00</color>
     <color name="prime_negative">#FFFF0000</color>
 
-    <color name="SearchLineBG">#FFE6E8EB</color>
-
+    <color name="SearchLineBG">#FFFFFFFF</color>
 </resources>

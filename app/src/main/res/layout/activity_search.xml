@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ActivitySettingsGeneralStyle">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageButton
+            android:id="@+id/backButton"
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="28dp"
+            android:contentDescription="This is an arrow - this is a button leading back"
+            app:srcCompat="@drawable/arrow_back_button" />
+
+        <TextView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/search_title"
+            android:textSize="@dimen/titleFontSize"
+            app:icon="@drawable/arrow_back_button"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/iconPadding"
+            app:iconTint="@color/black" />
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="29dp">
+
+        <EditText
+            android:id="@+id/inputEditText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/search_bg"
+            android:drawableStart="@drawable/search_button"
+            android:drawablePadding="12dp"
+            android:paddingHorizontal="12dp"
+            android:hint="@string/input_hint"
+            android:textColorHint="@color/black"
+            android:textColor="@color/black"
+            android:maxLength="5"
+            android:maxLines="1"
+            android:paddingVertical="10dp"/>
+
+        <ImageView
+            android:id="@+id/clearIcon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical|end"
+            android:layout_marginHorizontal="12dp"
+            android:layout_marginVertical="10dp"
+            android:src="@drawable/clear_button"
+            android:contentDescription="TODO"
+            android:visibility="gone"/>
+    </FrameLayout>
+
+</LinearLayout>
+
+
+
+
+
+

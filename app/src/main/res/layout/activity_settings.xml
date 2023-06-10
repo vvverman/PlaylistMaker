@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ActivitySettingsGeneralStyle">
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        tools:ignore="UseCompoundDrawables">
+
+        <ImageButton
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:id="@+id/backButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginEnd="28dp"
+            android:contentDescription="This is an arrow - this is a button leading back"
+            app:srcCompat="@drawable/arrow_back_button" />
+
+        <TextView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="start"
+            android:text="@string/settings_title"
+            android:textSize="@dimen/titleFontSize"
+            app:cornerRadius="@dimen/cornerRadius"
+            app:icon="@drawable/arrow_back_button"
+            app:iconGravity="textStart"
+            app:iconPadding="@dimen/iconPadding"
+            app:iconTint="@color/black" />
+    </LinearLayout>
+
+    <Switch
+        style="@style/ActivitySettingsColorAndFontStyle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/paddingVertical"
+        android:paddingVertical="@dimen/paddingVertical"
+        android:text="@string/color_theme" />
+
+    <LinearLayout
+        android:id="@+id/shareButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/paddingVertical">
+
+        <TextView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/share_button"/>
+
+        <ImageView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:contentDescription="This is an icon - a button that helps to share content"
+            app:srcCompat="@drawable/share_button" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/supportButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/paddingVertical">
+
+        <TextView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/support_button" />
+
+        <ImageView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="This is an icon depicting a technical support specialist."
+            app:srcCompat="@drawable/support_button" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/termsOfUseButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:paddingVertical="@dimen/paddingVertical">
+
+
+        <TextView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/terms_of_use_button" />
+
+        <ImageView
+            style="@style/ActivitySettingsColorAndFontStyle"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            app:srcCompat="@drawable/arrow_forward_button" />
+    </LinearLayout>
+
+
+</LinearLayout>

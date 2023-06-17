@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <style name="ActivityMainGeneralStyle">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
@@ -37,5 +38,27 @@
         <item name="android:textSize">@dimen/titleFontSize</item>
         <item name="android:stateListAnimator">@null</item>
     </style>
+
+    <style name="Widget.Theme.MaterialComponents.DayNight.NoActionBar.MyView" parent="">
+        <item name="android:background">@color/gray_400</item>
+        <item name="exampleColor">@color/light_blue_400</item>
+    </style>
+
+    <style name="oneItem">
+    </style>
+
+    <style name="CoverImageURLStyle">
+    </style>
+
+    <style name="CompositionNameStyle">
+    </style>
+
+    <style name="ArtistNameStyle">
+    </style>
+
+    <style name="DurationStyle">
+    </style>
+
+
 
 </resources>

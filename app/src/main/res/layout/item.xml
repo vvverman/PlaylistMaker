@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="10dp">
+
+    <RelativeLayout
+        android:id="@+id/oneItem"
+        style="@style/oneItem"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp">
+
+        <View
+            style="@style/CoverImageURLStyle"
+            android:id="@+id/coverImageURL"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:background="#ffff0000"
+            tools:text="Картинко" />
+
+        <TextView
+            android:id="@+id/compositionName"
+            style="@style/CompositionNameStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="70dp"
+            android:layout_marginTop="3dp"
+            android:gravity="top"
+            tools:text="Название песни" />
+
+        <TextView
+            android:id="@+id/artistName"
+            style="@style/ArtistNameStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="25dp"
+            tools:text="Артист" />
+
+        <View
+            android:id="@+id/ellipse_1"
+            android:layout_width="19dp"
+            android:layout_height="21dp"
+            android:layout_marginStart="26dp"
+            android:layout_toEndOf="@+id/artistName"
+            android:background="@drawable/ellipse_1"
+            tools:text="Картинко" />
+
+        <TextView
+            android:id="@+id/duration"
+            style="@style/DurationStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="105dp"
+            android:layout_marginLeft="66dp"
+            android:layout_marginTop="26dp"
+            android:gravity="top"
+            tools:text="Время" />
+
+        <View
+            android:id="@+id/vector"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="2dp"
+            android:background="@drawable/arrow_forward_button" />
+
+    </RelativeLayout>
+
+</FrameLayout>

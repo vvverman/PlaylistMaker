@@ -15,7 +15,6 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 
-
 class SearchActivity : AppCompatActivity() {
 
     var inputEditText = ""

@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 class ItemsAdapter(
     val items: ArrayList<Item>
-//    private val onItemClickListener: AdapterView.OnItemClickListener
+
 ) : RecyclerView.Adapter<ItemsViewHolder> () {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder {
@@ -19,7 +19,7 @@ class ItemsAdapter(
 
     override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
         holder.bind(items[position])
-//        holder.itemView.setOnClickListener { onItemClickListener.onItemClick(items[holder.adapterPosition]) }
+
     }
 
     override fun getItemCount(): Int {

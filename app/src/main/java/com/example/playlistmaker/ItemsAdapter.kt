@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 
 class ItemsAdapter(
-    val items: ArrayList<Item>
+    private val items: ArrayList<Item>
 
 ) : RecyclerView.Adapter<ItemsViewHolder> () {
 

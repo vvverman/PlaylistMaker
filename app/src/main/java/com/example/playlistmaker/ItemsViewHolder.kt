@@ -1,9 +1,11 @@
 package com.example.playlistmaker
 
+import android.net.Uri
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import java.net.URI
 
 class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -16,8 +18,9 @@ class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         compositionNameView.text = item.compositionName
         artistNameView.text = item.artistName
         durationView.text = item.duration
-        coverImageURLView.setImageResource(item.coverImageURL.toInt())
+        coverImageURLView.setImageURI(Uri.parse("item.coverImageURL"))
     }
 }
+
 
 

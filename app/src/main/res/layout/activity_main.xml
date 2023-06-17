@@ -34,7 +34,7 @@
             android:textFontWeight="500"
             android:textSize="@dimen/titleFontSize"
             android:text="@string/search_button"
-            android:icon="@drawable/search_button" />
+            app:icon="@drawable/search_button" />
 
         <Button
             style="@style/ActivityMainButtonStyle"

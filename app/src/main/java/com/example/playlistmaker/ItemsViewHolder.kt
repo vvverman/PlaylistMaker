@@ -5,7 +5,8 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import java.net.URI
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
 class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -18,7 +19,14 @@ class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
         compositionNameView.text = item.compositionName
         artistNameView.text = item.artistName
         durationView.text = item.duration
-        coverImageURLView.setImageURI(Uri.parse("item.coverImageURL"))
+//        coverImageURLView.setImageURI(Uri.parse("item.coverImageURL"))
+
+        Glide
+            .with(itemView)
+            .load(item.coverImageURL)
+            .placeholder(R.drawable.poster)
+            .transform(CenterCrop())
+            .into(coverImageURLView)
     }
 }
 

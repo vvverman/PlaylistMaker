@@ -8,12 +8,12 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 
-abstract class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
+class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
     private val compositionNameView: TextView = itemView.findViewById(R.id.compositionName)
     private val artistNameView: TextView = itemView.findViewById(R.id.artistName)
     private val durationView: TextView = itemView.findViewById(R.id.duration)
-    abstract val coverImageURLView: ImageView
+    private val coverImageURLView: ImageView = itemView.findViewById(R.id.coverImageURL)
 
     fun bind(item: Item) {
         compositionNameView.text = item.compositionName

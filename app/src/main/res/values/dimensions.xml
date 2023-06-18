@@ -7,4 +7,5 @@
     <dimen name="padding">16dp</dimen>
     <dimen name="typesettingFontSize">16sp</dimen>
     <dimen name="titleFontSize">22sp</dimen>
+    <dimen name="miniFontSize">11sp</dimen>
 </resources>

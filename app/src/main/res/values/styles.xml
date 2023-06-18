@@ -51,13 +51,28 @@
     </style>
 
     <style name="CompositionNameStyle">
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/typesettingFontSize</item>
+        <item name="android:textColor">@color/black</item>
     </style>
 
     <style name="ArtistNameStyle">
+        <item name="android:textSize">@dimen/miniFontSize</item>
+        <item name="android:textColor">@color/grey</item>
+
     </style>
 
     <style name="DurationStyle">
+        <item name="android:textSize">@dimen/miniFontSize</item>
+        <item name="android:textColor">@color/grey</item>
     </style>
+
+    <style name="ellipse_1">
+        <item name="android:background">#FFFF0000</item>
+    </style>
+
+
 
 
 

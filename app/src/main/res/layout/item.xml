@@ -18,8 +18,8 @@
             android:id="@+id/coverImageURL"
             android:layout_width="50dp"
             android:layout_height="50dp"
-            android:background="#ffff0000"
-            tools:text="Картинко" />
+            tools:text="Картинко"
+            android:scaleType="fitCenter"/>
 
         <TextView
             android:id="@+id/compositionName"

@@ -44,13 +44,6 @@
         <item name="exampleColor">@color/light_blue_400</item>
     </style>
 
-    <style name="oneItem">
-    </style>
-
-    <style name="CoverImageURLStyle">
-<!--        <item name="android:radius">15dp</item>-->
-    </style>
-
     <style name="CompositionNameStyle">
         <item name="android:fontFamily">@font/ys_display_regular</item>
         <item name="android:textFontWeight">400</item>
@@ -69,8 +62,8 @@
         <item name="android:textColor">@color/grey</item>
     </style>
 
-    <style name="ellipse_1">
-        <item name="android:background">#FFFF0000</item>
+    <style name="ellipse_color">
+        <item name="android:fillColor">#FFFF0000</item>
     </style>
 
 

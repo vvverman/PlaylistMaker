@@ -8,4 +8,10 @@
     <dimen name="typesettingFontSize">16sp</dimen>
     <dimen name="titleFontSize">22sp</dimen>
     <dimen name="miniFontSize">11sp</dimen>
+    <dimen name="roundedCornersValue">2dp</dimen>
+    <dimen name="bigDotSize">3dp</dimen>
+
+    <dimen name="layout_marginTop_artist">25dp</dimen>
+    <dimen name="layout_marginStart">66dp</dimen>
+
 </resources>

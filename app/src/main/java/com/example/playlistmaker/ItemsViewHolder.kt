@@ -26,11 +26,10 @@ class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .load(item.coverImageURL)
             .transform(
                 MultiTransformation(
-                    RoundedCorners(2),
+                    RoundedCorners(itemView.resources.getDimensionPixelSize(R.dimen.roundedCornersValue)),
                     CenterCrop()
                 ))
             .placeholder(R.drawable.placeholder_track)
-
             .into(coverImageURLView)
     }
 }

@@ -4,14 +4,24 @@
     <dimen name="layout_marginTop">32dp</dimen>
     <dimen name="iconPadding">10dp</dimen>
     <dimen name="paddingVertical">20dp</dimen>
-    <dimen name="padding">16dp</dimen>
     <dimen name="typesettingFontSize">16sp</dimen>
     <dimen name="titleFontSize">22sp</dimen>
     <dimen name="miniFontSize">11sp</dimen>
     <dimen name="roundedCornersValue">2dp</dimen>
     <dimen name="bigDotSize">3dp</dimen>
 
+    <dimen name="arrow_size_vertical">8dp</dimen>
+    <dimen name="arrow_size_horizontal">14dp</dimen>
+
     <dimen name="layout_marginTop_artist">25dp</dimen>
     <dimen name="layout_marginStart">66dp</dimen>
+    <dimen name="song_cover_size">50dp</dimen>
+
+    <dimen name="offset_3">3dp</dimen>
+    <dimen name="offset_5">5dp</dimen>
+    <dimen name="offset_8">8dp</dimen>
+    <dimen name="offset_16">16dp</dimen>
+    <dimen name="offset_25">25dp</dimen>
+    <dimen name="offset_29">29dp</dimen>
 
 </resources>

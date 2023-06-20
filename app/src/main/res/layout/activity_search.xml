@@ -37,8 +37,8 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="29dp"
-        android:paddingBottom="16dp">
+        android:paddingTop="@dimen/offset_29"
+        android:paddingBottom="@dimen/offset_16">
 
         <EditText
             android:id="@+id/inputEditText"
@@ -72,7 +72,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="@dimen/offset_8"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
 </LinearLayout>

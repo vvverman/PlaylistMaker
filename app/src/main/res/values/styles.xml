@@ -6,7 +6,7 @@
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@color/blue</item>
         <item name="android:orientation">vertical</item>
-        <item name="android:padding">@dimen/padding</item>
+        <item name="android:padding">@dimen/offset_16</item>
     </style>
 
     <style name="ActivitySettingsGeneralStyle" parent="ActivityMainGeneralStyle">
@@ -65,9 +65,4 @@
     <style name="ellipse_color">
         <item name="android:fillColor">#FFFF0000</item>
     </style>
-
-
-
-
-
 </resources>

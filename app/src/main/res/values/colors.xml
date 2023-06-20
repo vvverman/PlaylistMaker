@@ -10,7 +10,7 @@
     <color name="prime_positive">#FF00FF00</color>
     <color name="prime_negative">#FFFF0000</color>
 
-    <color name="SearchLineBG">#FFE6E8EB</color>
+    <color name="search_line_BG">#FFE6E8EB</color>
     <color name="light_blue_400">#FF29B6F6</color>
     <color name="light_blue_600">#FF039BE5</color>
     <color name="gray_400">#FFBDBDBD</color>

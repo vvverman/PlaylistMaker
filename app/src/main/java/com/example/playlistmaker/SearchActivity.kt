@@ -12,7 +12,9 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 
 class SearchActivity : AppCompatActivity() {
 
@@ -56,6 +58,13 @@ class SearchActivity : AppCompatActivity() {
             }
         }
         inputEditText.addTextChangedListener(simpleTextWatcher)
+
+        val itemsAdapter = ItemsAdapter(items)
+
+        val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
+        itemsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        itemsRecyclerView.adapter = itemsAdapter
+
     }
 
     companion object {

@@ -19,4 +19,8 @@
 
     <string name="input_hint">Search</string>
 
+    <string name="song_name">Song name</string>
+    <string name="artist_name">Artist</string>
+    <string name="duration">Duration</string>
+
 </resources>

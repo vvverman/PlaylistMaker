@@ -19,6 +19,9 @@
 
     <string name="input_hint">Поиск</string>
 
+    <string name="song_name">Название песни</string>
+    <string name="artist_name">Исполнитель</string>
+    <string name="duration">Длительность</string>
 
     <string name="title_activity_settings">SettingsActivity</string>
 

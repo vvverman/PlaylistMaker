@@ -23,4 +23,6 @@
     <string name="artist_name">Artist</string>
     <string name="duration">Duration</string>
 
+    <string name="track_duration_format">%1\$d:%2\$02d</string>
+
 </resources>

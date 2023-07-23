@@ -1,8 +1,9 @@
-package com.example.playlistmaker
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.Item
+import com.example.playlistmaker.R
 
 class ItemsAdapter(
     private val items: ArrayList<Item>

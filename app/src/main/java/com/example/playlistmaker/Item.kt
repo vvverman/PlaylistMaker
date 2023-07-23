@@ -9,6 +9,8 @@ data class Item(
     @SerializedName("artworkUrl100") val coverImageURL: String
 )
 
+
+
 var items: ArrayList<Item> = arrayListOf()
 
 

@@ -67,11 +67,21 @@
             android:visibility="gone" />
 
         <ImageView
-            android:id="@+id/placeholderImageView"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:id="@+id/noSearchResultsImageView"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
             android:src="@drawable/no_search_results_image"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/noSearchResultsText"
+            android:layout_width="312dp"
+            android:layout_height="20dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="427dp"
+            android:gravity="center_horizontal|top"
+            android:text="@string/no_search_results_message"
+            android:textColor="@android:color/black"
             android:visibility="gone" />
 
     </FrameLayout>

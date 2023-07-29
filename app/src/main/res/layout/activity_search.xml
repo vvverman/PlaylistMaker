@@ -53,7 +53,7 @@
             android:textColor="@color/black"
             android:maxLength="5"
             android:maxLines="1"
-            android:paddingVertical="10dp"/>
+            android:paddingVertical="10dp" />
 
         <ImageView
             android:id="@+id/clearIcon"
@@ -64,7 +64,16 @@
             android:layout_marginVertical="10dp"
             android:src="@drawable/clear_button"
             android:contentDescription="TODO"
-            android:visibility="gone"/>
+            android:visibility="gone" />
+
+        <ImageView
+            android:id="@+id/placeholderImageView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:src="@drawable/no_search_results_image"
+            android:visibility="gone" />
+
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -73,14 +82,6 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:layout_marginTop="@dimen/offset_8"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>
-
-
-
-
-
-
-
-

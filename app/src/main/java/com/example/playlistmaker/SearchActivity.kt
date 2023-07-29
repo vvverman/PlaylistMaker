@@ -11,24 +11,20 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.Item
-import com.example.playlistmaker.TracksResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 class SearchActivity : AppCompatActivity() {
 
-    var inputEditText = ""
+    private var inputEditText = ""
     var valueInSearchString = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,6 +122,19 @@ class SearchActivity : AppCompatActivity() {
                         // Обновите адаптер вашего RecyclerView с новыми данными из API
                         val itemsAdapter = findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
                         itemsAdapter?.updateItems(items)
+                        // Проверка наличия результатов и показ/скрытие плейсхолдера
+                        val placeholderImageView = findViewById<ImageView>(R.id.noSearchResultsImageView)
+                        val placeholderText = findViewById<TextView>(R.id.noSearchResultsText)
+
+                        if (items.isEmpty()) {
+                            // Показываем плейсхолдер, если результаты пусты
+                            placeholderImageView.visibility = View.VISIBLE
+                            placeholderText.visibility = View.VISIBLE
+                        } else {
+                            // Скрываем плейсхолдер, если есть результаты
+                            placeholderImageView.visibility = View.GONE
+                            placeholderText.visibility = View.GONE
+                        }
                     }
                 } else {
                     // Обработка ошибки при запросе к API

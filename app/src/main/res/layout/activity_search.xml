@@ -65,25 +65,86 @@
             android:src="@drawable/clear_button"
             android:contentDescription="TODO"
             android:visibility="gone" />
+    </FrameLayout>
 
-        <ImageView
-            android:id="@+id/noSearchResultsImageView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@drawable/no_search_results_image"
-            android:visibility="gone" />
 
-        <TextView
-            android:id="@+id/noSearchResultsText"
-            android:layout_width="312dp"
-            android:layout_height="20dp"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="427dp"
-            android:gravity="center_horizontal|top"
-            android:text="@string/no_search_results_message"
-            android:textColor="@android:color/black"
-            android:visibility="gone" />
 
+    <!-- Поиск не дал результатов -->
+    <FrameLayout
+        android:id="@+id/noSearchResults"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+
+        <FrameLayout
+            android:layout_width ="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+            <ImageView
+                android:layout_width ="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/no_search_results_image" />
+
+            <TextView
+                android:layout_width ="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="136dp"
+                android:text="@string/no_search_results_message"
+                android:textAlignment="center"
+                style="ActivitySettingsGeneralStyle"
+                android:textColor="@color/grey"
+                />
+        </FrameLayout>
+
+    </FrameLayout>
+
+
+    <!-- Нет сети, бро -->
+    <FrameLayout
+        android:id="@+id/communicationProblems"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        >
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            >
+            <ImageView
+                android:layout_width ="120dp"
+                android:layout_height="120dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/communication_problems_image"
+                />
+
+            <TextView
+                android:layout_width ="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="136dp"
+                android:text="@string/communication_problems_message"
+                android:textAlignment="center"
+                style="ActivitySettingsGeneralStyle"
+                android:textColor="@color/grey"
+                />
+
+            <Button
+                android:id="@+id/no_network_update_button"
+                android:layout_width ="96dp"
+                android:layout_height="36dp"
+                android:layout_marginTop ="248dp"
+                android:layout_gravity="center_horizontal"
+                app:cornerRadius="54dp"
+                android:insetTop   ="0dp"
+                android:insetBottom="0dp"
+
+                />
+
+        </FrameLayout>
     </FrameLayout>
 
     <androidx.recyclerview.widget.RecyclerView
@@ -95,3 +156,11 @@
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>
+
+    <!--                android:backgroundTint="@color/search_screen_header"-->
+
+
+    <!--                android:text="@string/search_no_network_update_button"-->
+    <!--                android:textColor="@color/search_screen_background"-->
+    <!--                android:textAppearance="@style/search_info_button"-->
+    <!--                style                 ="@style/search_info_button"-->

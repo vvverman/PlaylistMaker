@@ -27,7 +27,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
 
-//    private var inputEditText = ""
     private var valueInSearchString = ""
     private var currentViewState = SearchViewState.NO_INTERNET
 
@@ -48,7 +47,7 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-        val inputEditTextView = findViewById<EditText>(R.id.inputEditText)
+        val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
         clearButton.setOnClickListener {
@@ -93,7 +92,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
-        val inputEditTextView = findViewById<EditText>(R.id.inputEditText)
+        val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)
         inputEditTextView.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
     }
 
@@ -136,9 +135,9 @@ class SearchActivity : AppCompatActivity() {
                             itemsAdapter?.updateItems(items)
                         }
                         if (items.isEmpty()) {
-                            currentViewState = SearchViewState.NO_RESULTS
+                            SearchViewState.NO_RESULTS
                         } else {
-                            currentViewState = SearchViewState.HAS_RESULTS
+                            SearchViewState.HAS_RESULTS
                         }
                     } else {
                         currentViewState = SearchViewState.NO_RESULTS

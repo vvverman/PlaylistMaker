@@ -41,7 +41,7 @@
         android:paddingBottom="@dimen/offset_16">
 
         <EditText
-            android:id="@+id/inputEditText"
+            android:id="@+id/inputEditTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_bg"
@@ -156,10 +156,3 @@
 
 </LinearLayout>
 
-    <!--                android:backgroundTint="@color/search_screen_header"-->
-
-
-    <!--                android:text="@string/search_no_network_update_button"-->
-    <!--                android:textColor="@color/search_screen_background"-->
-    <!--                android:textAppearance="@style/search_info_button"-->
-    <!--                style                 ="@style/search_info_button"-->

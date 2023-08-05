@@ -123,14 +123,13 @@ class SearchActivity : AppCompatActivity() {
 
             // Вызов метода поиска музыкальных треков
             val mediaType = "music"
-            val call = iTunesSearchApi.searchTracks(searchTerm, mediaType) // Исправлено: использование правильного метода
+            val call = iTunesSearchApi.searchTracks(searchTerm, mediaType)
 
             call.enqueue(object : Callback<TracksResponse> {
                 override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
                     if (response.isSuccessful) {
                         val tracksResponse = response.body()
                         tracksResponse?.items?.let { items ->
-                            // Обновите адаптер вашего RecyclerView с новыми данными из API
                             val itemsAdapter = findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
                             itemsAdapter?.updateItems(items)
                         }

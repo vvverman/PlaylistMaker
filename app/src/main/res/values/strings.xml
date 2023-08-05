@@ -23,14 +23,14 @@
     <string name="artist_name">Исполнитель</string>
     <string name="duration">Длительность</string>
 
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings">Настройки</string>
 
     <!-- Preference Titles -->
-    <string name="messages_header">Messages</string>
-    <string name="sync_header">Sync</string>
+    <string name="messages_header">Сообщения</string>
+    <string name="sync_header">Синхронизация</string>
 
     <!-- Messages Preferences -->
-    <string name="signature_title">Your signature</string>
+    <string name="signature_title">Ваша сигнатура</string>
     <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->

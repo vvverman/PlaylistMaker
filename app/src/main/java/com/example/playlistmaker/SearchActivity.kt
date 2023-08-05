@@ -6,17 +6,17 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import androidx.appcompat.app.AppCompatActivity
+import android.os.Build.VERSION_CODES.R
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
+import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import retrofit2.Call
@@ -25,10 +25,20 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 class SearchActivity : AppCompatActivity() {
 
     private var inputEditText = ""
-    var valueInSearchString = ""
+    private var valueInSearchString = ""
+
+    private var currentViewState = SearchViewState.NO_INTERNET
+
+    enum class SearchViewState {
+        NO_INTERNET,
+        NO_RESULTS,
+        HAS_RESULTS
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +65,6 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-
                 valueInSearchString = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
                 // Вызов метода поиска музыкальных треков
@@ -86,11 +95,8 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
-        inputEditText = valueInSearchString
-
-        Log.d("REQUEST_TEXT", "valueInSearchString before $valueInSearchString")
-        valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
-        Log.d("REQUEST_TEXT", "valueInSearchString after $valueInSearchString")
+        inputEditText.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
+        // Исправлено: установка текста в inputEditText
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {
@@ -111,7 +117,7 @@ class SearchActivity : AppCompatActivity() {
         if (internetConnection) {
             // Создание экземпляра Retrofit
             val retrofit = Retrofit.Builder()
-                .baseUrl("https://itunes.apple.com") // Базовый URL API iTunes Search
+                .baseUrl("https://itunes.apple.com/") // Базовый URL API iTunes Search
                 .addConverterFactory(GsonConverterFactory.create()) // Используем Gson для сериализации/десериализации
                 .build()
 
@@ -120,9 +126,8 @@ class SearchActivity : AppCompatActivity() {
 
             // Вызов метода поиска музыкальных треков
             val mediaType = "music"
-            val call = iTunesSearchApi.searchTracks(searchTerm, mediaType)
+            val call = iTunesSearchApi.searchTracks(searchTerm, mediaType) // Исправлено: использование правильного метода
 
-            // Выполнение запроса асинхронно
             call.enqueue(object : Callback<TracksResponse> {
                 override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
                     if (response.isSuccessful) {
@@ -131,25 +136,21 @@ class SearchActivity : AppCompatActivity() {
                             // Обновите адаптер вашего RecyclerView с новыми данными из API
                             val itemsAdapter = findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
                             itemsAdapter?.updateItems(items)
-                            // Проверка наличия результатов и показ/скрытие плейсхолдера
-                            val placeholderImageView = findViewById<FrameLayout>(R.id.noSearchResults)
-                            val communicationProblems = findViewById<FrameLayout>(R.id.communicationProblems)
-
-                            if (items.isEmpty()) {
-                                // Показываем плейсхолдер, если результаты пусты
-                                placeholderImageView.visibility = View.VISIBLE
-                            } else {
-                                // Скрываем плейсхолдер, если есть результаты
-                                placeholderImageView.visibility = View.GONE
-                            }
+                        }
+                        if (items.isEmpty()) {
+                            currentViewState = SearchViewState.NO_RESULTS
+                        } else {
+                            currentViewState = SearchViewState.HAS_RESULTS
                         }
                     } else {
-                        // Обработка ошибки при запросе к API
+                        currentViewState = SearchViewState.NO_RESULTS
                     }
+                    updateContainersVisibility()
                 }
 
                 override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
-                    // Обработка ошибки при сбое запроса к API
+                    currentViewState = SearchViewState.NO_INTERNET
+                    updateContainersVisibility()
                 }
             })
         }
@@ -173,6 +174,34 @@ class SearchActivity : AppCompatActivity() {
 
     private fun updateNoNetworkMessageVisibility(hasConnection: Boolean) {
         val communicationProblems = findViewById<FrameLayout>(R.id.communicationProblems)
-        communicationProblems.visibility = if (hasConnection) View.GONE else View.VISIBLE
+        if (hasConnection) {
+            communicationProblems.visibility = View.GONE
+        } else {
+            communicationProblems.visibility = View.VISIBLE
+        }
+    }
+
+    private fun updateContainersVisibility() {
+        val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)
+        val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
+        val resultsContainer = findViewById<RecyclerView>(R.id.recyclerView)
+
+        when (currentViewState) {
+            SearchViewState.NO_INTERNET -> {
+                noInternetContainer.visibility = View.VISIBLE
+                noResultsContainer.visibility = View.GONE
+                resultsContainer.visibility = View.GONE
+            }
+            SearchViewState.NO_RESULTS -> {
+                noInternetContainer.visibility = View.GONE
+                noResultsContainer.visibility = View.VISIBLE
+                resultsContainer.visibility = View.GONE
+            }
+            SearchViewState.HAS_RESULTS -> {
+                noInternetContainer.visibility = View.GONE
+                noResultsContainer.visibility = View.GONE
+                resultsContainer.visibility = View.VISIBLE
+            }
+        }
     }
 }

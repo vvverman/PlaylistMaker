@@ -6,7 +6,6 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
-import android.os.Build.VERSION_CODES.R
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -28,9 +27,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
 
-    private var inputEditText = ""
+//    private var inputEditText = ""
     private var valueInSearchString = ""
-
     private var currentViewState = SearchViewState.NO_INTERNET
 
     enum class SearchViewState {
@@ -50,13 +48,13 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-        val inputEditText = findViewById<EditText>(R.id.inputEditText)
+        val inputEditTextView = findViewById<EditText>(R.id.inputEditText)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
         clearButton.setOnClickListener {
-            inputEditText.setText("")
+            inputEditTextView.setText("")
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(inputEditText.windowToken, 0)
+            inputMethodManager?.hideSoftInputFromWindow(inputEditTextView.windowToken, 0)
         }
 
         val simpleTextWatcher = object : TextWatcher {
@@ -75,7 +73,7 @@ class SearchActivity : AppCompatActivity() {
                 // empty
             }
         }
-        inputEditText.addTextChangedListener(simpleTextWatcher)
+        inputEditTextView.addTextChangedListener(simpleTextWatcher)
 
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val itemsAdapter = ItemsAdapter()
@@ -95,8 +93,8 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
-        inputEditText.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
-        // Исправлено: установка текста в inputEditText
+        val inputEditTextView = findViewById<EditText>(R.id.inputEditText)
+        inputEditTextView.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
     }
 
     private fun clearButtonVisibility(s: CharSequence?): Int {

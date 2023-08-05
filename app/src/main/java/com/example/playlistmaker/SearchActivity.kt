@@ -132,12 +132,13 @@ class SearchActivity : AppCompatActivity() {
                         tracksResponse?.items?.let { items ->
                             val itemsAdapter = findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
                             itemsAdapter?.updateItems(items)
+                            currentViewState = if (com.example.playlistmaker.items.isEmpty()) {
+                                SearchViewState.NO_RESULTS
+                            } else {
+                                SearchViewState.HAS_RESULTS
+                            }
                         }
-                        if (items.isEmpty()) {
-                            SearchViewState.NO_RESULTS
-                        } else {
-                            SearchViewState.HAS_RESULTS
-                        }
+
                     } else {
                         currentViewState = SearchViewState.NO_RESULTS
                     }

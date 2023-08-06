@@ -11,6 +11,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
@@ -78,6 +79,15 @@ class SearchActivity : AppCompatActivity() {
         val itemsAdapter = ItemsAdapter()
         itemsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         itemsRecyclerView.adapter = itemsAdapter
+
+        //кнопка "Обновить"
+        val updateButton = findViewById<Button>(R.id.no_network_update_button)
+
+        updateButton.setOnClickListener(object : View.OnClickListener {
+            override fun onClick(v: View?) {
+                searchTracks(valueInSearchString)
+            }
+        })
     }
 
     companion object {
@@ -132,10 +142,10 @@ class SearchActivity : AppCompatActivity() {
                         tracksResponse?.items?.let { items ->
                             val itemsAdapter = findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
                             itemsAdapter?.updateItems(items)
-                            currentViewState = if (com.example.playlistmaker.items.isEmpty()) {
-                                SearchViewState.NO_RESULTS
+                            if (items.isEmpty()) {
+                                currentViewState = SearchViewState.NO_RESULTS
                             } else {
-                                SearchViewState.HAS_RESULTS
+                                currentViewState = SearchViewState.HAS_RESULTS
                             }
                         }
 
@@ -201,4 +211,6 @@ class SearchActivity : AppCompatActivity() {
             }
         }
     }
+
+
 }

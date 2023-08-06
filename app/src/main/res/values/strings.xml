@@ -34,15 +34,14 @@
     <string name="reply_title">Default reply action</string>
 
     <!-- Sync Preferences -->
-    <string name="sync_title">Sync email periodically</string>
-    <string name="attachment_title">Download incoming attachments</string>
-    <string name="attachment_summary_on">Automatically download attachments for incoming emails
-    </string>
-    <string name="attachment_summary_off">Only download attachments when manually requested</string>
+    <string name="sync_title">Периодически синхронизируйте электронную почту</string>
+    <string name="attachment_title">Загружать входящие вложения</string>
+    <string name="attachment_summary_on">Автоматически загружать вложения для входящих писем</string>
+    <string name="attachment_summary_off">Загружать вложения только по запросу вручную</string>
 
     <string name="track_duration_format">%1\$d:%2\$02d</string>
 
     <string name="no_search_results_message">Ничего не нашлось</string>
-    <string name="communication_problems_message">Проблемы со связью. Загрузка не удалась. Проверьте подключение к интернету</string>
+    <string name="communication_problems_message">Проблемы со связью. \n\nЗагрузка не удалась. Проверьте подключение к интернету</string>
 
 </resources>

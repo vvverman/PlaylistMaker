@@ -16,7 +16,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginEnd="28dp"
+            android:layout_marginEnd="@dimen/offset_29"
             android:contentDescription="This is an arrow - this is a button leading back"
             app:srcCompat="@drawable/arrow_back_button" />
 
@@ -46,22 +46,22 @@
             android:layout_height="wrap_content"
             android:background="@drawable/search_bg"
             android:drawableStart="@drawable/search_button"
-            android:drawablePadding="12dp"
-            android:paddingHorizontal="12dp"
+            android:drawablePadding="@dimen/offset_12"
+            android:paddingHorizontal="@dimen/offset_12"
             android:hint="@string/input_hint"
             android:textColorHint="@color/black"
             android:textColor="@color/black"
             android:maxLength="5"
             android:maxLines="1"
-            android:paddingVertical="10dp" />
+            android:paddingVertical="@dimen/offset_10" />
 
         <ImageView
             android:id="@+id/clearIcon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical|end"
-            android:layout_marginHorizontal="12dp"
-            android:layout_marginVertical="10dp"
+            android:layout_marginHorizontal="@dimen/offset_12"
+            android:layout_marginVertical="@dimen/offset_10"
             android:src="@drawable/clear_button"
             android:contentDescription="TODO"
             android:visibility="gone" />
@@ -83,8 +83,8 @@
             android:layout_gravity="center"
             >
             <ImageView
-                android:layout_width ="120dp"
-                android:layout_height="120dp"
+                android:layout_width ="@dimen/offset_120"
+                android:layout_height="@dimen/offset_120"
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/no_search_results_image" />
 
@@ -111,31 +111,31 @@
         android:layout_gravity="center">
 
             <ImageView
-                android:layout_width ="120dp"
-                android:layout_height="120dp"
+                android:layout_width ="@dimen/offset_120"
+                android:layout_height="@dimen/offset_120"
                 android:layout_gravity="center_horizontal"
-                android:layout_marginTop="210dp"
+                android:layout_marginTop="@dimen/offset_210"
                 android:src="@drawable/communication_problems_image"
                 />
 
             <TextView
                 android:layout_width ="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="346dp"
+                android:layout_marginTop="@dimen/offset_346"
                 android:text="@string/communication_problems_message"
                 android:textAlignment="center"
                 style="@style/CommunicationProblemsMessageTextStyle"
-                android:textColor="@color/grey"
                 />
 
             <Button
                 android:id="@+id/no_network_update_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="458dp"
+                android:layout_marginTop="@dimen/offset_458"
                 android:layout_gravity="center_horizontal"
                 style="@style/CommunicationProblemsUpdateButtonStyle"
-                android:text="Обновить"/>
+                android:text="@string/update_button_text"
+                android:textAllCaps="false"/>
 
 
         </FrameLayout>

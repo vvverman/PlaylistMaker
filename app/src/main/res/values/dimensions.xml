@@ -7,6 +7,8 @@
     <dimen name="typesettingFontSize">16sp</dimen>
     <dimen name="titleFontSize">22sp</dimen>
     <dimen name="miniFontSize">11sp</dimen>
+    <dimen name="CommunicationProblemsUpdateButtonTextSize">14sp</dimen>
+    <dimen name="errorTextSize">19sp</dimen>
     <dimen name="roundedCornersValue">2dp</dimen>
     <dimen name="bigDotSize">3dp</dimen>
 
@@ -20,8 +22,15 @@
     <dimen name="offset_3">3dp</dimen>
     <dimen name="offset_5">5dp</dimen>
     <dimen name="offset_8">8dp</dimen>
+    <dimen name="offset_10">10dp</dimen>
+    <dimen name="offset_12">12dp</dimen>
     <dimen name="offset_16">16dp</dimen>
     <dimen name="offset_25">25dp</dimen>
     <dimen name="offset_29">29dp</dimen>
 
+    <dimen name="offset_458">458dp</dimen>
+    <dimen name="offset_346">346dp</dimen>
+    <dimen name="offset_120">120dp</dimen>
+    <dimen name="offset_210">210dp</dimen>
+    <dimen name="cornerRadiusUpdateButton">54dp</dimen>
 </resources>

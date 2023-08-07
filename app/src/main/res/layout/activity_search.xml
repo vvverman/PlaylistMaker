@@ -51,7 +51,6 @@
             android:hint="@string/input_hint"
             android:textColorHint="@color/black"
             android:textColor="@color/black"
-            android:maxLength="5"
             android:maxLines="1"
             android:paddingVertical="@dimen/offset_10" />
 

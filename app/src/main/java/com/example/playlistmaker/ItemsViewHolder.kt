@@ -1,5 +1,3 @@
-package com.example.playlistmaker
-
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,6 +6,8 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
+import com.example.playlistmaker.Item
+import com.example.playlistmaker.R
 
 class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
 
@@ -19,7 +19,12 @@ class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
     fun bind(item: Item) {
         compositionNameView.text = item.compositionName
         artistNameView.text = item.artistName
-        durationView.text = item.duration
+
+        val minutes = item.durationInMillis / 1000 / 60
+        val seconds = (item.durationInMillis / 1000) % 60
+
+        val durationText = String.format("%02d:%02d", minutes, seconds)
+        durationView.text = durationText
 
         Glide
             .with(itemView)
@@ -33,6 +38,3 @@ class ItemsViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {
             .into(coverImageURLView)
     }
 }
-
-
-

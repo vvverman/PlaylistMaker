@@ -35,13 +35,15 @@
             app:iconTint="@color/black" />
     </LinearLayout>
 
-    <Switch
+    <com.google.android.material.switchmaterial.SwitchMaterial
+        android:id="@+id/themeSwitcher"
         style="@style/ActivitySettingsColorAndFontStyle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/paddingVertical"
         android:paddingVertical="@dimen/paddingVertical"
         android:text="@string/color_theme" />
+
 
     <LinearLayout
         android:id="@+id/shareButton"

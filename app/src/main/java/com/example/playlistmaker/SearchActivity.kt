@@ -20,9 +20,6 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.playlistmaker.Item
-import com.example.playlistmaker.R
-import com.example.playlistmaker.SearchHistory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

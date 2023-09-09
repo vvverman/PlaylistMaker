@@ -3,6 +3,7 @@ package com.example.playlistmaker
 import ITunesSearchApi
 import ItemsAdapter
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
@@ -19,24 +20,27 @@ import android.widget.ImageView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.Item
+import com.example.playlistmaker.R
+import com.example.playlistmaker.SearchHistory
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class SearchActivity : AppCompatActivity() {
 
     private var valueInSearchString = ""
     private var currentViewState = SearchViewState.NO_INTERNET
+    private lateinit var searchHistory: SearchHistory
+    private lateinit var sharedPreferences: SharedPreferences
 
     enum class SearchViewState {
         NO_INTERNET,
         NO_RESULTS,
         HAS_RESULTS
     }
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -88,6 +92,12 @@ class SearchActivity : AppCompatActivity() {
                 searchTracks(valueInSearchString)
             }
         })
+
+        // Инициализируйте SharedPreferences
+        sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
+
+        // Создайте экземпляр SearchHistory
+        searchHistory = SearchHistory(sharedPreferences)
     }
 
     companion object {
@@ -147,8 +157,19 @@ class SearchActivity : AppCompatActivity() {
                             } else {
                                 currentViewState = SearchViewState.HAS_RESULTS
                             }
-                        }
 
+                            // Добавьте поисковый запрос в историю при получении результатов
+                            if (currentViewState == SearchViewState.HAS_RESULTS) {
+                                val Item = Item(
+                                    itemId = 0, // Можете установить его на 0 или любой уникальный идентификатор для поискового запроса
+                                    compositionName = searchTerm,
+                                    artistName = "",
+                                    durationInMillis = 0,
+                                    coverImageURL = ""
+                                )
+                                searchHistory.addItemToHistory(Item)
+                            }
+                        }
                     } else {
                         currentViewState = SearchViewState.NO_RESULTS
                     }
@@ -211,6 +232,4 @@ class SearchActivity : AppCompatActivity() {
             }
         }
     }
-
-
 }

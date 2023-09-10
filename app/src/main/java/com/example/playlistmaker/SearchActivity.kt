@@ -10,6 +10,7 @@ import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
@@ -65,7 +66,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchField.setOnClickListener {
-            setContentView(R.layout.search_input_layout)
+            findViewById<View>(R.layout.search_input_layout).visibility = View.VISIBLE
         }
 
         val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)
@@ -138,6 +139,10 @@ class SearchActivity : AppCompatActivity() {
 
     // Метод для выполнения поиска музыкальных треков
     private fun searchTracks(searchTerm: String) {
+
+        // Логируем
+        Log.e("mylog", "Start searching for term: $searchTerm")
+
         // Проверяем наличие интернет-соединения
         val internetConnection = hasInternetConnection()
 
@@ -168,6 +173,10 @@ class SearchActivity : AppCompatActivity() {
                             currentViewState = if (items.isEmpty()) {
                                 SearchViewState.NO_RESULTS
                             } else {
+
+                                // Логируем
+                                Log.e("mylog", "Response failed. Error code: ${response.code()}, message: ${response.message()}")
+
                                 SearchViewState.HAS_RESULTS
                             }
 
@@ -190,6 +199,9 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
+                    //Логируем
+                    Log.e("mylog", "faile $t")
+
                     currentViewState = SearchViewState.NO_INTERNET
                     updateContainersVisibility()
                 }
@@ -199,7 +211,12 @@ class SearchActivity : AppCompatActivity() {
 
     // Метод для проверки наличия интернет-соединения
     private fun hasInternetConnection(): Boolean {
+
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+
+        // Логируем
+        Log.e("mylog", "Internet connection status: $connectivityManager")
+
         if (connectivityManager != null) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
                 val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
@@ -226,6 +243,9 @@ class SearchActivity : AppCompatActivity() {
 
     // Метод для обновления видимости контейнеров в зависимости от состояния поиска
     private fun updateContainersVisibility() {
+        //Логируем
+        Log.e("mylog", "state: $currentViewState")
+
         val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
         val resultsContainer = findViewById<RecyclerView>(R.id.recyclerView)

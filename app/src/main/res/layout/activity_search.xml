@@ -33,7 +33,7 @@
             app:iconTint="@color/black" />
     </LinearLayout>
 
-    <include layout="@layout/search_input_layout"/>
+    <include layout="@layout/search_input_layout" android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/container"

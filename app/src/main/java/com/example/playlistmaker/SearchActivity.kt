@@ -28,14 +28,21 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
 
+    // Переменная для хранения строки поиска
     private var valueInSearchString = ""
+
+    // Перечисление для состояния поиска
     private var currentViewState = SearchViewState.NO_INTERNET
+
+    // Переменные для управления историей поиска
     private lateinit var searchHistory: SearchHistory
     private lateinit var sharedPreferences: SharedPreferences
 
+    // Элементы пользовательского интерфейса
     private lateinit var searchField: EditText
-    private lateinit var hintMessage: TextView
+    private lateinit var searchHint: TextView
 
+    // Перечисление для состояния поиска
     enum class SearchViewState {
         NO_INTERNET,
         NO_RESULTS,
@@ -48,10 +55,11 @@ class SearchActivity : AppCompatActivity() {
 
         // Находим элементы по их идентификаторам
         searchField = findViewById(R.id.searchField)
-        hintMessage = findViewById(R.id.searchHint)
+        searchHint = findViewById(R.id.searchHint)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
+        // Обработчик клика по кнопке "назад"
         backButton.setOnClickListener {
             finish()
         }
@@ -59,6 +67,7 @@ class SearchActivity : AppCompatActivity() {
         val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
+        // Обработчик клика по кнопке "очистить"
         clearButton.setOnClickListener {
             inputEditTextView.setText("")
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
@@ -67,10 +76,11 @@ class SearchActivity : AppCompatActivity() {
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-                // empty
+                // Перед изменением текста
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Во время изменения текста
                 valueInSearchString = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
                 // Вызов метода поиска музыкальных треков
@@ -78,7 +88,7 @@ class SearchActivity : AppCompatActivity() {
             }
 
             override fun afterTextChanged(s: Editable?) {
-                // empty
+                // После изменения текста
             }
         }
         inputEditTextView.addTextChangedListener(simpleTextWatcher)
@@ -88,10 +98,10 @@ class SearchActivity : AppCompatActivity() {
         itemsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         itemsRecyclerView.adapter = itemsAdapter
 
-        // Инициализируйте SharedPreferences
+        // Инициализируйте SharedPreferences для хранения истории поиска
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
 
-        // Создайте экземпляр SearchHistory
+        // Создайте экземпляр SearchHistory для управления историей поиска
         searchHistory = SearchHistory(sharedPreferences)
     }
 
@@ -99,11 +109,13 @@ class SearchActivity : AppCompatActivity() {
         const val REQUEST_TEXT = "REQUEST_TEXT"
     }
 
+    // Метод для сохранения состояния активности
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(REQUEST_TEXT, valueInSearchString)
     }
 
+    // Метод для восстановления состояния активности
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
@@ -111,6 +123,7 @@ class SearchActivity : AppCompatActivity() {
         inputEditTextView.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
     }
 
+    // Метод для определения видимости кнопки "очистить"
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -119,6 +132,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для выполнения поиска музыкальных треков
     private fun searchTracks(searchTerm: String) {
         // Проверяем наличие интернет-соединения
         val internetConnection = hasInternetConnection()
@@ -147,10 +161,10 @@ class SearchActivity : AppCompatActivity() {
                         tracksResponse?.items?.let { items ->
                             val itemsAdapter = findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
                             itemsAdapter?.updateItems(items)
-                            if (items.isEmpty()) {
-                                currentViewState = SearchViewState.NO_RESULTS
+                            currentViewState = if (items.isEmpty()) {
+                                SearchViewState.NO_RESULTS
                             } else {
-                                currentViewState = SearchViewState.HAS_RESULTS
+                                SearchViewState.HAS_RESULTS
                             }
 
                             // Добавьте поисковый запрос в историю при получении результатов
@@ -179,6 +193,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для проверки наличия интернет-соединения
     private fun hasInternetConnection(): Boolean {
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
         if (connectivityManager != null) {
@@ -195,6 +210,7 @@ class SearchActivity : AppCompatActivity() {
         return false
     }
 
+    // Метод для обновления видимости сообщения о проблемах с сетью
     private fun updateNoNetworkMessageVisibility(hasConnection: Boolean) {
         val communicationProblems = findViewById<FrameLayout>(R.id.communicationProblems)
         if (hasConnection) {
@@ -204,6 +220,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    // Метод для обновления видимости контейнеров в зависимости от состояния поиска
     private fun updateContainersVisibility() {
         val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)

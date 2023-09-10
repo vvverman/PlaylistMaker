@@ -14,7 +14,8 @@
         android:layout_marginRight="8dp"
         android:textColor="@color/black"
         android:imeOptions="actionDone"
-        android:singleLine="true"/>
+        android:singleLine="true"
+        />
 
     <TextView
         android:id="@+id/searchHint"

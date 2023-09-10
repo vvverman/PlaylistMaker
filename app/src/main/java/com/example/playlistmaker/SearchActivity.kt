@@ -64,6 +64,10 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
+        searchField.setOnClickListener {
+            setContentView(R.layout.search_input_layout)
+        }
+
         val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 

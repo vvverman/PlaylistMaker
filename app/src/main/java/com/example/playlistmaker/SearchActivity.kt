@@ -34,7 +34,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
 
     private lateinit var searchField: EditText
-    private lateinit var searchHint: ImageView
+    private lateinit var hintMessage: TextView
 
     enum class SearchViewState {
         NO_INTERNET,
@@ -48,7 +48,7 @@ class SearchActivity : AppCompatActivity() {
 
         // Находим элементы по их идентификаторам
         searchField = findViewById(R.id.searchField)
-        val searchHintText = findViewById<TextView>(R.id.searchHint)
+        hintMessage = findViewById(R.id.searchHint)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
 

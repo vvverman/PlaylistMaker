@@ -66,7 +66,7 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchField.setOnClickListener {
-            findViewById<View>(R.id.search_input_layout).visibility = View.VISIBLE
+           findViewById<View>(R.id.search_input_layout).visibility = View.VISIBLE
         }
 
         val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)

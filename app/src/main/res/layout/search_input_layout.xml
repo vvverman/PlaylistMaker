@@ -4,7 +4,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:visibility="gone">
 
     <EditText
         android:id="@+id/searchField"
@@ -29,5 +30,5 @@
         android:textAlignment="center"
         android:textColor="@color/black"
         android:text="Введите название трека на английском языке"
-        android:visibility="gone"/>
+        />
 </LinearLayout>

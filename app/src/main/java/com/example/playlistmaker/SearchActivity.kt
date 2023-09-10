@@ -12,11 +12,11 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import android.view.inputmethod.InputMethodManager
-import android.widget.Button
 import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +33,9 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchHistory: SearchHistory
     private lateinit var sharedPreferences: SharedPreferences
 
+    private lateinit var searchField: EditText
+    private lateinit var searchHint: ImageView
+
     enum class SearchViewState {
         NO_INTERNET,
         NO_RESULTS,
@@ -42,6 +45,10 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        // Находим элементы по их идентификаторам
+        searchField = findViewById(R.id.searchField)
+        val searchHintText = findViewById<TextView>(R.id.searchHint)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
@@ -80,15 +87,6 @@ class SearchActivity : AppCompatActivity() {
         val itemsAdapter = ItemsAdapter()
         itemsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         itemsRecyclerView.adapter = itemsAdapter
-
-        //кнопка "Обновить"
-        val updateButton = findViewById<Button>(R.id.no_network_update_button)
-
-        updateButton.setOnClickListener(object : View.OnClickListener {
-            override fun onClick(v: View?) {
-                searchTracks(valueInSearchString)
-            }
-        })
 
         // Инициализируйте SharedPreferences
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
@@ -157,14 +155,14 @@ class SearchActivity : AppCompatActivity() {
 
                             // Добавьте поисковый запрос в историю при получении результатов
                             if (currentViewState == SearchViewState.HAS_RESULTS) {
-                                val Item = Item(
+                                val item = Item(
                                     itemId = 0, // Можете установить его на 0 или любой уникальный идентификатор для поискового запроса
                                     compositionName = searchTerm,
                                     artistName = "",
                                     durationInMillis = 0,
                                     coverImageURL = ""
                                 )
-                                searchHistory.addItemToHistory(Item)
+                                searchHistory.addItemToHistory(item)
                             }
                         }
                     } else {

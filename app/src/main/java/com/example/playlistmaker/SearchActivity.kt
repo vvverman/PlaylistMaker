@@ -6,7 +6,6 @@ import android.content.Context
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import android.os.Build
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -17,7 +16,6 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -41,7 +39,7 @@ class SearchActivity : AppCompatActivity() {
 
     // Элементы пользовательского интерфейса
     private lateinit var searchField: EditText
-    private lateinit var searchHint: TextView
+//    private lateinit var searchHint: TextView
 
     // Перечисление для состояния поиска
     enum class SearchViewState {
@@ -56,7 +54,7 @@ class SearchActivity : AppCompatActivity() {
 
         // Находим элементы по их идентификаторам
         searchField = findViewById(R.id.searchField)
-        searchHint = findViewById(R.id.searchHint)
+//        searchHint = findViewById(R.id.searchHint)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
@@ -218,14 +216,9 @@ class SearchActivity : AppCompatActivity() {
         Log.e("mylog", "Internet connection status: $connectivityManager")
 
         if (connectivityManager != null) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
-                if (capabilities != null) {
-                    return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-                }
-            } else {
-                val networkInfo = connectivityManager.activeNetworkInfo
-                return networkInfo != null && networkInfo.isConnected
+            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            if (capabilities != null) {
+                return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
             }
         }
         return false

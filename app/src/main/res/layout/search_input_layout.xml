@@ -87,7 +87,8 @@
                 android:layout_width ="@dimen/offset_120"
                 android:layout_height="@dimen/offset_120"
                 android:layout_gravity="center_horizontal"
-                android:src="@drawable/no_search_results_image" />
+                android:src="@drawable/no_search_results_image"
+                android:contentDescription="TODO" />
 
             <TextView
                 android:layout_width ="wrap_content"
@@ -117,7 +118,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/offset_210"
             android:src="@drawable/communication_problems_image"
-            />
+            android:contentDescription="TODO" />
 
         <TextView
             android:layout_width ="wrap_content"
@@ -141,19 +142,6 @@
 
     </FrameLayout>
 
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/button"
-        android:layout_width="148dp"
-        android:layout_height="36dp"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="106dp"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="399dp"
-        android:background="@drawable/button"
-        />
-
-
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
@@ -162,6 +150,14 @@
         android:layout_marginTop="@dimen/offset_8"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <RelativeLayout
+        android:id="@+id/button"
+        android:layout_width="148dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="106dp"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/clear_history_button_day" />
 
 </LinearLayout>
 

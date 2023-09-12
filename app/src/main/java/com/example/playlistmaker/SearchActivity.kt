@@ -77,7 +77,8 @@ class SearchActivity : AppCompatActivity() {
         // Обработчик клика по кнопке "очистить"
         clearButton.setOnClickListener {
             searchField.setText("")
-            val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
+            val inputMethodManager =
+                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
             inputMethodManager?.hideSoftInputFromWindow(searchField.windowToken, 0)
         }
 
@@ -102,7 +103,8 @@ class SearchActivity : AppCompatActivity() {
 
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val itemsAdapter = ItemsAdapter()
-        itemsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+        itemsRecyclerView.layoutManager =
+            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         itemsRecyclerView.adapter = itemsAdapter
 
         // Инициализируйте SharedPreferences для хранения истории поиска
@@ -165,11 +167,15 @@ class SearchActivity : AppCompatActivity() {
             val call = iTunesSearchApi.searchTracks(searchTerm, mediaType)
 
             call.enqueue(object : Callback<TracksResponse> {
-                override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
+                override fun onResponse(
+                    call: Call<TracksResponse>,
+                    response: Response<TracksResponse>
+                ) {
                     if (response.isSuccessful) {
                         val tracksResponse = response.body()
                         tracksResponse?.items?.let { items ->
-                            val itemsAdapter = findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
+                            val itemsAdapter =
+                                findViewById<RecyclerView>(R.id.recyclerView).adapter as? ItemsAdapter
                             itemsAdapter?.updateItems(items)
                             currentViewState = if (items.isEmpty()) {
                                 SearchViewState.NO_RESULTS
@@ -205,9 +211,11 @@ class SearchActivity : AppCompatActivity() {
 
     // Метод для проверки наличия интернет-соединения
     private fun hasInternetConnection(): Boolean {
-        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
+        val connectivityManager =
+            getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
         if (connectivityManager != null) {
-            val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
+            val capabilities =
+                connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
             if (capabilities != null) {
                 return capabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
             }
@@ -237,11 +245,13 @@ class SearchActivity : AppCompatActivity() {
                 noResultsContainer.visibility = View.GONE
                 resultsContainer.visibility = View.GONE
             }
+
             SearchViewState.NO_RESULTS -> {
                 noInternetContainer.visibility = View.GONE
                 noResultsContainer.visibility = View.VISIBLE
                 resultsContainer.visibility = View.GONE
             }
+
             SearchViewState.HAS_RESULTS -> {
                 noInternetContainer.visibility = View.GONE
                 noResultsContainer.visibility = View.GONE

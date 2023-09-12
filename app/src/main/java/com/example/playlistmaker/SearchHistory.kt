@@ -23,7 +23,10 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
 
     // Метод для получения текущей истории поиска
     fun getHistory(): MutableList<Item> {
-        val historyString = sharedPreferences.getString(historyKey, "") // Получаем историю в виде JSON-строки из SharedPreferences
+        val historyString = sharedPreferences.getString(
+            historyKey,
+            ""
+        ) // Получаем историю в виде JSON-строки из SharedPreferences
         return if (historyString.isNullOrEmpty()) {
             mutableListOf() // Если история пуста или отсутствует, возвращаем пустой список
         } else {
@@ -40,6 +43,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
     // Метод для сохранения обновленной истории в SharedPreferences
     private fun saveHistory(history: MutableList<Item>) {
         val historyString = gson.toJson(history) // Сериализуем список элементов в JSON-строку
-        sharedPreferences.edit().putString(historyKey, historyString).apply() // Сохраняем JSON-строку в SharedPreferences
+        sharedPreferences.edit().putString(historyKey, historyString)
+            .apply() // Сохраняем JSON-строку в SharedPreferences
     }
 }

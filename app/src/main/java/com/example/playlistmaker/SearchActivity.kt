@@ -53,7 +53,6 @@ class SearchActivity : AppCompatActivity() {
 
         // Находим элементы по их идентификаторам
         searchField = findViewById(R.id.searchField)
-
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
         // Обработчик клика по кнопке "назад"
@@ -61,9 +60,16 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-        searchField.setOnClickListener {
-            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
-            searchInputLayoutInclude.visibility = View.VISIBLE
+//        searchField.setOnClickListener {
+//            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
+//            searchInputLayoutInclude.visibility = View.VISIBLE
+//        }
+
+        searchField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus) {
+                val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
+                searchInputLayoutInclude.visibility = View.VISIBLE
+            }
         }
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)

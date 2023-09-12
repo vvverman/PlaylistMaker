@@ -33,7 +33,12 @@
             app:iconTint="@color/black" />
     </LinearLayout>
 
-    <include layout="@layout/search_input_layout" android:visibility="gone" />
+<!--    <include layout="@layout/search_input_layout" android:visibility="gone" />-->
+
+    <include
+        android:id="@+id/search_input_layout_include"
+        layout="@layout/search_input_layout"
+        android:visibility="gone" />
 
     <FrameLayout
         android:id="@+id/container"
@@ -43,19 +48,19 @@
         android:paddingBottom="@dimen/offset_16">
 
         <EditText
-            android:id="@+id/inputEditTextView"
-            android:inputType="text"
+            android:id="@+id/searchField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/search_bg"
             android:drawableStart="@drawable/search_button"
             android:drawablePadding="@dimen/offset_12"
-            android:paddingHorizontal="@dimen/offset_12"
             android:hint="@string/input_hint"
-            android:textColorHint="@color/black"
-            android:textColor="@color/black"
+            android:inputType="text"
             android:maxLines="1"
-            android:paddingVertical="@dimen/offset_10" />
+            android:paddingHorizontal="@dimen/offset_12"
+            android:paddingVertical="@dimen/offset_10"
+            android:textColor="@color/black"
+            android:textColorHint="@color/black" />
 
         <ImageView
             android:id="@+id/clearIcon"

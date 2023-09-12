@@ -3,13 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ActivitySettingsGeneralStyle"
-    android:id="@+id/search_input_layout">
+    android:id="@+id/search_input_layout"
+    android:visibility="gone">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        tools:ignore="UseCompoundDrawables">
+        tools:ignore="UseCompoundDrawables"
+        >
 
         <ImageButton
             android:id="@+id/backButton"
@@ -19,7 +21,8 @@
             android:layout_gravity="center_vertical"
             android:layout_marginEnd="@dimen/offset_29"
             android:contentDescription="This is an arrow - this is a button leading back"
-            app:srcCompat="@drawable/arrow_back_button" />
+            app:srcCompat="@drawable/arrow_back_button"
+            />
 
         <TextView
             style="@style/ActivitySettingsColorAndFontStyle"
@@ -42,11 +45,11 @@
         android:paddingBottom="@dimen/offset_16">
 
         <EditText
-            android:id="@+id/searchField"
+            android:id="@+id/searchField2"
             android:inputType="text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/search_bg"
+            android:background="#ff0000"
             android:drawableStart="@drawable/search_button"
             android:drawablePadding="@dimen/offset_12"
             android:paddingHorizontal="@dimen/offset_12"
@@ -54,7 +57,10 @@
             android:textColorHint="@color/black"
             android:textColor="@color/black"
             android:maxLines="1"
-            android:paddingVertical="@dimen/offset_10" />
+            android:paddingVertical="@dimen/offset_10"
+            />
+
+<!--        android:background="#@drawable/search_bg"-->
 
         <ImageView
             android:id="@+id/clearIcon"
@@ -64,8 +70,7 @@
             android:layout_marginHorizontal="@dimen/offset_12"
             android:layout_marginVertical="@dimen/offset_10"
             android:src="@drawable/clear_button"
-            android:contentDescription="TODO"
-            android:visibility="gone" />
+            android:contentDescription="TODO" />
     </FrameLayout>
 
 

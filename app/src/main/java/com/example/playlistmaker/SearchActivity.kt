@@ -39,7 +39,6 @@ class SearchActivity : AppCompatActivity() {
 
     // Элементы пользовательского интерфейса
     private lateinit var searchField: EditText
-//    private lateinit var searchHint: TextView
 
     // Перечисление для состояния поиска
     enum class SearchViewState {
@@ -54,7 +53,6 @@ class SearchActivity : AppCompatActivity() {
 
         // Находим элементы по их идентификаторам
         searchField = findViewById(R.id.searchField)
-//        searchHint = findViewById(R.id.searchHint)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
@@ -64,17 +62,17 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchField.setOnClickListener {
-           findViewById<View>(R.id.search_input_layout).visibility = View.VISIBLE
+            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
+            searchInputLayoutInclude.visibility = View.VISIBLE
         }
 
-        val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
 
         // Обработчик клика по кнопке "очистить"
         clearButton.setOnClickListener {
-            inputEditTextView.setText("")
+            searchField.setText("")
             val inputMethodManager = getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(inputEditTextView.windowToken, 0)
+            inputMethodManager?.hideSoftInputFromWindow(searchField.windowToken, 0)
         }
 
         val simpleTextWatcher = object : TextWatcher {
@@ -94,7 +92,7 @@ class SearchActivity : AppCompatActivity() {
                 // После изменения текста
             }
         }
-        inputEditTextView.addTextChangedListener(simpleTextWatcher)
+        searchField.addTextChangedListener(simpleTextWatcher)
 
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val itemsAdapter = ItemsAdapter()
@@ -122,8 +120,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
-        val inputEditTextView = findViewById<EditText>(R.id.inputEditTextView)
-        inputEditTextView.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
+        searchField.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
     }
 
     // Метод для определения видимости кнопки "очистить"
@@ -171,10 +168,6 @@ class SearchActivity : AppCompatActivity() {
                             currentViewState = if (items.isEmpty()) {
                                 SearchViewState.NO_RESULTS
                             } else {
-
-                                // Логируем
-                                Log.e("mylog", "Response failed. Error code: ${response.code()}, message: ${response.message()}")
-
                                 SearchViewState.HAS_RESULTS
                             }
 
@@ -197,9 +190,6 @@ class SearchActivity : AppCompatActivity() {
                 }
 
                 override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
-                    //Логируем
-                    Log.e("mylog", "faile $t")
-
                     currentViewState = SearchViewState.NO_INTERNET
                     updateContainersVisibility()
                 }
@@ -209,12 +199,7 @@ class SearchActivity : AppCompatActivity() {
 
     // Метод для проверки наличия интернет-соединения
     private fun hasInternetConnection(): Boolean {
-
         val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
-
-        // Логируем
-        Log.e("mylog", "Internet connection status: $connectivityManager")
-
         if (connectivityManager != null) {
             val capabilities = connectivityManager.getNetworkCapabilities(connectivityManager.activeNetwork)
             if (capabilities != null) {
@@ -236,9 +221,6 @@ class SearchActivity : AppCompatActivity() {
 
     // Метод для обновления видимости контейнеров в зависимости от состояния поиска
     private fun updateContainersVisibility() {
-        //Логируем
-        Log.e("mylog", "state: $currentViewState")
-
         val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
         val resultsContainer = findViewById<RecyclerView>(R.id.recyclerView)

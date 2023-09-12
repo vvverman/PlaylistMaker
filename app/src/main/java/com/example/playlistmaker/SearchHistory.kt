@@ -1,6 +1,8 @@
 package com.example.playlistmaker
 
 import android.content.SharedPreferences
+import android.widget.ImageButton
+import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -23,6 +25,9 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
 
     // Метод для получения текущей истории поиска
     fun getHistory(): MutableList<Item> {
+
+        val itemsRecyclerViewSearchHistory = findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
+
         val historyString = sharedPreferences.getString(
             historyKey,
             ""
@@ -47,3 +52,4 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
             .apply() // Сохраняем JSON-строку в SharedPreferences
     }
 }
+

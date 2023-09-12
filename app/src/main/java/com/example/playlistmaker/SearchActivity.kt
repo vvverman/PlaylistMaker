@@ -55,6 +55,7 @@ class SearchActivity : AppCompatActivity() {
         searchField = findViewById(R.id.searchField)
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
+
         // Обработчик клика по кнопке "назад"
         backButton.setOnClickListener {
             finish()

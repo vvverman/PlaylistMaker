@@ -53,3 +53,5 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsViewHolder>() {
         }
     }
 }
+
+

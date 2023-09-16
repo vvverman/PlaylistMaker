@@ -80,3 +80,5 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
         sharedPreferences.edit().putString(historyKey, historyString).apply()
     }
 }
+
+

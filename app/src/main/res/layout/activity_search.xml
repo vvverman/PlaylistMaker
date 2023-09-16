@@ -141,6 +141,7 @@
             android:text="@string/update_button_text"
             android:textAllCaps="false" />
     </FrameLayout>
+
     <include
         android:id="@+id/search_input_layout_include"
         layout="@layout/search_input_layout"

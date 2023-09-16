@@ -115,9 +115,16 @@ class SearchActivity : AppCompatActivity() {
         // Обработчик клика по кнопке "Очистить историю поиска"
         clearSearchHistoryButton.setOnClickListener {
             // Вызов метода для очистки истории поиска
-            searchHistory.clearHistory()
+                searchHistory.clearHistory()
 
-            // После очистки истории, возможно, вам захочется обновить отображение списка в recyclerViewSearchHistory
+            // Создайте пустой список данных, так как история очищена
+            val emptyDataList: List<Item> = ArrayList()
+
+            // Получаем адаптер для recyclerViewSearchHistory (в данном случае, это ItemsAdapter)
+            val adapter = recyclerViewSearchHistory.adapter as? ItemsAdapter
+
+            // Обновляем данные адаптера пустым списком
+            adapter?.updateItems(emptyDataList)
         }
     }
 

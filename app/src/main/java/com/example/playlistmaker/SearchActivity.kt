@@ -27,44 +27,38 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 class SearchActivity : AppCompatActivity() {
 
-    // Переменная для хранения строки поиска
+    // Переменные для хранения состояния и данных
     private var valueInSearchString = ""
-
-    // Перечисление для состояния поиска
     private var currentViewState = SearchViewState.NO_INTERNET
-
-    // Переменные для управления историей поиска
     private lateinit var searchHistory: SearchHistory
     private lateinit var sharedPreferences: SharedPreferences
-
-    // Элементы пользовательского интерфейса
     private lateinit var searchField: EditText
-
     private lateinit var clearSearchHistoryButton: ImageButton
     private lateinit var recyclerViewSearchHistory: RecyclerView
 
-    // Перечисление для состояния поиска
+    // Перечисление для состояний поиска
     enum class SearchViewState {
-        NO_INTERNET,
-        NO_RESULTS,
-        HAS_RESULTS
+        NO_INTERNET, // Нет интернет-соединения
+        NO_RESULTS,  // Нет результатов поиска
+        HAS_RESULTS  // Есть результаты поиска
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
-        // Находим элементы по их идентификаторам
+        // Инициализация элементов интерфейса и обработчиков событий
+
+        // Поле ввода текста для поиска
         searchField = findViewById(R.id.searchField)
+
+        // Кнопка "Назад"
         val backButton = findViewById<ImageButton>(R.id.backButton)
-
-
-        // Обработчик клика по кнопке "назад"
         backButton.setOnClickListener {
             finish()
         }
 
-
+        // Обработчик фокуса на поле поиска
         searchField.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
                 val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
@@ -72,9 +66,8 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
+        // Кнопка "Очистить" в поле поиска
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
-
-        // Обработчик клика по кнопке "очистить"
         clearButton.setOnClickListener {
             searchField.setText("")
             val inputMethodManager =
@@ -82,6 +75,7 @@ class SearchActivity : AppCompatActivity() {
             inputMethodManager?.hideSoftInputFromWindow(searchField.windowToken, 0)
         }
 
+        // Обработчик изменения текста в поле поиска
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
                 // Перед изменением текста
@@ -91,7 +85,7 @@ class SearchActivity : AppCompatActivity() {
                 // Во время изменения текста
                 valueInSearchString = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
-                // Вызов метода поиска музыкальных треков
+                // Вызов метода для выполнения поиска музыкальных треков
                 searchTracks(s.toString())
             }
 
@@ -101,23 +95,26 @@ class SearchActivity : AppCompatActivity() {
         }
         searchField.addTextChangedListener(simpleTextWatcher)
 
+        // Настройка RecyclerView для отображения результатов поиска
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         val itemsAdapter = ItemsAdapter()
         itemsRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         itemsRecyclerView.adapter = itemsAdapter
 
-        // Инициализируйте SharedPreferences для хранения истории поиска
+        // Инициализация SharedPreferences для хранения истории поиска
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
 
-        // Создайте экземпляр SearchHistory для управления историей поиска
+        // Создание экземпляра SearchHistory для управления историей поиска
         searchHistory = SearchHistory(sharedPreferences)
 
+        // Кнопка "Очистить историю поиска"
         clearSearchHistoryButton = findViewById(R.id.clearSearchHistoryButton)
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
 
+        // Обработчик клика по кнопке "Очистить историю поиска"
         clearSearchHistoryButton.setOnClickListener {
-            // Вызовите метод clearHistory() при щелчке на кнопке
+            // Вызов метода для очистки истории поиска
             searchHistory.clearHistory()
 
             // После очистки истории, возможно, вам захочется обновить отображение списка в recyclerViewSearchHistory
@@ -128,20 +125,20 @@ class SearchActivity : AppCompatActivity() {
         const val REQUEST_TEXT = "REQUEST_TEXT"
     }
 
-    // Метод для сохранения состояния активности
+    // Метод для сохранения состояния активности при повороте экрана и т. д.
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(REQUEST_TEXT, valueInSearchString)
     }
 
-    // Метод для восстановления состояния активности
+    // Метод для восстановления состояния активности после поворота экрана и т. д.
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
         searchField.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
     }
 
-    // Метод для определения видимости кнопки "очистить"
+    // Метод для определения видимости кнопки "Очистить" в поле поиска
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -152,18 +149,17 @@ class SearchActivity : AppCompatActivity() {
 
     // Метод для выполнения поиска музыкальных треков
     private fun searchTracks(searchTerm: String) {
-
-        // Логируем
+        // Логирование начала поиска
         Log.e("mylog", "Start searching for term: $searchTerm")
 
-        // Проверяем наличие интернет-соединения
+        // Проверка наличия интернет-соединения
         val internetConnection = hasInternetConnection()
 
-        // При отсутствии интернет-соединения показываем сообщение о проблемах с сетью
+        // Обновление видимости сообщения о проблемах с сетью
         updateNoNetworkMessageVisibility(internetConnection)
 
         if (internetConnection) {
-            // Создание экземпляра Retrofit
+            // Создание экземпляра Retrofit для работы с API iTunes Search
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://itunes.apple.com/") // Базовый URL API iTunes Search
                 .addConverterFactory(GsonConverterFactory.create()) // Используем Gson для сериализации/десериализации
@@ -193,7 +189,7 @@ class SearchActivity : AppCompatActivity() {
                                 SearchViewState.HAS_RESULTS
                             }
 
-                            // Добавьте поисковый запрос в историю при получении результатов
+                            // Добавление поискового запроса в историю после получения результатов
                             if (currentViewState == SearchViewState.HAS_RESULTS) {
                                 val item = Item(
                                     itemId = 0, // Можете установить его на 0 или любой уникальный идентификатор для поискового запроса
@@ -208,11 +204,14 @@ class SearchActivity : AppCompatActivity() {
                     } else {
                         currentViewState = SearchViewState.NO_RESULTS
                     }
+                    // Обновление видимости контейнеров в зависимости от состояния поиска
                     updateContainersVisibility()
                 }
 
                 override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
+                    // Обработка ошибки при неудачном запросе
                     currentViewState = SearchViewState.NO_INTERNET
+                    // Обновление видимости контейнеров при ошибке
                     updateContainersVisibility()
                 }
             })

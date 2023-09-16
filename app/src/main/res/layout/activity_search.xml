@@ -1,18 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     style="@style/ActivitySettingsGeneralStyle">
 
-
+    <!-- Заголовок и кнопка "назад" -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
+        <!-- Кнопка "назад" -->
         <ImageButton
             android:id="@+id/backButton"
             style="@style/ActivitySettingsColorAndFontStyle"
@@ -23,6 +23,7 @@
             android:contentDescription="This is an arrow - this is a button leading back"
             app:srcCompat="@drawable/arrow_back_button" />
 
+        <!-- Заголовок активности -->
         <TextView
             style="@style/ActivitySettingsColorAndFontStyle"
             android:layout_width="wrap_content"
@@ -36,7 +37,7 @@
             app:iconTint="@color/black" />
     </LinearLayout>
 
-
+    <!-- Поле поиска и кнопка очистки -->
     <FrameLayout
         android:id="@+id/container"
         android:layout_width="match_parent"
@@ -44,6 +45,7 @@
         android:paddingTop="@dimen/offset_29"
         android:paddingBottom="@dimen/offset_16">
 
+        <!-- Поле поиска -->
         <EditText
             android:id="@+id/searchField"
             android:layout_width="match_parent"
@@ -59,6 +61,7 @@
             android:textColor="@color/black"
             android:textColorHint="@color/black" />
 
+        <!-- Иконка для очистки поля поиска -->
         <ImageView
             android:id="@+id/clearIcon"
             android:layout_width="wrap_content"
@@ -71,14 +74,14 @@
             android:visibility="gone" />
     </FrameLayout>
 
-
-    <!-- Поиск не дал результатов -->
+    <!-- Сообщение о том, что поиск не дал результатов -->
     <FrameLayout
         android:id="@+id/noSearchResults"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone">
 
+        <!-- Изображение для отображения отсутствия результатов -->
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -90,6 +93,7 @@
                 android:layout_gravity="center_horizontal"
                 android:src="@drawable/no_search_results_image" />
 
+            <!-- Текстовое сообщение о отсутствии результатов -->
             <TextView
                 style="@style/NoSearchResultsImageTextStyle"
                 android:layout_width="wrap_content"
@@ -99,11 +103,9 @@
                 android:textAlignment="center"
                 android:textColor="@color/grey" />
         </FrameLayout>
-
     </FrameLayout>
 
-
-    <!-- Нет сети, бро -->
+    <!-- Сообщение о проблемах с сетью -->
     <FrameLayout
         android:id="@+id/communicationProblems"
         android:layout_width="match_parent"
@@ -111,6 +113,7 @@
         android:layout_gravity="center"
         android:visibility="gone">
 
+        <!-- Изображение для отображения проблем с сетью -->
         <ImageView
             android:layout_width="@dimen/offset_120"
             android:layout_height="@dimen/offset_120"
@@ -118,6 +121,7 @@
             android:layout_marginTop="@dimen/offset_210"
             android:src="@drawable/communication_problems_image" />
 
+        <!-- Текстовое сообщение о проблемах с сетью -->
         <TextView
             style="@style/CommunicationProblemsMessageTextStyle"
             android:layout_width="wrap_content"
@@ -126,6 +130,7 @@
             android:text="@string/communication_problems_message"
             android:textAlignment="center" />
 
+        <!-- Кнопка для обновления при отсутствии сети -->
         <Button
             android:id="@+id/no_network_update_button"
             style="@style/CommunicationProblemsUpdateButtonStyle"
@@ -135,24 +140,5 @@
             android:layout_marginTop="@dimen/offset_458"
             android:text="@string/update_button_text"
             android:textAllCaps="false" />
-
     </FrameLayout>
-
-    <include
-        android:id="@+id/search_input_layout_include"
-        layout="@layout/search_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_8"
-        android:visibility="gone" />
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_8"
-        android:orientation="vertical"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
-
-</LinearLayout>
 

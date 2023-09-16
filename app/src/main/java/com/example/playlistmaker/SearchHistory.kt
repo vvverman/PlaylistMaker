@@ -1,53 +1,82 @@
 package com.example.playlistmaker
 
 import android.content.SharedPreferences
-import android.widget.ImageButton
-import androidx.recyclerview.widget.RecyclerView
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-// Класс для управления историей поисковых запросов
+/**
+ * Класс SearchHistory предназначен для управления историей поисковых запросов.
+ *
+ * @property sharedPreferences Используется для доступа к хранилищу SharedPreferences.
+ */
 class SearchHistory(private val sharedPreferences: SharedPreferences) {
 
-    private val gson = Gson() // Используется для сериализации и десериализации данных
-    private val historyKey = "search_history" // Ключ для сохранения истории в SharedPreferences
+    // Создаем объект Gson для сериализации и десериализации данных.
+    private val gson = Gson()
 
-    // Метод для добавления элемента в историю поиска
+    // Ключ, по которому будет сохраняться история в SharedPreferences.
+    private val historyKey = "search_history"
+
+    /**
+     * Метод для добавления элемента в историю поиска.
+     *
+     * @param item Элемент типа Item, который будет добавлен в историю.
+     */
     fun addItemToHistory(item: Item) {
-        val history = getHistory() // Получаем текущую историю поиска
-        history.removeIf { it.itemId == item.itemId } // Удаляем элемент с таким же идентификатором (дубликат)
-        history.add(0, item) // Добавляем новый элемент в начало списка
+        // Получаем текущую историю поиска.
+        val history = getHistory()
+
+        // Удаляем элемент с таким же идентификатором (дубликат), если такой уже существует.
+        history.removeIf { it.itemId == item.itemId }
+
+        // Добавляем новый элемент в начало списка.
+        history.add(0, item)
+
+        // Если история стала длиннее 10 элементов, удаляем последний элемент.
         if (history.size > 10) {
-            history.removeAt(history.size - 1) // Если история стала длиннее 10 элементов, удаляем последний элемент
+            history.removeAt(history.size - 1)
         }
-        saveHistory(history) // Сохраняем обновленную историю
+
+        // Сохраняем обновленную историю.
+        saveHistory(history)
     }
 
-    // Метод для получения текущей истории поиска
-    fun getHistory(): MutableList<Item> {
+    /**
+     * Метод для получения текущей истории поиска.
+     *
+     * @return Список элементов типа Item, представляющих историю поиска.
+     */
+    private fun getHistory(): MutableList<Item> {
+        // Получаем историю в виде JSON-строки из SharedPreferences.
+        val historyString = sharedPreferences.getString(historyKey, "")
 
-        val historyString = sharedPreferences.getString(
-            historyKey,
-            ""
-        ) // Получаем историю в виде JSON-строки из SharedPreferences
         return if (historyString.isNullOrEmpty()) {
-            mutableListOf() // Если история пуста или отсутствует, возвращаем пустой список
+            // Если история пуста или отсутствует, возвращаем пустой список.
+            mutableListOf()
         } else {
-            // Десериализуем JSON-строку в список элементов Item с использованием TypeToken
+            // Десериализуем JSON-строку в список элементов Item с использованием TypeToken.
             gson.fromJson(historyString, object : TypeToken<MutableList<Item>>() {}.type)
         }
     }
 
-    // Метод для очистки истории поиска
+    /**
+     * Метод для очистки истории поиска.
+     */
     fun clearHistory() {
-        sharedPreferences.edit().remove(historyKey).apply() // Удаляем историю из SharedPreferences
+        // Удаляем историю из SharedPreferences.
+        sharedPreferences.edit().remove(historyKey).apply()
     }
 
-    // Метод для сохранения обновленной истории в SharedPreferences
+    /**
+     * Метод для сохранения обновленной истории в SharedPreferences.
+     *
+     * @param history Список элементов типа Item, представляющих обновленную историю поиска.
+     */
     private fun saveHistory(history: MutableList<Item>) {
-        val historyString = gson.toJson(history) // Сериализуем список элементов в JSON-строку
-        sharedPreferences.edit().putString(historyKey, historyString)
-            .apply() // Сохраняем JSON-строку в SharedPreferences
+        // Сериализуем список элементов в JSON-строку.
+        val historyString = gson.toJson(history)
+
+        // Сохраняем JSON-строку в SharedPreferences.
+        sharedPreferences.edit().putString(historyKey, historyString).apply()
     }
 }
-

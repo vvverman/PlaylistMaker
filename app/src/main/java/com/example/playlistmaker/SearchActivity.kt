@@ -16,6 +16,7 @@ import android.widget.EditText
 import android.widget.FrameLayout
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.RelativeLayout
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -109,7 +110,8 @@ class SearchActivity : AppCompatActivity() {
         searchHistory = SearchHistory(sharedPreferences)
 
         // Кнопка "Очистить историю поиска"
-        clearSearchHistoryButton = findViewById(R.id.clearSearchHistoryButton)
+        val clearSearchHistoryButton: RelativeLayout = findViewById(R.id.clearSearchHistoryButton)
+
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
 
         // Обработчик клика по кнопке "Очистить историю поиска"

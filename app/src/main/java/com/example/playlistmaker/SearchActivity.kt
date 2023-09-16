@@ -40,6 +40,9 @@ class SearchActivity : AppCompatActivity() {
     // Элементы пользовательского интерфейса
     private lateinit var searchField: EditText
 
+    private lateinit var clearSearchHistoryButton: ImageButton
+    private lateinit var recyclerViewSearchHistory: RecyclerView
+
     // Перечисление для состояния поиска
     enum class SearchViewState {
         NO_INTERNET,
@@ -61,10 +64,6 @@ class SearchActivity : AppCompatActivity() {
             finish()
         }
 
-//        searchField.setOnClickListener {
-//            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
-//            searchInputLayoutInclude.visibility = View.VISIBLE
-//        }
 
         searchField.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus) {
@@ -113,6 +112,16 @@ class SearchActivity : AppCompatActivity() {
 
         // Создайте экземпляр SearchHistory для управления историей поиска
         searchHistory = SearchHistory(sharedPreferences)
+
+        clearSearchHistoryButton = findViewById(R.id.clearSearchHistoryButton)
+        recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
+
+        clearSearchHistoryButton.setOnClickListener {
+            // Вызовите метод clearHistory() при щелчке на кнопке
+            searchHistory.clearHistory()
+
+            // После очистки истории, возможно, вам захочется обновить отображение списка в recyclerViewSearchHistory
+        }
     }
 
     companion object {

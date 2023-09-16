@@ -26,8 +26,6 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
     // Метод для получения текущей истории поиска
     fun getHistory(): MutableList<Item> {
 
-        val itemsRecyclerViewSearchHistory = findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
-
         val historyString = sharedPreferences.getString(
             historyKey,
             ""

@@ -141,4 +141,20 @@
             android:text="@string/update_button_text"
             android:textAllCaps="false" />
     </FrameLayout>
+    <include
+        android:id="@+id/search_input_layout_include"
+        layout="@layout/search_input_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_8"
+        android:visibility="gone" />
 
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_8"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+</LinearLayout>

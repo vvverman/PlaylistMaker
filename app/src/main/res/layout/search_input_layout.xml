@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/search_input_layout"
     style="@style/ActivitySettingsGeneralStyle"
-    android:visibility="visible">
+    android:visibility="gone">
 
     <!-- Заголовок "You Were Looking For" -->
     <RelativeLayout

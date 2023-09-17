@@ -46,7 +46,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
      *
      * @return Список элементов типа Item, представляющих историю поиска.
      */
-    private fun getHistory(): MutableList<Item> {
+    fun getHistory(): MutableList<Item> {
         // Получаем историю в виде JSON-строки из SharedPreferences.
         val historyString = sharedPreferences.getString(historyKey, "")
 

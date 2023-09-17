@@ -1,6 +1,5 @@
+package com.example.playlistmaker
 
-import com.example.playlistmaker.Item
-import com.example.playlistmaker.TracksResponse
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

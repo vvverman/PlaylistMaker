@@ -56,7 +56,7 @@ fun main() {
 
                         // Создание объекта Item с учетом расчитанных значений
                         val newItem = Item(
-                            itemId = 0,
+                            itemId = item.itemId,
                             compositionName = item.compositionName,
                             artistName = item.artistName,
                             durationInMillis = item.durationInMillis,

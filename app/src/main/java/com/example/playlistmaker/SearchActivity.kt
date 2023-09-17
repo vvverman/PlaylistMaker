@@ -99,16 +99,26 @@ class SearchActivity : AppCompatActivity() {
         itemsAdapter = ItemsAdapter()
         itemsRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
+
+
         itemsRecyclerView.adapter = itemsAdapter
 
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
         searchHistoryAdapter = SearchHistoryAdapter(emptyList())
-        recyclerViewSearchHistory.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-        recyclerViewSearchHistory.adapter = searchHistoryAdapter
 
-        // Установите историю поиска в адаптер сразу при создании активности
-        searchHistoryAdapter.updateItems(searchHistory.getHistory())
+        // Устанавливаем слушателя клика на элемент списка:
+        itemsAdapter.setOnItemClickListener(object : ItemsAdapter.OnItemClickListener {
+            override fun onItemClick(item: Item) {
+                Log.e("mylog", "Item clicked: ${item.itemId} ${item.compositionName}")
+                searchHistory.addItemToHistory(item)
+                Log.e("mylog", " size before of searchHistory.getHistory() ${searchHistory.getHistory().size}")
+                //  RecyclerView для истории, надо обновить его:
+                searchHistoryAdapter.updateItems(searchHistory.getHistory())
+                Log.e("mylog", " size of after searchHistory.getHistory() ${searchHistory.getHistory().size}")
+                Log.e("mylog", " size of after searchHistory.getHistory() ${searchHistory.getHistory()}")
+            }
+        })
+
 
         val clearSearchHistoryButton: RelativeLayout = findViewById(R.id.clearSearchHistoryButton)
 
@@ -174,6 +184,24 @@ class SearchActivity : AppCompatActivity() {
                                 SearchViewState.NO_RESULTS
                             } else {
                                 SearchViewState.HAS_RESULTS
+                            }
+
+                            // Проверяем, что в списке items есть хотя бы один элемент
+                            if (items.isNotEmpty()) {
+                                // Получаем первый элемент из списка items (предположим, что это первый результат поиска)
+                                val firstItem = items[0]
+
+                                // Создаем объект Item на основе данных первого элемента
+                                val item = Item(
+                                    itemId = firstItem.itemId,
+                                    compositionName = firstItem.compositionName,
+                                    artistName = firstItem.artistName,
+                                    durationInMillis = firstItem.durationInMillis,
+                                    coverImageURL = firstItem.coverImageURL
+                                )
+
+                                // Добавляем созданный объект item в историю поиска
+                                searchHistory.addItemToHistory(item)
                             }
                         }
                     } else {

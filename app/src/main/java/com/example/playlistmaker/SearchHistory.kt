@@ -27,7 +27,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
         val history = getHistory()
 
         // Удаляем элемент с таким же идентификатором (дубликат), если такой уже существует.
-        history.removeIf { it.itemId == item.itemId }
+        history.removeIf { it.compositionName == item.compositionName }
 
         // Добавляем новый элемент в начало списка.
         history.add(0, item)

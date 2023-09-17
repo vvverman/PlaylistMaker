@@ -53,9 +53,16 @@ class SearchActivity : AppCompatActivity() {
         }
 
         searchField.setOnFocusChangeListener { _, hasFocus ->
+            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
+            val recyclerViewSearchHistory =
+                findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
+
             if (hasFocus) {
-                val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
                 searchInputLayoutInclude.visibility = View.VISIBLE
+                recyclerViewSearchHistory.visibility = View.GONE
+            } else {
+                searchInputLayoutInclude.visibility = View.GONE
+                recyclerViewSearchHistory.visibility = View.VISIBLE
             }
         }
 
@@ -105,7 +112,8 @@ class SearchActivity : AppCompatActivity() {
             searchHistoryAdapter.updateItems(emptyDataList)
         }
 
-        searchHistoryAdapter.setOnItemClickListener(object : SearchHistoryAdapter.OnItemClickListener {
+        searchHistoryAdapter.setOnItemClickListener(object :
+            SearchHistoryAdapter.OnItemClickListener {
             override fun onItemClick(item: Item) {
                 searchHistory.addItemToHistory(item)
                 searchHistoryAdapter.updateItems(searchHistory.getHistory())
@@ -193,11 +201,13 @@ class SearchActivity : AppCompatActivity() {
                         currentViewState = SearchViewState.NO_RESULTS
                     }
                     updateContainersVisibility()
+                    updateSearchHistoryVisibility()
                 }
 
                 override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
                     currentViewState = SearchViewState.NO_INTERNET
                     updateContainersVisibility()
+                    updateSearchHistoryVisibility()
                 }
             })
         }
@@ -224,6 +234,20 @@ class SearchActivity : AppCompatActivity() {
             communicationProblems.visibility = View.VISIBLE
         }
     }
+
+    private fun updateSearchHistoryVisibility() {
+        val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
+        val recyclerViewSearchHistory = findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
+
+        if (currentViewState == SearchViewState.HAS_RESULTS) {
+            searchInputLayoutInclude.visibility = View.GONE
+            recyclerViewSearchHistory.visibility = View.VISIBLE
+        } else {
+            searchInputLayoutInclude.visibility = View.VISIBLE
+            recyclerViewSearchHistory.visibility = View.GONE
+        }
+    }
+
 
     private fun updateContainersVisibility() {
         val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)

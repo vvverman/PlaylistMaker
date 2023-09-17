@@ -30,6 +30,7 @@
 
     <dimen name="offset_458">458dp</dimen>
     <dimen name="offset_346">346dp</dimen>
+    <dimen name="offset_266">266dp</dimen>
     <dimen name="offset_120">120dp</dimen>
     <dimen name="offset_210">210dp</dimen>
     <dimen name="cornerRadiusUpdateButton">54dp</dimen>

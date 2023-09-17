@@ -45,6 +45,12 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
+        searchHistory = SearchHistory(sharedPreferences)
+
+        recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
+        recyclerViewSearchHistory.visibility = View.VISIBLE // Отображаем историю поиска сразу
+
         searchField = findViewById(R.id.searchField)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
@@ -101,8 +107,8 @@ class SearchActivity : AppCompatActivity() {
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         recyclerViewSearchHistory.adapter = searchHistoryAdapter
 
-        sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
-        searchHistory = SearchHistory(sharedPreferences)
+        // Установите историю поиска в адаптер сразу при создании активности
+        searchHistoryAdapter.updateItems(searchHistory.getHistory())
 
         val clearSearchHistoryButton: RelativeLayout = findViewById(R.id.clearSearchHistoryButton)
 
@@ -111,21 +117,6 @@ class SearchActivity : AppCompatActivity() {
             val emptyDataList: List<Item> = ArrayList()
             searchHistoryAdapter.updateItems(emptyDataList)
         }
-
-        searchHistoryAdapter.setOnItemClickListener(object :
-            SearchHistoryAdapter.OnItemClickListener {
-            override fun onItemClick(item: Item) {
-                searchHistory.addItemToHistory(item)
-                searchHistoryAdapter.updateItems(searchHistory.getHistory())
-            }
-        })
-
-        itemsAdapter.setOnItemClickListener(object : ItemsAdapter.OnItemClickListener {
-            override fun onItemClick(item: Item) {
-                searchHistory.addItemToHistory(item)
-                searchHistoryAdapter.updateItems(searchHistory.getHistory())
-            }
-        })
     }
 
     companion object {
@@ -184,30 +175,16 @@ class SearchActivity : AppCompatActivity() {
                             } else {
                                 SearchViewState.HAS_RESULTS
                             }
-
-                            if (currentViewState == SearchViewState.HAS_RESULTS) {
-                                val item = Item(
-                                    itemId = 0,
-                                    compositionName = searchTerm,
-                                    artistName = "",
-                                    durationInMillis = 0,
-                                    coverImageURL = ""
-                                )
-                                searchHistory.addItemToHistory(item)
-                                searchHistoryAdapter.updateItems(searchHistory.getHistory())
-                            }
                         }
                     } else {
                         currentViewState = SearchViewState.NO_RESULTS
                     }
                     updateContainersVisibility()
-                    updateSearchHistoryVisibility()
                 }
 
                 override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
                     currentViewState = SearchViewState.NO_INTERNET
                     updateContainersVisibility()
-                    updateSearchHistoryVisibility()
                 }
             })
         }
@@ -235,20 +212,6 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun updateSearchHistoryVisibility() {
-        val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
-        val recyclerViewSearchHistory = findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
-
-        if (currentViewState == SearchViewState.HAS_RESULTS) {
-            searchInputLayoutInclude.visibility = View.GONE
-            recyclerViewSearchHistory.visibility = View.VISIBLE
-        } else {
-            searchInputLayoutInclude.visibility = View.VISIBLE
-            recyclerViewSearchHistory.visibility = View.GONE
-        }
-    }
-
-
     private fun updateContainersVisibility() {
         val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
@@ -257,8 +220,6 @@ class SearchActivity : AppCompatActivity() {
         when (currentViewState) {
             SearchViewState.NO_INTERNET -> {
                 noInternetContainer.visibility = View.VISIBLE
-
-
                 noResultsContainer.visibility = View.GONE
                 resultsContainer.visibility = View.GONE
             }

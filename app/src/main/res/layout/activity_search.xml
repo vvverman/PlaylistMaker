@@ -46,6 +46,7 @@
         android:paddingBottom="@dimen/offset_16">
 
         <!-- Поле поиска -->
+
         <EditText
             android:id="@+id/searchField"
             android:layout_width="match_parent"
@@ -59,7 +60,9 @@
             android:paddingHorizontal="@dimen/offset_12"
             android:paddingVertical="@dimen/offset_10"
             android:textColor="@color/black"
-            android:textColorHint="@color/black" />
+            android:textColorHint="@color/black"
+            android:contentDescription="Search input field" />
+
 
         <!-- Иконка для очистки поля поиска -->
         <ImageView
@@ -82,27 +85,24 @@
         android:visibility="gone">
 
         <!-- Изображение для отображения отсутствия результатов -->
-        <FrameLayout
+        <ImageView
+            android:layout_width="@dimen/offset_120"
+            android:layout_height="@dimen/offset_120"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="136dp"
+            android:src="@drawable/no_search_results_image" />
+
+        <!-- Текстовое сообщение о отсутствии результатов -->
+        <TextView
+            style="@style/NoSearchResultsImageTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center">
+            android:layout_marginTop="@dimen/offset_266"
+            android:layout_gravity="center_horizontal"
 
-            <ImageView
-                android:layout_width="@dimen/offset_120"
-                android:layout_height="@dimen/offset_120"
-                android:layout_gravity="center_horizontal"
-                android:src="@drawable/no_search_results_image" />
-
-            <!-- Текстовое сообщение о отсутствии результатов -->
-            <TextView
-                style="@style/NoSearchResultsImageTextStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="136dp"
-                android:text="@string/no_search_results_message"
-                android:textAlignment="center"
-                android:textColor="@color/grey" />
-        </FrameLayout>
+            android:text="@string/no_search_results_message"
+            android:textAlignment="center"
+            android:textColor="@color/grey" />
     </FrameLayout>
 
     <!-- Сообщение о проблемах с сетью -->
@@ -145,9 +145,6 @@
     <include
         android:id="@+id/search_input_layout_include"
         layout="@layout/search_input_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/offset_8"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -158,5 +155,9 @@
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
+
 </LinearLayout>
 
+<!--    android:layout_width="match_parent"-->
+<!--    android:layout_height="wrap_content"-->
+<!--    android:layout_marginTop="@dimen/offset_8"-->

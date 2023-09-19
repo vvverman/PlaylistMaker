@@ -49,6 +49,8 @@ class SearchActivity : AppCompatActivity() {
         searchHistory = SearchHistory(sharedPreferences)
 
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
+        searchHistoryAdapter = SearchHistoryAdapter(emptyList())
+
         recyclerViewSearchHistory.visibility = View.VISIBLE // Отображаем историю поиска сразу
 
         searchField = findViewById(R.id.searchField)
@@ -110,12 +112,18 @@ class SearchActivity : AppCompatActivity() {
         itemsAdapter.setOnItemClickListener(object : ItemsAdapter.OnItemClickListener {
             override fun onItemClick(item: Item) {
                 Log.e("mylog", "Item clicked: ${item.itemId} ${item.compositionName}")
-                searchHistory.addItemToHistory(item)
+
                 Log.e("mylog", " size before of searchHistory.getHistory() ${searchHistory.getHistory().size}")
                 //  RecyclerView для истории, надо обновить его:
                 searchHistoryAdapter.updateItems(searchHistory.getHistory())
                 Log.e("mylog", " size of after searchHistory.getHistory() ${searchHistory.getHistory().size}")
                 Log.e("mylog", " size of after searchHistory.getHistory() ${searchHistory.getHistory()}")
+
+                // Внутри onItemClick
+                searchHistory.addItemToHistory(item)
+
+// После добавления элемента в историю, обновите отображение истории
+                updateSearchHistoryView()
             }
         })
 
@@ -216,6 +224,17 @@ class SearchActivity : AppCompatActivity() {
                 }
             })
         }
+    }
+
+    private fun updateSearchHistoryView() {
+        // Получите текущую историю поиска из объекта SearchHistory
+        val historyItems = searchHistory.getHistory()
+
+        // Обновите адаптер истории поиска
+        searchHistoryAdapter.updateItems(historyItems)
+
+        // Убедитесь, что RecyclerView для истории видим
+        recyclerViewSearchHistory.visibility = View.VISIBLE
     }
 
     private fun hasInternetConnection(): Boolean {

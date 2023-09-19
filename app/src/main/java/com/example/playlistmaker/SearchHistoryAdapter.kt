@@ -14,7 +14,6 @@ class SearchHistoryAdapter(private var searchHistory: List<Item>) : RecyclerView
         val coverImageURL: ImageView = itemView.findViewById(R.id.coverImageURL)
         val compositionName: TextView = itemView.findViewById(R.id.compositionName)
         val artistName: TextView = itemView.findViewById(R.id.artistName)
-        val ellipse: View = itemView.findViewById(R.id.ellipse_1)
         var duration: TextView = itemView.findViewById(R.id.duration)
         val vector: View = itemView.findViewById(R.id.vector)
     }
@@ -52,8 +51,8 @@ class SearchHistoryAdapter(private var searchHistory: List<Item>) : RecyclerView
         holder.artistName.text = searchItem.artistName
         holder.duration.text = searchItem.durationInMillis.toString() // Преобразовано значение duration в String
 
-        holder.ellipse.visibility = View.GONE
-        holder.vector.visibility = View.GONE
+//        holder.ellipse.visibility = View.GONE
+//        holder.vector.visibility = View.GONE
     }
 
     override fun getItemCount(): Int {

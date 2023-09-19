@@ -145,7 +145,7 @@
     <include
         android:id="@+id/search_input_layout_include"
         layout="@layout/search_input_layout"
-        android:visibility="gone" />
+        android:visibility="visible" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"

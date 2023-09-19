@@ -24,12 +24,6 @@ class SearchHistoryAdapter(private var searchHistory: List<Item>) : RecyclerView
         fun onItemClick(item: Item)
     }
 
-    fun setOnItemClickListener(listener: OnItemClickListener) {
-        onItemClickListener = listener
-    }
-
-
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
         return ViewHolder(view)
@@ -51,8 +45,6 @@ class SearchHistoryAdapter(private var searchHistory: List<Item>) : RecyclerView
         holder.artistName.text = searchItem.artistName
         holder.duration.text = searchItem.durationInMillis.toString() // Преобразовано значение duration в String
 
-//        holder.ellipse.visibility = View.GONE
-//        holder.vector.visibility = View.GONE
     }
 
     override fun getItemCount(): Int {

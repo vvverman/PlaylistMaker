@@ -233,6 +233,7 @@ class SearchActivity : AppCompatActivity() {
         // Обновите адаптер истории поиска
         searchHistoryAdapter.updateItems(historyItems)
 
+
         // Убедитесь, что RecyclerView для истории видим
         recyclerViewSearchHistory.visibility = View.VISIBLE
     }

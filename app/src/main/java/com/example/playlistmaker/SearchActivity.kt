@@ -52,7 +52,7 @@ class SearchActivity : AppCompatActivity() {
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
         searchHistoryAdapter = SearchHistoryAdapter(searchHistory.getHistory())
         recyclerViewSearchHistory.adapter = searchHistoryAdapter
-        searchHistoryAdapter = SearchHistoryAdapter(emptyList())
+//        searchHistoryAdapter = SearchHistoryAdapter(emptyList())
 
         recyclerViewSearchHistory.visibility = View.VISIBLE // Отображаем историю поиска сразу
 
@@ -61,20 +61,6 @@ class SearchActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener {
             finish()
-        }
-
-        searchField.setOnFocusChangeListener { _, hasFocus ->
-            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
-            val recyclerViewSearchHistory =
-                findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
-
-            if (hasFocus) {
-                searchInputLayoutInclude.visibility = View.VISIBLE
-                recyclerViewSearchHistory.visibility = View.GONE
-            } else {
-                searchInputLayoutInclude.visibility = View.GONE
-                recyclerViewSearchHistory.visibility = View.VISIBLE
-            }
         }
 
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
@@ -92,12 +78,18 @@ class SearchActivity : AppCompatActivity() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 valueInSearchString = s.toString()
                 clearButton.visibility = clearButtonVisibility(s)
-                searchTracks(s.toString())
+
+                // Здесь мы проверяем, что длина введенного текста больше определенного порога, прежде чем начать поиск
+                if (valueInSearchString.length >= 1) {
+                    searchTracks(valueInSearchString)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
             }
         }
+
+// Устанавливаем TextWatcher
         searchField.addTextChangedListener(simpleTextWatcher)
 
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
@@ -129,6 +121,16 @@ class SearchActivity : AppCompatActivity() {
                 updateSearchHistoryView()
             }
         })
+
+        searchField.setOnFocusChangeListener { _, hasFocus ->
+            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
+            val recyclerViewSearchHistory = findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
+
+            if (!hasFocus) {
+                searchInputLayoutInclude.visibility = View.GONE
+                recyclerViewSearchHistory.visibility = View.VISIBLE
+            }
+        }
 
 
         val clearSearchHistoryButton: RelativeLayout = findViewById(R.id.clearSearchHistoryButton)
@@ -267,6 +269,7 @@ class SearchActivity : AppCompatActivity() {
         val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
         val resultsContainer = findViewById<RecyclerView>(R.id.recyclerView)
+
 
         when (currentViewState) {
             SearchViewState.NO_INTERNET -> {

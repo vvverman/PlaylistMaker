@@ -38,7 +38,8 @@ class SearchActivity : AppCompatActivity() {
     enum class SearchViewState {
         NO_INTERNET,
         NO_RESULTS,
-        HAS_RESULTS
+        HAS_RESULTS,
+        HISTORY
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +50,8 @@ class SearchActivity : AppCompatActivity() {
         searchHistory = SearchHistory(sharedPreferences)
 
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
+        searchHistoryAdapter = SearchHistoryAdapter(searchHistory.getHistory())
+        recyclerViewSearchHistory.adapter = searchHistoryAdapter
         searchHistoryAdapter = SearchHistoryAdapter(emptyList())
 
         recyclerViewSearchHistory.visibility = View.VISIBLE // Отображаем историю поиска сразу
@@ -270,19 +273,31 @@ class SearchActivity : AppCompatActivity() {
                 noInternetContainer.visibility = View.VISIBLE
                 noResultsContainer.visibility = View.GONE
                 resultsContainer.visibility = View.GONE
+                recyclerViewSearchHistory.visibility = View.GONE
             }
 
             SearchViewState.NO_RESULTS -> {
                 noInternetContainer.visibility = View.GONE
                 noResultsContainer.visibility = View.VISIBLE
                 resultsContainer.visibility = View.GONE
+                recyclerViewSearchHistory.visibility = View.GONE
             }
 
             SearchViewState.HAS_RESULTS -> {
                 noInternetContainer.visibility = View.GONE
                 noResultsContainer.visibility = View.GONE
                 resultsContainer.visibility = View.VISIBLE
+                recyclerViewSearchHistory.visibility = View.GONE
             }
+
+            SearchViewState.HISTORY -> {
+                noInternetContainer.visibility = View.GONE
+                noResultsContainer.visibility = View.GONE
+                resultsContainer.visibility = View.GONE
+                recyclerViewSearchHistory.visibility = View.VISIBLE
+            }
+
+
         }
     }
 }

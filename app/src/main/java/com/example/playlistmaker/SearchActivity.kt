@@ -89,7 +89,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-// Устанавливаем TextWatcher
+            // Устанавливаем TextWatcher
         searchField.addTextChangedListener(simpleTextWatcher)
 
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)

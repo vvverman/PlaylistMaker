@@ -61,7 +61,8 @@
             android:paddingVertical="@dimen/offset_10"
             android:textColor="@color/black"
             android:textColorHint="@color/black"
-            android:contentDescription="Search input field" />
+            android:contentDescription="Search input field"
+            android:imeOptions="actionSearch"/>
 
 
         <!-- Иконка для очистки поля поиска -->
@@ -143,17 +144,19 @@
     </FrameLayout>
 
     <include
-        android:id="@+id/search_input_layout_include"
+        android:id="@+id/search_input_layout"
         layout="@layout/search_input_layout"
         android:visibility="visible"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_8"
         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+
         android:layout_marginTop="@dimen/offset_8"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />

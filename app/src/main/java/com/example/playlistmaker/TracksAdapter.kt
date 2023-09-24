@@ -1,20 +1,20 @@
 package com.example.playlistmaker
 
-import ItemsViewHolder
+import TracksViewHolder
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 // Класс ItemsAdapter является адаптером для RecyclerView и отвечает за отображение элементов списка
-class ItemsAdapter : RecyclerView.Adapter<ItemsViewHolder>() {
+class TracksAdapter : RecyclerView.Adapter<TracksViewHolder>() {
 
     // Список элементов, которые будут отображаться в RecyclerView
-    private val itemsList = ArrayList<Item>()
+    private val itemsList = ArrayList<Track>()
 
     // Интерфейс для обработки события клика на элемент списка
     interface OnItemClickListener {
-        fun onItemClick(item: Item)
+        fun onItemClick(track: Track)
     }
 
     // Переменная для хранения слушателя кликов
@@ -26,29 +26,29 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsViewHolder>() {
     }
 
     // Метод для обновления списка элементов в адаптере с использованием DiffUtil
-    fun updateItems(newItems: List<Item>) {
+    fun updateTracks(newTracks: List<Track>) {
         // Рассчитываем разницу между старым и новым списками элементов
-        val diffResult = DiffUtil.calculateDiff(ItemsDiffCallback(itemsList, newItems))
+        val diffResult = DiffUtil.calculateDiff(ItemsDiffCallback(itemsList, newTracks))
 
         // Очищаем текущий список и добавляем новые элементы
         itemsList.clear()
-        itemsList.addAll(newItems)
+        itemsList.addAll(newTracks)
 
         // Применяем разницу к RecyclerView, чтобы обновить его
         diffResult.dispatchUpdatesTo(this)
     }
 
     // Метод вызывается для создания нового ViewHolder, который будет отображать элемент списка
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ItemsViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TracksViewHolder {
         // Создаем View элемента списка из layout-ресурса "R.layout.item"
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
 
         // Возвращаем созданный ViewHolder
-        return ItemsViewHolder(view)
+        return TracksViewHolder(view)
     }
 
     // Метод вызывается для связывания данных элемента списка с ViewHolder
-    override fun onBindViewHolder(holder: ItemsViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: TracksViewHolder, position: Int) {
         // Получаем элемент списка по позиции
         val item = itemsList[position]
 
@@ -69,8 +69,8 @@ class ItemsAdapter : RecyclerView.Adapter<ItemsViewHolder>() {
 
     // Класс ItemsDiffCallback используется для вычисления разницы между старым и новым списками элементов
     private class ItemsDiffCallback(
-        private val oldList: List<Item>,
-        private val newList: List<Item>
+        private val oldList: List<Track>,
+        private val newList: List<Track>
     ) : DiffUtil.Callback() {
 
         // Метод возвращает размер старого списка

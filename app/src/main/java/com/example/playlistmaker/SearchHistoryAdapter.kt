@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 
-class SearchHistoryAdapter(private var searchHistory: List<Item>) : RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>() {
+class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>() {
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val coverImageURL: ImageView = itemView.findViewById(R.id.coverImageURL)
@@ -21,7 +21,7 @@ class SearchHistoryAdapter(private var searchHistory: List<Item>) : RecyclerView
     private var onItemClickListener: OnItemClickListener? = null
 
     interface OnItemClickListener {
-        fun onItemClick(item: Item)
+        fun onItemClick(track: Track)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -51,7 +51,7 @@ class SearchHistoryAdapter(private var searchHistory: List<Item>) : RecyclerView
         return searchHistory.size
     }
 
-    fun updateItems(newSearchHistory: List<Item>) {
+    fun updateItems(newSearchHistory: List<Track>) {
         searchHistory = newSearchHistory
         notifyDataSetChanged()
     }

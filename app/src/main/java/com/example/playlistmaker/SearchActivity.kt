@@ -9,6 +9,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.FrameLayout
@@ -32,7 +33,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var searchField: EditText
     private lateinit var recyclerViewSearchHistory: RecyclerView
-    private lateinit var itemsAdapter: ItemsAdapter
+    private lateinit var tracksAdapter: TracksAdapter
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
     enum class SearchViewState {
@@ -54,22 +55,13 @@ class SearchActivity : AppCompatActivity() {
         recyclerViewSearchHistory.adapter = searchHistoryAdapter
 //        searchHistoryAdapter = SearchHistoryAdapter(emptyList())
 
-        recyclerViewSearchHistory.visibility = View.VISIBLE // Отображаем историю поиска сразу
+        recyclerViewSearchHistory.visibility = View.GONE // Отображаем историю поиска сразу
 
         searchField = findViewById(R.id.searchField)
 
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        backButton.setOnClickListener {
-            finish()
-        }
+        initBackButton()
 
-        val clearButton = findViewById<ImageView>(R.id.clearIcon)
-        clearButton.setOnClickListener {
-            searchField.setText("")
-            val inputMethodManager =
-                getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager
-            inputMethodManager?.hideSoftInputFromWindow(searchField.windowToken, 0)
-        }
+        val clearButton = initClearButton()
 
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
@@ -77,36 +69,64 @@ class SearchActivity : AppCompatActivity() {
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 valueInSearchString = s.toString()
-                clearButton.visibility = clearButtonVisibility(s)
+                clearButton?.let { cb ->
+                    cb.visibility = clearButtonVisibility(s)
+                }
 
                 // Здесь мы проверяем, что длина введенного текста больше определенного порога, прежде чем начать поиск
-                if (valueInSearchString.length >= 1) {
-                    searchTracks(valueInSearchString)
-                }
-            }
+//                if (valueInSearchString.length >= 3) {
+//                    searchTracks(valueInSearchString)
+//                    updateContainersVisibility()
+//                }
 
+
+            }
             override fun afterTextChanged(s: Editable?) {
+
             }
         }
 
             // Устанавливаем TextWatcher
         searchField.addTextChangedListener(simpleTextWatcher)
 
+
+        val searchField = findViewById<EditText>(R.id.searchField)
+
+        searchField.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                // Вызывайте функцию поиска при нажатии на клавишу "Enter"
+                val searchTerm = searchField.text.toString()
+                if (searchTerm.isNotEmpty()) {
+                    searchTracks(searchTerm)
+                    updateContainersVisibility()
+                }
+                true // Возвращаем true, чтобы показать, что событие обработано
+            } else {
+                false
+            }
+
+        }
+
+
+
+
+
+
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        itemsAdapter = ItemsAdapter()
+        tracksAdapter = TracksAdapter()
         itemsRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
 
-        itemsRecyclerView.adapter = itemsAdapter
+        itemsRecyclerView.adapter = tracksAdapter
 
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
         searchHistoryAdapter = SearchHistoryAdapter(emptyList())
 
         // Устанавливаем слушателя клика на элемент списка:
-        itemsAdapter.setOnItemClickListener(object : ItemsAdapter.OnItemClickListener {
-            override fun onItemClick(item: Item) {
-                Log.e("mylog", "Item clicked: ${item.itemId} ${item.compositionName}")
+        tracksAdapter.setOnItemClickListener(object : TracksAdapter.OnItemClickListener {
+            override fun onItemClick(track: Track) {
+                Log.e("mylog", "Item clicked: ${track.itemId} ${track.compositionName}")
 
                 Log.e("mylog", " size before of searchHistory.getHistory() ${searchHistory.getHistory().size}")
                 //  RecyclerView для истории, надо обновить его:
@@ -115,7 +135,7 @@ class SearchActivity : AppCompatActivity() {
                 Log.e("mylog", " size of after searchHistory.getHistory() ${searchHistory.getHistory()}")
 
                 // Внутри onItemClick
-                searchHistory.addItemToHistory(item)
+                searchHistory.addTrackToHistory(track)
 
 // После добавления элемента в историю, обновите отображение истории
                 updateSearchHistoryView()
@@ -123,7 +143,7 @@ class SearchActivity : AppCompatActivity() {
         })
 
         searchField.setOnFocusChangeListener { _, hasFocus ->
-            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout_include)
+            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout)
             val recyclerViewSearchHistory = findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
 
             if (!hasFocus) {
@@ -137,9 +157,27 @@ class SearchActivity : AppCompatActivity() {
 
         clearSearchHistoryButton.setOnClickListener {
             searchHistory.clearHistory()
-            val emptyDataList: List<Item> = ArrayList()
+            val emptyDataList: List<Track> = ArrayList()
             searchHistoryAdapter.updateItems(emptyDataList)
         }
+    }
+
+    private fun initBackButton() {
+        val backButton = findViewById<ImageButton>(R.id.backButton)
+        backButton.setOnClickListener {
+            finish()
+        }
+    }
+
+    private fun initClearButton(): ImageView? {
+        val clearButton = findViewById<ImageView>(R.id.clearIcon)
+        clearButton.setOnClickListener {
+            searchField.setText("")
+            val inputMethodManager =
+                getSystemService(INPUT_METHOD_SERVICE) as? InputMethodManager
+            inputMethodManager?.hideSoftInputFromWindow(searchField.windowToken, 0)
+        }
+        return clearButton
     }
 
     companion object {
@@ -168,12 +206,14 @@ class SearchActivity : AppCompatActivity() {
     private fun searchTracks(searchTerm: String) {
         Log.e("mylog", "Start searching for term: $searchTerm")
 
-        currentViewState = SearchViewState.NO_RESULTS
-
+        currentViewState = SearchViewState.HAS_RESULTS
+        updateContainersVisibility()
         val internetConnection = hasInternetConnection()
-        updateNoNetworkMessageVisibility(internetConnection)
 
-        if (internetConnection) {
+        if(!hasInternetConnection()) {
+            updateNoNetworkMessageVisibility(internetConnection)
+        }
+
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://itunes.apple.com/")
                 .addConverterFactory(GsonConverterFactory.create())
@@ -184,6 +224,7 @@ class SearchActivity : AppCompatActivity() {
             val mediaType = "music"
             val call = iTunesSearchApi.searchTracks(searchTerm, mediaType)
 
+
             call.enqueue(object : Callback<TracksResponse> {
                 override fun onResponse(
                     call: Call<TracksResponse>,
@@ -191,34 +232,16 @@ class SearchActivity : AppCompatActivity() {
                 ) {
                     if (response.isSuccessful) {
                         val tracksResponse = response.body()
-                        tracksResponse?.items?.let { items ->
-                            itemsAdapter.updateItems(items)
-                            currentViewState = if (items.isEmpty()) {
-                                SearchViewState.NO_RESULTS
+                        tracksResponse?.tracks?.let { tracks ->
+
+                            tracksAdapter.updateTracks(tracks)
+                            if (tracks.isNotEmpty()) {
+                                currentViewState = SearchViewState.HAS_RESULTS
                             } else {
-                                SearchViewState.HAS_RESULTS
+                                currentViewState = SearchViewState.NO_RESULTS
                             }
 
-                            // Проверяем, что в списке items есть хотя бы один элемент
-                            if (items.isNotEmpty()) {
-                                // Получаем первый элемент из списка items (предположим, что это первый результат поиска)
-                                val firstItem = items[0]
-
-                                // Создаем объект Item на основе данных первого элемента
-                                val item = Item(
-                                    itemId = firstItem.itemId,
-                                    compositionName = firstItem.compositionName,
-                                    artistName = firstItem.artistName,
-                                    durationInMillis = firstItem.durationInMillis,
-                                    coverImageURL = firstItem.coverImageURL
-                                )
-
-                                // Добавляем созданный объект item в историю поиска
-                                searchHistory.addItemToHistory(item)
-                            }
                         }
-                    } else {
-                        currentViewState = SearchViewState.NO_RESULTS
                     }
                     updateContainersVisibility()
                 }
@@ -227,8 +250,9 @@ class SearchActivity : AppCompatActivity() {
                     currentViewState = SearchViewState.NO_INTERNET
                     updateContainersVisibility()
                 }
+
             })
-        }
+        updateContainersVisibility()
     }
 
     private fun updateSearchHistoryView() {
@@ -270,6 +294,7 @@ class SearchActivity : AppCompatActivity() {
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
         val resultsContainer = findViewById<RecyclerView>(R.id.recyclerView)
 
+println(currentViewState)
 
         when (currentViewState) {
             SearchViewState.NO_INTERNET -> {
@@ -295,10 +320,11 @@ class SearchActivity : AppCompatActivity() {
 
             SearchViewState.HISTORY -> {
                 noInternetContainer.visibility = View.GONE
-                noResultsContainer.visibility = View.GONE
+                noResultsContainer.visibility = View.VISIBLE
                 resultsContainer.visibility = View.GONE
-                recyclerViewSearchHistory.visibility = View.VISIBLE
+                recyclerViewSearchHistory.visibility = View.GONE
             }
+
 
 
         }

@@ -20,17 +20,17 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
     /**
      * Метод для добавления элемента в историю поиска.
      *
-     * @param item Элемент типа Item, который будет добавлен в историю.
+     * @param track Элемент типа Item, который будет добавлен в историю.
      */
-    fun addItemToHistory(item: Item) {
+    fun addTrackToHistory(track: Track) {
         // Получаем текущую историю поиска.
         val history = getHistory()
 
         // Удаляем элемент с таким же идентификатором (дубликат), если такой уже существует.
-        history.removeIf { it.compositionName == item.compositionName }
+        history.removeIf { it.compositionName == track.compositionName }
 
         // Добавляем новый элемент в начало списка.
-        history.add(0, item)
+        history.add(0, track)
 
         // Если история стала длиннее 10 элементов, удаляем последний элемент.
         if (history.size > 10) {
@@ -46,7 +46,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
      *
      * @return Список элементов типа Item, представляющих историю поиска.
      */
-    fun getHistory(): MutableList<Item> {
+    fun getHistory(): MutableList<Track> {
         // Получаем историю в виде JSON-строки из SharedPreferences.
         val historyString = sharedPreferences.getString(historyKey, "")
 
@@ -55,7 +55,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
             mutableListOf()
         } else {
             // Десериализуем JSON-строку в список элементов Item с использованием TypeToken.
-            gson.fromJson(historyString, object : TypeToken<MutableList<Item>>() {}.type)
+            gson.fromJson(historyString, object : TypeToken<MutableList<Track>>() {}.type)
         }
     }
 
@@ -72,7 +72,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
      *
      * @param history Список элементов типа Item, представляющих обновленную историю поиска.
      */
-    private fun saveHistory(history: MutableList<Item>) {
+    private fun saveHistory(history: MutableList<Track>) {
         // Сериализуем список элементов в JSON-строку.
         val historyString = gson.toJson(history)
 

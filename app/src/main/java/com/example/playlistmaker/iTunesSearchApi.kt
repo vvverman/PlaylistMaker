@@ -16,9 +16,9 @@ interface ITunesSearchApi {
 }
 
 // Метод для создания плейлиста на основе полученных треков
-fun createPlaylist(items: List<Item>) {
+fun createPlaylist(tracks: List<Track>) {
     println("Your Playlist:")
-    for (item in items) {
+    for (item in tracks) {
         println("${item.compositionName} - ${item.artistName} (${item.durationInMillis})")
         println("Cover Image URL: ${item.coverImageURL}")
         println("----------------------------------")
@@ -45,9 +45,9 @@ fun main() {
         override fun onResponse(call: Call<TracksResponse>, response: Response<TracksResponse>) {
             if (response.isSuccessful) {
                 val tracksResponse = response.body()
-                tracksResponse?.items?.let { items ->
+                tracksResponse?.tracks?.let { items ->
                     // Заполняем список items данными из API
-                    val itemList = ArrayList<Item>()
+                    val trackList = ArrayList<Track>()
                     for (item in items) {
                         // Выполнение расчетов и форматирования для durationInMillis
                         val minutes = item.durationInMillis / 1000 / 60
@@ -55,7 +55,7 @@ fun main() {
                         val durationText = String.format("%02d:%02d", minutes, seconds)
 
                         // Создание объекта Item с учетом расчитанных значений
-                        val newItem = Item(
+                        val newTrack = Track(
                             itemId = item.itemId,
                             compositionName = item.compositionName,
                             artistName = item.artistName,
@@ -63,11 +63,11 @@ fun main() {
                             coverImageURL = item.coverImageURL
                         )
 
-                        itemList.add(newItem)
+                        trackList.add(newTrack)
                     }
 
                     // Теперь itemList содержит данные из API, вызываем метод для создания плейлиста на основе этих данных.
-                    createPlaylist(itemList)
+                    createPlaylist(trackList)
                 }
             } else {
                 // Обработка ошибки при запросе к API

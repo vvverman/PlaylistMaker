@@ -2,7 +2,7 @@ package com.example.playlistmaker
 
 import com.google.gson.annotations.SerializedName
 
-data class Item(
+data class Track(
     @SerializedName("ItemId") val itemId: Long,
     @SerializedName("trackName") val compositionName: String,
     @SerializedName("artistName") val artistName: String,
@@ -10,7 +10,7 @@ data class Item(
     @SerializedName("artworkUrl100") val coverImageURL: String
 )
 
-var items: ArrayList<Item> = arrayListOf()
+var tracks: ArrayList<Track> = arrayListOf()
 
 
 

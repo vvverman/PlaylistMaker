@@ -55,4 +55,9 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
         searchHistory = newSearchHistory
         notifyDataSetChanged()
     }
+
+//    fun clearHistory() {
+//        searchHistory = listOf()
+//        notifyDataSetChanged()
+//    }
 }

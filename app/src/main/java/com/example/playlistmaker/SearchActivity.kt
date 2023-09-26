@@ -37,8 +37,10 @@ class SearchActivity : AppCompatActivity() {
         NO_INTERNET,
         NO_RESULTS,
         HAS_RESULTS,
-        HISTORY
+        HISTORY,
+        EMPTY
     }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,9 +53,9 @@ class SearchActivity : AppCompatActivity() {
         searchInputLayout = findViewById(R.id.search_input_layout)
         searchHistoryAdapter = SearchHistoryAdapter(searchHistory.getHistory())
         recyclerViewSearchHistory.adapter = searchHistoryAdapter
-//        searchHistoryAdapter = SearchHistoryAdapter(emptyList())
 
-        recyclerViewSearchHistory.visibility = View.VISIBLE // Отображаем историю поиска сразу
+
+        searchInputLayout.visibility = View.GONE // Отображаем историю поиска сразу
 
         searchField = findViewById(R.id.searchField)
 
@@ -71,14 +73,9 @@ class SearchActivity : AppCompatActivity() {
                     cb.visibility = clearButtonVisibility(s)
                 }
 
-                // Здесь мы проверяем, что длина введенного текста больше определенного порога, прежде чем начать поиск
-//                if (valueInSearchString.length >= 3) {
-//                    searchTracks(valueInSearchString)
-//                    updateContainersVisibility()
-//                }
-
 
             }
+
             override fun afterTextChanged(s: Editable?) {
 
             }
@@ -106,10 +103,6 @@ class SearchActivity : AppCompatActivity() {
         }
 
 
-
-
-
-
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         tracksAdapter = TracksAdapter()
         itemsRecyclerView.layoutManager =
@@ -126,11 +119,20 @@ class SearchActivity : AppCompatActivity() {
             override fun onItemClick(track: Track) {
                 Log.e("mylog", "Item clicked: ${track.itemId} ${track.compositionName}")
 
-                Log.e("mylog", " size before of searchHistory.getHistory() ${searchHistory.getHistory().size}")
+                Log.e(
+                    "mylog",
+                    " size before of searchHistory.getHistory() ${searchHistory.getHistory().size}"
+                )
                 //  RecyclerView для истории, надо обновить его:
                 searchHistoryAdapter.updateItems(searchHistory.getHistory())
-                Log.e("mylog", " size of after searchHistory.getHistory() ${searchHistory.getHistory().size}")
-                Log.e("mylog", " size of after searchHistory.getHistory() ${searchHistory.getHistory()}")
+                Log.e(
+                    "mylog",
+                    " size of after searchHistory.getHistory() ${searchHistory.getHistory().size}"
+                )
+                Log.e(
+                    "mylog",
+                    " size of after searchHistory.getHistory() ${searchHistory.getHistory()}"
+                )
 
                 // Внутри onItemClick
                 searchHistory.addTrackToHistory(track)
@@ -140,16 +142,14 @@ class SearchActivity : AppCompatActivity() {
             }
         })
 
-        searchField.setOnFocusChangeListener { _, hasFocus ->
-            val searchInputLayoutInclude = findViewById<View>(R.id.search_input_layout)
-            val recyclerViewSearchHistory = findViewById<RecyclerView>(R.id.recyclerViewSearchHistory)
 
-            if (!hasFocus) {
-                searchInputLayoutInclude.visibility = View.GONE
-                recyclerViewSearchHistory.visibility = View.VISIBLE
+        searchField.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && searchHistory.getHistory().isNotEmpty()) {
+                // Если поле поиска в фокусе и есть элементы в истории поиска, покажите RecyclerView для истории поиска
+                searchInputLayout.visibility = View.VISIBLE
+
             }
         }
-
 
         val clearSearchHistoryButton: RelativeLayout = findViewById(R.id.clearSearchHistoryButton)
 
@@ -157,6 +157,8 @@ class SearchActivity : AppCompatActivity() {
             searchHistory.clearHistory()
             val emptyDataList: List<Track> = ArrayList()
             searchHistoryAdapter.updateItems(emptyDataList)
+            currentViewState = SearchViewState.EMPTY
+            updateContainersVisibility()
         }
     }
 
@@ -208,7 +210,7 @@ class SearchActivity : AppCompatActivity() {
         updateContainersVisibility()
         val internetConnection = hasInternetConnection()
 
-        if(!hasInternetConnection()) {
+        if (!hasInternetConnection()) {
             updateNoNetworkMessageVisibility(internetConnection)
         }
 
@@ -325,8 +327,12 @@ class SearchActivity : AppCompatActivity() {
                 recyclerViewSearchHistory.visibility = View.GONE
             }
 
-
-
+            SearchViewState.EMPTY -> {
+                noInternetContainer.visibility = View.GONE
+                noResultsContainer.visibility = View.GONE
+                resultsContainer.visibility = View.GONE
+                searchInputLayout.visibility = View.GONE
+            }
         }
     }
 }

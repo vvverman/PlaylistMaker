@@ -11,11 +11,7 @@ import android.util.Log
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
-import android.widget.EditText
-import android.widget.FrameLayout
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.RelativeLayout
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -33,6 +29,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var sharedPreferences: SharedPreferences
     private lateinit var searchField: EditText
     private lateinit var recyclerViewSearchHistory: RecyclerView
+    private lateinit var searchInputLayout: LinearLayout
     private lateinit var tracksAdapter: TracksAdapter
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
@@ -51,11 +48,12 @@ class SearchActivity : AppCompatActivity() {
         searchHistory = SearchHistory(sharedPreferences)
 
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
+        searchInputLayout = findViewById(R.id.search_input_layout)
         searchHistoryAdapter = SearchHistoryAdapter(searchHistory.getHistory())
         recyclerViewSearchHistory.adapter = searchHistoryAdapter
 //        searchHistoryAdapter = SearchHistoryAdapter(emptyList())
 
-        recyclerViewSearchHistory.visibility = View.GONE // Отображаем историю поиска сразу
+        recyclerViewSearchHistory.visibility = View.VISIBLE // Отображаем историю поиска сразу
 
         searchField = findViewById(R.id.searchField)
 
@@ -86,7 +84,7 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-            // Устанавливаем TextWatcher
+        // Устанавливаем TextWatcher
         searchField.addTextChangedListener(simpleTextWatcher)
 
 
@@ -214,44 +212,44 @@ class SearchActivity : AppCompatActivity() {
             updateNoNetworkMessageVisibility(internetConnection)
         }
 
-            val retrofit = Retrofit.Builder()
-                .baseUrl("https://itunes.apple.com/")
-                .addConverterFactory(GsonConverterFactory.create())
-                .build()
+        val retrofit = Retrofit.Builder()
+            .baseUrl("https://itunes.apple.com/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
 
-            val iTunesSearchApi = retrofit.create(ITunesSearchApi::class.java)
+        val iTunesSearchApi = retrofit.create(ITunesSearchApi::class.java)
 
-            val mediaType = "music"
-            val call = iTunesSearchApi.searchTracks(searchTerm, mediaType)
+        val mediaType = "music"
+        val call = iTunesSearchApi.searchTracks(searchTerm, mediaType)
 
 
-            call.enqueue(object : Callback<TracksResponse> {
-                override fun onResponse(
-                    call: Call<TracksResponse>,
-                    response: Response<TracksResponse>
-                ) {
-                    if (response.isSuccessful) {
-                        val tracksResponse = response.body()
-                        tracksResponse?.tracks?.let { tracks ->
+        call.enqueue(object : Callback<TracksResponse> {
+            override fun onResponse(
+                call: Call<TracksResponse>,
+                response: Response<TracksResponse>
+            ) {
+                if (response.isSuccessful) {
+                    val tracksResponse = response.body()
+                    tracksResponse?.tracks?.let { tracks ->
 
-                            tracksAdapter.updateTracks(tracks)
-                            if (tracks.isNotEmpty()) {
-                                currentViewState = SearchViewState.HAS_RESULTS
-                            } else {
-                                currentViewState = SearchViewState.NO_RESULTS
-                            }
-
+                        tracksAdapter.updateTracks(tracks)
+                        currentViewState = if (tracks.isNotEmpty()) {
+                            SearchViewState.HAS_RESULTS
+                        } else {
+                            SearchViewState.NO_RESULTS
                         }
+
                     }
-                    updateContainersVisibility()
                 }
+                updateContainersVisibility()
+            }
 
-                override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
-                    currentViewState = SearchViewState.NO_INTERNET
-                    updateContainersVisibility()
-                }
+            override fun onFailure(call: Call<TracksResponse>, t: Throwable) {
+                currentViewState = SearchViewState.NO_INTERNET
+                updateContainersVisibility()
+            }
 
-            })
+        })
         updateContainersVisibility()
     }
 
@@ -294,7 +292,7 @@ class SearchActivity : AppCompatActivity() {
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
         val resultsContainer = findViewById<RecyclerView>(R.id.recyclerView)
 
-println(currentViewState)
+        println(currentViewState)
 
         when (currentViewState) {
             SearchViewState.NO_INTERNET -> {
@@ -302,6 +300,7 @@ println(currentViewState)
                 noResultsContainer.visibility = View.GONE
                 resultsContainer.visibility = View.GONE
                 recyclerViewSearchHistory.visibility = View.GONE
+
             }
 
             SearchViewState.NO_RESULTS -> {
@@ -316,6 +315,7 @@ println(currentViewState)
                 noResultsContainer.visibility = View.GONE
                 resultsContainer.visibility = View.VISIBLE
                 recyclerViewSearchHistory.visibility = View.GONE
+                searchInputLayout.visibility = View.GONE
             }
 
             SearchViewState.HISTORY -> {

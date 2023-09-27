@@ -29,6 +29,13 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
         return ViewHolder(view)
     }
 
+    // Функция для преобразования миллисекунд в минуты:секунды
+    private fun formatDuration(durationInMillis: Long): String {
+        val minutes = durationInMillis / 60000
+        val seconds = (durationInMillis % 60000) / 1000
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val searchItem = searchHistory[position]
 
@@ -43,7 +50,8 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
 
         holder.compositionName.text = searchItem.compositionName
         holder.artistName.text = searchItem.artistName
-        holder.duration.text = searchItem.durationInMillis.toString() // Преобразовано значение duration в String
+        holder.duration.text = formatDuration(searchItem.durationInMillis)
+//        holder.duration.text = searchItem.durationInMillis.toString() // Преобразовано значение duration в String
 
     }
 

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/search_input_layout"
+    style="@style/ActivitySettingsGeneralStyle"
+    android:visibility="gone"
+    android:padding="0dp">
+
+    <!-- Заголовок "You Were Looking For" -->
+    <RelativeLayout
+        android:id="@+id/lists"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/you_were_looking_for"
+            android:textSize="@dimen/titleFontSize"
+            android:gravity="center"
+            android:textAppearance="@style/ys_medium_1" />
+    </RelativeLayout>
+
+    <!-- RecyclerView для отображения истории поиска -->
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewSearchHistory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/offset_8"
+        android:layout_margin="0dp"
+        android:orientation="vertical"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
+
+    <!-- Кнопка "Очистить историю поиска" -->
+    <RelativeLayout
+        android:id="@+id/clearSearchHistoryButton"
+        android:layout_width="148dp"
+        android:layout_height="36dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+        android:background="@drawable/clear_history_button_day" />
+</LinearLayout>
+
+<!--    android:layout_marginStart="106dp"-->

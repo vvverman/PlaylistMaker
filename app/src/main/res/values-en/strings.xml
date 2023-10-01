@@ -46,4 +46,6 @@
     <string name="communication_problems_message">communication problems. Upload failed. Check your internet connection</string>
     <string name="update_button_text">Update</string>
 
+    <string name="you_were_looking_for">You were looking for</string>
+
 </resources>

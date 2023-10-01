@@ -78,13 +78,7 @@
         app:layout_constraintTop_toBottomOf="@+id/yesterday_r"
         app:layout_constraintVertical_bias="0.0" />
 
-    <!-- Примеры других элементов с Constraints -->
 
-    <!-- Пример RelativeLayout с id "button" -->
-
-    <!-- Пример ещё одного RelativeLayout с id "button" -->
-
-    <!-- Пример TextView с id "some_id" -->
 
     <RelativeLayout
         android:id="@+id/play_button"

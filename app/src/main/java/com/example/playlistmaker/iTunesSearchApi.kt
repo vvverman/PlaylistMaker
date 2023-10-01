@@ -60,7 +60,11 @@ fun main() {
                             compositionName = item.compositionName,
                             artistName = item.artistName,
                             durationInMillis = item.durationInMillis,
-                            coverImageURL = item.coverImageURL
+                            coverImageURL = item.coverImageURL,
+                            albumName = item.albumName,
+                            releaseDate = item.releaseDate,
+                            genre = item.genre,
+                            country = item.country,
                         )
 
                         trackList.add(newTrack)

@@ -28,34 +28,30 @@
 
 
         <!-- Кнопка "назад" -->
-        <ImageButton
-            android:id="@+id/backButton"
-            style="@style/ActivitySettingsColorAndFontStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="@dimen/offset_29"
-            android:layout_gravity="center_vertical"
-            android:contentDescription="Это стрелка - кнопка возврата"
-            app:srcCompat="@drawable/arrow_back_button"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="12dp"
-            android:gravity="top"
-            android:text="Длительность"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
 
-        <!-- Заголовок активности -->
+    <!-- Заголовок активности -->
 
 
     <!-- ImageView с обложкой плеера -->
+    <ImageButton
+        android:id="@+id/backButton"
+        style="@style/ActivitySettingsColorAndFontStyle"
+
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:contentDescription="Это стрелка - кнопка возврата"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.005"
+        app:layout_constraintStart_toStartOf="@id/leftBorder"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/arrow_back_button" />
+
     <ImageView
         android:id="@+id/coverImageView"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="38dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="24dp"
         android:background="@drawable/placeholder_track"
@@ -68,7 +64,7 @@
 
     <!-- TextView с названием трека -->
     <TextView
-        android:id="@+id/yesterday_r"
+        android:id="@+id/track_name"
         android:layout_width="0dp"
         android:layout_height="26dp"
         android:text="yesterday_r"
@@ -91,23 +87,22 @@
         android:layout_marginEnd="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yesterday_r"
+        app:layout_constraintTop_toBottomOf="@+id/track_name"
         app:layout_constraintVertical_bias="0.0" />
 
     <ImageView
         android:id="@+id/add_to_track_button"
         android:layout_width="51dp"
         android:layout_height="51dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="54dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="72dp"
         android:background="@drawable/add_track_to_playlist"
-        android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yesterday_r" />
+        app:layout_constraintTop_toBottomOf="@+id/track_name" />
 
     <ImageView
         android:id="@+id/play_button"
@@ -117,6 +112,7 @@
         android:layout_alignParentTop="true"
         android:background="@drawable/play_button"
         android:layout_marginTop="30dp"
+
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artist_name"
@@ -126,16 +122,15 @@
         android:id="@+id/add_to_favorite_button"
         android:layout_width="51dp"
         android:layout_height="51dp"
-        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginLeft="24dp"
-        android:layout_marginTop="60dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="72dp"
         android:background="@drawable/add_to_favorite"
-        android:clipToOutline="true"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.919"
+        app:layout_constraintHorizontal_bias="0.916"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/yesterday_r" />
+        app:layout_constraintTop_toBottomOf="@+id/track_name" />
 
     <TextView
         android:id="@+id/current_time"
@@ -167,7 +162,7 @@
 
     <TextView
         android:id="@+id/duration_data"
-        android:layout_width="124dp"
+        android:layout_width="wrap_content"
         android:layout_height="15dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
@@ -187,7 +182,7 @@
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
         android:layout_marginStart="12dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="18dp"
         android:gravity="bottom"
         android:text="Альбом"
         app:layout_constraintEnd_toEndOf="parent"
@@ -197,18 +192,108 @@
 
     <TextView
         android:id="@+id/album_data"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="18dp"
+        android:gravity="end"
+        android:text="Дьявол кроется в деталях"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.885"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/duration_data" />
+
+    <TextView
+        android:id="@+id/year"
         android:layout_width="124dp"
+        android:layout_height="15dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="18dp"
+        android:gravity="bottom"
+        android:text="Год"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/album_title" />
+
+    <TextView
+        android:id="@+id/number_year"
+        android:layout_width="wrap_content"
         android:layout_height="15dp"
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:gravity="end"
-        android:text="Yesterday (Remastered 2009)"
+        android:text="1666"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.885"
+        app:layout_constraintHorizontal_bias="0.925"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/duration_title" />
+        app:layout_constraintTop_toBottomOf="@+id/album_data" />
+
+    <TextView
+        android:id="@+id/genre_title"
+        android:layout_width="124dp"
+        android:layout_height="15dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="18dp"
+        android:gravity="bottom"
+        android:text="Жанр"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/year" />
+
+    <TextView
+        android:id="@+id/genre"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="end"
+        android:text="Блэк Митол"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.925"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/number_year" />
+
+    <TextView
+        android:id="@+id/country_title"
+        android:layout_width="124dp"
+        android:layout_height="15dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="18dp"
+        android:gravity="bottom"
+        android:text="Страна"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.059"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genre_title" />
+
+    <TextView
+        android:id="@+id/country"
+        android:layout_width="wrap_content"
+        android:layout_height="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:gravity="end"
+        android:text="Российская Федерация"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.925"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/genre" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

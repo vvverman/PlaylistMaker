@@ -169,6 +169,7 @@ class SearchActivity : AppCompatActivity() {
         intent.putExtra("primaryGenreName", track.genre)
         intent.putExtra("country", track.country)
         intent.putExtra("trackTimeMills", track.durationInMillis)
+        intent.putExtra("coverImageURL", track.coverImageURL)
 
         // Запустите активность MediaLibraryDetailActivity
         startActivity(intent)

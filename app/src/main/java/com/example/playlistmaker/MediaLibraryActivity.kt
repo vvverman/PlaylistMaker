@@ -5,7 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
+import com.bumptech.glide.request.RequestOptions
 
 class MediaLibraryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -23,6 +27,7 @@ class MediaLibraryActivity : AppCompatActivity() {
         val primaryGenreName = intent.getStringExtra("primaryGenreName")
         val country = intent.getStringExtra("country")
         val trackTimeMills = intent.getStringExtra("trackTimeMills")
+        val coverImageURL = intent.getStringExtra("coverImageURL")
 
         // Найдите соответствующие TextView на макете активности
         val trackNameTextView = findViewById<TextView>(R.id.track_name)
@@ -42,6 +47,7 @@ class MediaLibraryActivity : AppCompatActivity() {
         countryTextView.text = country
         trackTimeMillsTextView.text = trackTimeMills
 
+
         // Проверьте, что releaseDate не равен null и не пуст
         if (!releaseDate.isNullOrEmpty()) {
             // Извлеките только первые четыре символа (год) из строки releaseDate
@@ -57,6 +63,28 @@ class MediaLibraryActivity : AppCompatActivity() {
             val releaseYearTextView = findViewById<TextView>(R.id.release_date)
             releaseYearTextView.visibility = View.GONE // или установите текст по умолчанию
         }
+
+        val coverImageView = findViewById<ImageView>(R.id.coverImageView)
+// Получите URL обложки альбома из объекта Track (предположим, что это поле называется coverImageURL)
+        val imageUrl = coverImageURL
+
+        if (!imageUrl.isNullOrEmpty()) {
+            // Опции для загрузки изображения
+            val requestOptions = RequestOptions()
+                .placeholder(R.drawable.placeholder_track) // Заглушка, если изображение не загружено
+                .error(R.drawable.placeholder_track) // Заглушка, если произошла ошибка загрузки
+
+            // Загрузка изображения с использованием Glide
+            Glide.with(this)
+                .load(imageUrl)
+                .apply(requestOptions)
+                .transition(DrawableTransitionOptions.withCrossFade()) // Плавное переключение между изображениями
+                .into(coverImageView)
+        } else {
+            // Если URL обложки отсутствует, вы можете установить заглушку или другое действие по умолчанию
+            coverImageView.setImageResource(R.drawable.placeholder_track)
+        }
+
 
 
         // Установите обработчик клика на кнопке "назад"

@@ -55,24 +55,25 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
 
         // Устанавливаем слушатель клика на элемент списка
         holder.itemView.setOnClickListener {
-            // Проверяем, что слушатель установлен и вызываем его
-            listener?.onItemClick(track)
-
             // Создаем интент для перехода на экран "Аудиоплеер"
             val intent = Intent(holder.itemView.context, MediaLibraryActivity::class.java)
 
-            // Передаем данные о треке в новую активность (или фрагмент)
-            intent.putExtra("ItemId", track.itemId)
+            // Передаем данные о треке в новую активность
+            intent.putExtra("trackName", track.compositionName)
+            intent.putExtra("artistName", track.artistName)
+            intent.putExtra("collectionName", track.albumName)
+            intent.putExtra("releaseDate", track.releaseDate)
+            intent.putExtra("primaryGenreName", track.genre)
+            intent.putExtra("country", track.country)
+            intent.putExtra("trackTimeMills", track.durationInMillis)
 
             // Запускаем активность "Аудиоплеер"
             holder.itemView.context.startActivity(intent)
-
         }
 
         // Вызываем метод bind() ViewHolder'а для отображения данных элемента списка
         holder.bind(track)
     }
-
     // Метод возвращает общее количество элементов в списке
     override fun getItemCount(): Int {
         return itemsList.size

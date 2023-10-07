@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -15,11 +16,13 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class SearchActivity : AppCompatActivity() {
 
@@ -152,6 +155,23 @@ class SearchActivity : AppCompatActivity() {
             currentViewState = SearchViewState.EMPTY
             updateContainersVisibility()
         }
+    }
+
+    fun onItemClick(track: Track) {
+        // Создайте Intent для перехода на активность MediaLibraryDetailActivity
+        val intent = Intent(this, MediaLibraryActivity::class.java)
+
+        // Передайте данные о треке через Intent
+        intent.putExtra("trackName", track.compositionName)
+        intent.putExtra("artistName", track.artistName)
+        intent.putExtra("collectionName", track.albumName)
+        intent.putExtra("releaseDate", track.releaseDate)
+        intent.putExtra("primaryGenreName", track.genre)
+        intent.putExtra("country", track.country)
+        intent.putExtra("trackTimeMills", track.durationInMillis)
+
+        // Запустите активность MediaLibraryDetailActivity
+        startActivity(intent)
     }
 
     private fun initBackButton() {

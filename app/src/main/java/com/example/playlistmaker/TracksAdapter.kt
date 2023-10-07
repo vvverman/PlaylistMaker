@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 // Класс ItemsAdapter является адаптером для RecyclerView и отвечает за отображение элементов списка
-class TracksAdapter : RecyclerView.Adapter<TracksViewHolder>() {
+class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<TracksViewHolder>() {
 
     // Список элементов, которые будут отображаться в RecyclerView
     private val itemsList = ArrayList<Track>()

@@ -20,7 +20,7 @@ class MainActivity : AppCompatActivity() {
         val medialibraryButton = findViewById<Button>(R.id.medialibrary)
 
         medialibraryButton.setOnClickListener {
-            val intent = Intent(this, MedialibraryActivity::class.java)
+            val intent = Intent(this, MediaLibraryActivity::class.java)
             startActivity(intent)
         }
 

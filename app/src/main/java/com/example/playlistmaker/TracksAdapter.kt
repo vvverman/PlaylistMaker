@@ -59,7 +59,7 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
             listener?.onItemClick(track)
 
             // Создаем интент для перехода на экран "Аудиоплеер"
-            val intent = Intent(holder.itemView.context, MedialibraryActivity::class.java)
+            val intent = Intent(holder.itemView.context, MediaLibraryActivity::class.java)
 
             // Передаем данные о треке в новую активность (или фрагмент)
             intent.putExtra("ItemId", track.itemId)

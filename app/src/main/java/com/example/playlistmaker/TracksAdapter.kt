@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import TracksViewHolder
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
@@ -50,16 +51,26 @@ class TracksAdapter : RecyclerView.Adapter<TracksViewHolder>() {
     // Метод вызывается для связывания данных элемента списка с ViewHolder
     override fun onBindViewHolder(holder: TracksViewHolder, position: Int) {
         // Получаем элемент списка по позиции
-        val item = itemsList[position]
+        val track = itemsList[position]
 
         // Устанавливаем слушатель клика на элемент списка
         holder.itemView.setOnClickListener {
             // Проверяем, что слушатель установлен и вызываем его
-            listener?.onItemClick(item)
+            listener?.onItemClick(track)
+
+            // Создаем интент для перехода на экран "Аудиоплеер"
+            val intent = Intent(holder.itemView.context, MedialibraryActivity::class.java)
+
+            // Передаем данные о треке в новую активность (или фрагмент)
+            intent.putExtra("ItemId", track.itemId)
+
+            // Запускаем активность "Аудиоплеер"
+            holder.itemView.context.startActivity(intent)
+
         }
 
         // Вызываем метод bind() ViewHolder'а для отображения данных элемента списка
-        holder.bind(item)
+        holder.bind(track)
     }
 
     // Метод возвращает общее количество элементов в списке

@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 
 class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerView.Adapter<SearchHistoryAdapter.ViewHolder>() {
 
+
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val coverImageURL: ImageView = itemView.findViewById(R.id.coverImageURL)
         val compositionName: TextView = itemView.findViewById(R.id.compositionName)
@@ -41,6 +42,7 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
 
         holder.itemView.setOnClickListener {
             onItemClickListener?.onItemClick(searchItem)
+
         }
 
 

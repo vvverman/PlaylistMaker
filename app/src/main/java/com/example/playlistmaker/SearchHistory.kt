@@ -27,9 +27,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
         val history = getHistory()
 
         // Удаляем элемент с таким же идентификатором (дубликат), если такой уже существует.
-        history.removeIf {
-            it == track
-        }
+        history.removeIf {it == track}
 
         // Добавляем новый элемент в начало списка.
         history.add(0, track)
@@ -82,5 +80,3 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
         sharedPreferences.edit().putString(historyKey, historyString).apply()
     }
 }
-
-

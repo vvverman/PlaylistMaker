@@ -1,21 +1,23 @@
 package com.example.playlistmaker
 
 import TracksViewHolder
+import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.bumptech.glide.Glide
 
-class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerView.Adapter<TracksViewHolder>() {
-
-    private var onItemClickListener: OnItemClickListener? = null
+class SearchHistoryAdapter(
+    private var searchHistory: List<Track>
+) : RecyclerView.Adapter<TracksViewHolder>() {
 
     interface OnItemClickListener {
         fun onItemClick(track: Track)
     }
 
     private var listener: OnItemClickListener? = null
+
+    // Метод для установки слушателя кликов
     fun setOnItemClickListener(listener: OnItemClickListener) {
         this.listener = listener
     }
@@ -27,9 +29,9 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
 
     // Функция для преобразования миллисекунд в минуты:секунды
     private fun formatDuration(durationInMillis: Long): String {
-        val minutes = durationInMillis / 60000
-        val seconds = (durationInMillis % 60000) / 1000
-        return String.format("%02d:%02d", minutes, seconds)
+        val minutes = durationInMillis / 1000 / 60
+        val seconds = durationInMillis /1000 % 60
+        return "${minutes}:${seconds}"
     }
 
     override fun onBindViewHolder(holder: TracksViewHolder, position: Int) {
@@ -39,7 +41,9 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
         holder.itemView.setOnClickListener {
             // Создаем интент для перехода на экран "Аудиоплеер"
             val intent = Intent(holder.itemView.context, MediaLibraryActivity::class.java)
-            val newCoverImageURL = track.coverImageURL.replaceAfterLast("/", "512x512bb.jpg")
+
+            val coverImageURL = track.coverImageURL.replaceAfterLast("/","512x512bb.jpg", )
+
 
             // Передаем данные о треке в новую активность
             intent.putExtra("trackName", track.compositionName)
@@ -49,7 +53,7 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
             intent.putExtra("primaryGenreName", track.genre)
             intent.putExtra("country", track.country)
             intent.putExtra("trackTimeMills", formatDuration(track.durationInMillis))
-            intent.putExtra("coverImageURL", newCoverImageURL)
+            intent.putExtra("coverImageURL", coverImageURL)
 
             // Запускаем активность "Аудиоплеер"
             holder.itemView.context.startActivity(intent)
@@ -57,6 +61,7 @@ class SearchHistoryAdapter(private var searchHistory: List<Track>) : RecyclerVie
 
         // Вызываем метод bind() ViewHolder'а для отображения данных элемента списка
         holder.bind(track)
+
     }
 
     override fun getItemCount(): Int {

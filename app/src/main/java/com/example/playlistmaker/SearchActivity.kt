@@ -1,7 +1,6 @@
 package com.example.playlistmaker
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
@@ -35,6 +34,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchInputLayout: LinearLayout
     private lateinit var tracksAdapter: TracksAdapter
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
+
 
 
     enum class SearchViewState {
@@ -131,7 +131,7 @@ class SearchActivity : AppCompatActivity() {
                 // Внутри onItemClick
                 searchHistory.addTrackToHistory(track)
 
-// После добавления элемента в историю, обновите отображение истории
+                // После добавления элемента в историю, обновите отображение истории
                 updateSearchHistoryView()
             }
         })
@@ -155,7 +155,6 @@ class SearchActivity : AppCompatActivity() {
             updateContainersVisibility()
         }
     }
-
 
     private fun initBackButton() {
         val backButton = findViewById<ImageButton>(R.id.backButton)

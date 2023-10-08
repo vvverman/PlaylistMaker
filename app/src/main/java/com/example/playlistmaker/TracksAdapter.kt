@@ -48,11 +48,6 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
         return TracksViewHolder(view)
     }
 
-    private fun formatDuration(durationInMillis: Long): String {
-        val minutes = durationInMillis / 60000
-        val seconds = (durationInMillis % 60000) / 1000
-        return String.format("%02d:%02d", minutes, seconds)
-    }
     // Метод вызывается для связывания данных элемента списка с ViewHolder
     override fun onBindViewHolder(holder: TracksViewHolder, position: Int) {
         // Получаем элемент списка по позиции
@@ -60,10 +55,15 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
 
         // Устанавливаем слушатель клика на элемент списка
         holder.itemView.setOnClickListener {
+            // Проверяем, что слушатель установлен и вызываем его
+            listener?.onItemClick(track)
+
             // Создаем интент для перехода на экран "Аудиоплеер"
             val intent = Intent(holder.itemView.context, MediaLibraryActivity::class.java)
-            val newCoverImageURL = track.coverImageURL.replaceAfterLast("/", "512x512bb.jpg")
 
+            val minutes = track.durationInMillis / 1000 / 60
+            val seconds = track.durationInMillis / 1000 % 60
+            val coverImageURL = track.coverImageURL.replaceAfterLast("/","512x512bb.jpg", )
             // Передаем данные о треке в новую активность
             intent.putExtra("trackName", track.compositionName)
             intent.putExtra("artistName", track.artistName)
@@ -71,8 +71,9 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
             intent.putExtra("releaseDate", track.releaseDate)
             intent.putExtra("primaryGenreName", track.genre)
             intent.putExtra("country", track.country)
-            intent.putExtra("trackTimeMills", formatDuration(track.durationInMillis))
-            intent.putExtra("coverImageURL", newCoverImageURL)
+            intent.putExtra("trackTimeMills", "${minutes}:${seconds}")
+            intent.putExtra("coverImageURL", coverImageURL)
+
             // Запускаем активность "Аудиоплеер"
             holder.itemView.context.startActivity(intent)
         }

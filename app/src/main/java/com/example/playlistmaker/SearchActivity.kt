@@ -37,7 +37,6 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
 
-
     enum class SearchViewState {
         NO_INTERNET,
         NO_RESULTS,
@@ -157,23 +156,6 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
-    fun onItemClick(track: Track) {
-        // Создайте Intent для перехода на активность MediaLibraryDetailActivity
-        val intent = Intent(this, MediaLibraryActivity::class.java)
-
-        // Передайте данные о треке через Intent
-        intent.putExtra("trackName", track.compositionName)
-        intent.putExtra("artistName", track.artistName)
-        intent.putExtra("collectionName", track.albumName)
-        intent.putExtra("releaseDate", track.releaseDate)
-        intent.putExtra("primaryGenreName", track.genre)
-        intent.putExtra("country", track.country)
-        intent.putExtra("trackTimeMills", track.durationInMillis)
-        intent.putExtra("coverImageURL", track.coverImageURL)
-
-        // Запустите активность MediaLibraryDetailActivity
-        startActivity(intent)
-    }
 
     private fun initBackButton() {
         val backButton = findViewById<ImageButton>(R.id.backButton)

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- Элемент с вашим текущим фоном -->
+    <item android:drawable="@drawable/placeholder_track" />
+
+    <!-- Элемент для добавления закругленных углов -->
+    <item>
+        <shape
+            android:shape="rectangle">
+            <corners android:radius="8dp" /> <!-- Задайте радиус закругления в dp -->
+
+        </shape>
+    </item>
+</layer-list>

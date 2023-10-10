@@ -8,6 +8,7 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
@@ -72,6 +73,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             // Опции для загрузки изображения
             val requestOptions = RequestOptions()
                 .placeholder(R.drawable.placeholder_track) // Заглушка, если изображение не загружено
+                .transform(RoundedCorners(8))
                 .error(R.drawable.placeholder_track) // Заглушка, если произошла ошибка загрузки
 
             // Загрузка изображения с использованием Glide

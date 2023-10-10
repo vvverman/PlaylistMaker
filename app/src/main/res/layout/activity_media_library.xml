@@ -3,14 +3,12 @@
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 <androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     style="@style/ActivitySettingsGeneralStyle"
 
     >
@@ -51,13 +49,12 @@
         android:layout_marginTop="38dp"
         android:layout_marginStart="@dimen/offset_24"
         android:layout_marginEnd="@dimen/offset_24"
-        android:background="@drawable/placeholder_track"
+        android:background="@drawable/rounded_corner_background"
         app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/backButton" />
 
-    <!--    android:src="@drawable/placeholder"-->
 
     <!-- TextView с названием трека -->
     <TextView
@@ -133,6 +130,7 @@
 
     <TextView
         android:id="@+id/current_time"
+        style="@style/PlaybackTime"
         android:layout_width="100dp"
         android:layout_height="16dp"
         android:layout_alignParentStart="true"
@@ -147,6 +145,7 @@
 
     <TextView
         android:id="@+id/duration_title"
+        style="@style/DetailsTitle"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -160,6 +159,7 @@
 
     <TextView
         android:id="@+id/duration_data"
+        style="@style/Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -172,6 +172,7 @@
 
     <TextView
         android:id="@+id/collection_name_title"
+        style="@style/DetailsTitle"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -184,6 +185,7 @@
 
     <TextView
         android:id="@+id/collection_name"
+        style="@style/Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -197,6 +199,7 @@
 
     <TextView
         android:id="@+id/release_date_title"
+        style="@style/DetailsTitle"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -209,6 +212,7 @@
 
     <TextView
         android:id="@+id/release_date"
+        style="@style/Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -222,6 +226,7 @@
 
     <TextView
         android:id="@+id/primary_genre_name_title"
+        style="@style/DetailsTitle"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -234,6 +239,7 @@
 
     <TextView
         android:id="@+id/primary_genre_name"
+        style="@style/Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -247,6 +253,7 @@
 
     <TextView
         android:id="@+id/country_title"
+        style="@style/DetailsTitle"
         android:layout_width="124dp"
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
@@ -259,7 +266,7 @@
 
     <TextView
         android:id="@+id/country"
-
+        style="@style/Details"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"

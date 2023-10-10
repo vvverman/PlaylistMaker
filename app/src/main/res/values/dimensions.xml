@@ -20,11 +20,15 @@
     <dimen name="song_cover_size">50dp</dimen>
 
     <dimen name="offset_3">3dp</dimen>
+    <dimen name="offset_4">4dp</dimen>
     <dimen name="offset_5">5dp</dimen>
     <dimen name="offset_8">8dp</dimen>
     <dimen name="offset_10">10dp</dimen>
     <dimen name="offset_12">12dp</dimen>
+    <dimen name="offset_14">14dp</dimen>
     <dimen name="offset_16">16dp</dimen>
+    <dimen name="offset_22">22dp</dimen>
+    <dimen name="offset_24">24dp</dimen>
     <dimen name="offset_25">25dp</dimen>
     <dimen name="offset_29">29dp</dimen>
 

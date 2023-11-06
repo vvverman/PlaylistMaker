@@ -23,7 +23,7 @@
             android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".MedialibraryActivity"
+            android:name=".MediaLibraryActivity"
             android:exported="false" />
         <activity
             android:name=".SearchActivity"

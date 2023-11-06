@@ -1,13 +1,14 @@
 package com.example.playlistmaker
 
 import TracksViewHolder
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 
 // Класс ItemsAdapter является адаптером для RecyclerView и отвечает за отображение элементов списка
-class TracksAdapter : RecyclerView.Adapter<TracksViewHolder>() {
+class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<TracksViewHolder>() {
 
     // Список элементов, которые будут отображаться в RecyclerView
     private val itemsList = ArrayList<Track>()
@@ -50,18 +51,36 @@ class TracksAdapter : RecyclerView.Adapter<TracksViewHolder>() {
     // Метод вызывается для связывания данных элемента списка с ViewHolder
     override fun onBindViewHolder(holder: TracksViewHolder, position: Int) {
         // Получаем элемент списка по позиции
-        val item = itemsList[position]
+        val track = itemsList[position]
 
         // Устанавливаем слушатель клика на элемент списка
         holder.itemView.setOnClickListener {
             // Проверяем, что слушатель установлен и вызываем его
-            listener?.onItemClick(item)
+            listener?.onItemClick(track)
+
+            // Создаем интент для перехода на экран "Аудиоплеер"
+            val intent = Intent(holder.itemView.context, MediaLibraryActivity::class.java)
+
+            val minutes = track.durationInMillis / 1000 / 60
+            val seconds = track.durationInMillis / 1000 % 60
+            val coverImageURL = track.coverImageURL.replaceAfterLast("/","512x512bb.jpg", )
+            // Передаем данные о треке в новую активность
+            intent.putExtra("trackName", track.compositionName)
+            intent.putExtra("artistName", track.artistName)
+            intent.putExtra("collectionName", track.albumName)
+            intent.putExtra("releaseDate", track.releaseDate)
+            intent.putExtra("primaryGenreName", track.genre)
+            intent.putExtra("country", track.country)
+            intent.putExtra("trackTimeMills", "${minutes}:${seconds}")
+            intent.putExtra("coverImageURL", coverImageURL)
+
+            // Запускаем активность "Аудиоплеер"
+            holder.itemView.context.startActivity(intent)
         }
 
         // Вызываем метод bind() ViewHolder'а для отображения данных элемента списка
-        holder.bind(item)
+        holder.bind(track)
     }
-
     // Метод возвращает общее количество элементов в списке
     override fun getItemCount(): Int {
         return itemsList.size

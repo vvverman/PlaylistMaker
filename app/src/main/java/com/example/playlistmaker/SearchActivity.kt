@@ -15,11 +15,13 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+
 
 class SearchActivity : AppCompatActivity() {
 
@@ -32,6 +34,8 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchInputLayout: LinearLayout
     private lateinit var tracksAdapter: TracksAdapter
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
+
+
 
     enum class SearchViewState {
         NO_INTERNET,
@@ -54,6 +58,7 @@ class SearchActivity : AppCompatActivity() {
         searchHistoryAdapter = SearchHistoryAdapter(searchHistory.getHistory())
         recyclerViewSearchHistory.adapter = searchHistoryAdapter
 
+        tracksAdapter = TracksAdapter(this)
 
         searchInputLayout.visibility = View.GONE // Отображаем историю поиска сразу
 
@@ -104,7 +109,8 @@ class SearchActivity : AppCompatActivity() {
 
 
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        tracksAdapter = TracksAdapter()
+        tracksAdapter = TracksAdapter(this@SearchActivity)
+
         itemsRecyclerView.layoutManager =
             LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
 
@@ -117,27 +123,15 @@ class SearchActivity : AppCompatActivity() {
         // Устанавливаем слушателя клика на элемент списка:
         tracksAdapter.setOnItemClickListener(object : TracksAdapter.OnItemClickListener {
             override fun onItemClick(track: Track) {
-                Log.e("mylog", "Item clicked: ${track.itemId} ${track.compositionName}")
 
-                Log.e(
-                    "mylog",
-                    " size before of searchHistory.getHistory() ${searchHistory.getHistory().size}"
-                )
                 //  RecyclerView для истории, надо обновить его:
                 searchHistoryAdapter.updateItems(searchHistory.getHistory())
-                Log.e(
-                    "mylog",
-                    " size of after searchHistory.getHistory() ${searchHistory.getHistory().size}"
-                )
-                Log.e(
-                    "mylog",
-                    " size of after searchHistory.getHistory() ${searchHistory.getHistory()}"
-                )
+
 
                 // Внутри onItemClick
                 searchHistory.addTrackToHistory(track)
 
-// После добавления элемента в историю, обновите отображение истории
+                // После добавления элемента в историю, обновите отображение истории
                 updateSearchHistoryView()
             }
         })

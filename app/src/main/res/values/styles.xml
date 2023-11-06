@@ -99,5 +99,52 @@
         <item name="android:background">@color/white</item>
     </style>
 
+    <style name="SongTitle">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textSize">@dimen/offset_22</item>
+        <item name="android:tint">@color/black</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="ArtistTitleInAudioPlayer">
+        <item name="android:textColor">@color/black</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:textSize">@dimen/offset_14</item>
+        <item name="android:tint">@color/black</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="DetailsTitle">
+        <item name="android:textColor">@color/gray_text</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/offset_13</item>
+        <item name="android:tint">@color/gray_text</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="Details">
+        <item name="android:textColor">@color/black_details</item>
+        <item name="android:fontFamily">@font/ys_display_regular</item>
+        <item name="android:textFontWeight">400</item>
+        <item name="android:textSize">@dimen/offset_13</item>
+        <item name="android:tint">@color/gray_text</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+    <style name="PlaybackTime">
+        <item name="android:textColor">@color/black_details</item>
+        <item name="android:fontFamily">@font/ys_display_medium</item>
+        <item name="android:textFontWeight">500</item>
+        <item name="android:textSize">@dimen/offset_14</item>
+        <item name="android:tint">@color/gray_text</item>
+        <item name="android:background">@color/white</item>
+    </style>
+
+
+
 
 </resources>

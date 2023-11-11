@@ -41,6 +41,7 @@ class SearchActivity : AppCompatActivity() {
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
     private val debounceTimer = Handler(Looper.getMainLooper())
+    private lateinit var progressBar: ProgressBar
 
 
     // Enum для управления состоянием поиска
@@ -58,6 +59,11 @@ class SearchActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
+
+        // Инициализация ProgressBar
+        progressBar = findViewById(R.id.progressBar)
+
+
 
         // Инициализация SharedPreferences и SearchHistory
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
@@ -79,6 +85,8 @@ class SearchActivity : AppCompatActivity() {
         // Инициализация кнопок и слушателей
         initBackButton()
         val clearButton = initClearButton()
+
+
 
         // Настройка TextWatcher для отслеживания изменений в поле поиска
         val simpleTextWatcher = object : TextWatcher {
@@ -236,6 +244,9 @@ class SearchActivity : AppCompatActivity() {
     private fun searchTracks(searchTerm: String) {
         Log.e("mylog", "Start searching for term: $searchTerm")
 
+        // Показать ProgressBar при начале поиска
+        progressBar.visibility = View.VISIBLE
+
         // Изменение состояния поиска на "есть результаты"
         currentViewState = SearchViewState.HAS_RESULTS
         updateContainersVisibility()
@@ -275,6 +286,9 @@ class SearchActivity : AppCompatActivity() {
                         }
                     }
                 }
+                // Скрыть ProgressBar
+                progressBar.visibility = View.GONE
+                // Обновить видимость контейнеров
                 updateContainersVisibility()
             }
 

@@ -11,7 +11,8 @@ data class Track(
     @SerializedName("collectionName") val albumName: String?, // Название альбома (может быть null)
     @SerializedName("releaseDate") val releaseDate: String?, // Год релиза трека (может быть null)
     @SerializedName("primaryGenreName") val genre: String?, // Жанр трека (может быть null)
-    @SerializedName("country") val country: String? // Страна исполнителя (может быть null)
+    @SerializedName("country") val country: String?, // Страна исполнителя (может быть null)
+    @SerializedName("previewUrl") val previewUrl: String? // Ссылка на отрывок трека (может быть null)
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true
@@ -28,6 +29,7 @@ data class Track(
         if (releaseDate != other.releaseDate) return false
         if (genre != other.genre) return false
         if (country != other.country) return false
+        if (previewUrl != other.previewUrl) return false
 
         return true
     }
@@ -42,7 +44,9 @@ data class Track(
         result = 31 * result + (releaseDate?.hashCode() ?: 0)
         result = 31 * result + (genre?.hashCode() ?: 0)
         result = 31 * result + (country?.hashCode() ?: 0)
+        result = 31 * result + (previewUrl?.hashCode() ?: 0)
         return result
+
     }
 }
 

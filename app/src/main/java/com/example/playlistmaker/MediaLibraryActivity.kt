@@ -1,6 +1,7 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -13,6 +14,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
 class MediaLibraryActivity : AppCompatActivity() {
+    private var mediaPlayer: MediaPlayer? = null
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media_library)
@@ -30,6 +33,7 @@ class MediaLibraryActivity : AppCompatActivity() {
         val trackTimeMills = intent.getStringExtra("trackTimeMills")
         val coverImageURL = intent.getStringExtra("coverImageURL")
 
+
         // Найдите соответствующие TextView на макете активности
         val trackNameTextView = findViewById<TextView>(R.id.track_name)
         val artistNameTextView = findViewById<TextView>(R.id.artist_name)
@@ -38,6 +42,7 @@ class MediaLibraryActivity : AppCompatActivity() {
         val primaryGenreNameTextView = findViewById<TextView>(R.id.primary_genre_name)
         val countryTextView = findViewById<TextView>(R.id.country)
         val trackTimeMillsTextView = findViewById<TextView>(R.id.duration_data)
+
 
         // Заполните TextView данными о треке
         trackNameTextView.text = trackName
@@ -88,6 +93,71 @@ class MediaLibraryActivity : AppCompatActivity() {
         }
 
 
+        val playButton = findViewById<ImageView>(R.id.play_button)
+        val pauseButton = findViewById<ImageView>(R.id.pause_button)
+
+
+
+        // Установите слушатель клика для кнопки play
+        playButton.setOnClickListener {
+            // Проверьте, воспроизводится ли трек в данный момент
+            if (mediaPlayer?.isPlaying == true) {
+                // Если трек уже воспроизводится, поставьте его на паузу
+                mediaPlayer?.pause()
+                // Кнопка Pause появляется, кнопка Play исчезает
+                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
+                pauseButtonVisibility.visibility = View.VISIBLE
+                playButton.visibility = View.GONE
+
+
+
+            } else {
+                // Если трек не воспроизводится, начните его воспроизведение
+                mediaPlayer?.start()
+                // Кнопка Pause появляется, кнопка Play исчезает
+                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
+                pauseButtonVisibility.visibility = View.GONE
+                playButton.visibility = View.VISIBLE
+                // Нужно дописать, чтоб кнопка менялась на Play
+
+            }
+        }
+
+//        if (mediaPlayer?.isPlaying == true) {
+//            // Если трек уже воспроизводится, скройте кнопку "play" и покажите кнопку "pause"
+//            playButton.visibility = View.GONE
+//            pauseButton.visibility = View.VISIBLE
+//        } else {
+//            // Если трек не воспроизводится, скройте кнопку "pause" и покажите кнопку "play"
+//            pauseButton.visibility = View.GONE
+//            playButton.visibility = View.VISIBLE
+//        }
+
+//        val pauseButton = findViewById<ImageView>(R.id.pause_button)
+//
+//        pauseButton.setOnClickListener {
+//            // Проверьте, воспроизводится ли трек в данный момент
+//            if (mediaPlayer?.isPlaying == true) {
+//                // Если трек уже воспроизводится, поставьте его на паузу
+//                mediaPlayer?.start()
+//                // Кнопка Pause появляется, кнопка Play исчезает
+//                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
+//                pauseButtonVisibility.visibility = View.VISIBLE
+//                playButton.visibility = View.GONE
+//
+//
+//
+//            } else {
+//                // Если трек не воспроизводится, начните его воспроизведение
+//                mediaPlayer?.pause()
+//                // Кнопка Pause появляется, кнопка Play исчезает
+//                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
+//                pauseButtonVisibility.visibility = View.GONE
+//                playButton.visibility = View.VISIBLE
+//                // Нужно дописать, чтоб кнопка менялась на Play
+//
+//            }
+//        }
 
         // Установите обработчик клика на кнопке "назад"
         backButton.setOnClickListener {
@@ -110,11 +180,21 @@ class MediaLibraryActivity : AppCompatActivity() {
         // Сохраните данные о текущем треке или другие параметры
         editor.putString("currentTrackId", currentTrackId)
         editor.apply()
+
+        mediaPlayer?.pause()
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release()
+        mediaPlayer = null
     }
 
     // Метод вызывается при восстановлении активности из фонового режима
     override fun onResume() {
         super.onResume()
+
 
         // Восстановите состояние экрана "Аудиоплеер" из SharedPreferences
         val sharedPreferences = getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE)
@@ -133,6 +213,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             val countryTextView = findViewById<TextView>(R.id.country)
             val trackTimeMillisTextView = findViewById<TextView>(R.id.duration)
 
+
             // Ваши данные о треке
             val trackName = "Название трека"
             val artistName = "Имя исполнителя"
@@ -142,6 +223,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             val country = "Страна исполнителя"
             val trackTimeMillis = "Продолжительность трека"
 
+
             // Заполните TextView данными
             trackNameTextView.text = trackName
             artistNameTextView.text = artistName
@@ -150,6 +232,28 @@ class MediaLibraryActivity : AppCompatActivity() {
             primaryGenreNameTextView.text = primaryGenreName
             countryTextView.text = country
             trackTimeMillisTextView.text = trackTimeMillis
+        }
+
+        val previewUrl = intent.getStringExtra("previewUrl")
+
+        if (!previewUrl.isNullOrEmpty()) {
+            mediaPlayer = MediaPlayer().apply {
+
+                setDataSource(previewUrl)
+                prepareAsync()
+
+                setOnPreparedListener {
+                    mediaPlayer?.start()
+
+                }
+                setOnCompletionListener {
+                    mediaPlayer?.pause()
+
+                }
+            }
+        } else {
+            val playButtonVisibility = findViewById<View>(R.id.play_button)
+            playButtonVisibility.visibility = View.VISIBLE
         }
     }
 }

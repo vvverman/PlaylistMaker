@@ -93,8 +93,40 @@ class MediaLibraryActivity : AppCompatActivity() {
         }
 
 
+        val previewUrl = intent.getStringExtra("previewUrl")
+
+        if (!previewUrl.isNullOrEmpty()) {
+            mediaPlayer = MediaPlayer().apply {
+
+                setDataSource(previewUrl)
+                prepareAsync()
+
+                setOnPreparedListener {
+                    mediaPlayer?.start()
+
+                }
+                setOnCompletionListener {
+                    mediaPlayer?.pause()
+
+                }
+            }
+        }
+
+
+
+
         val playButton = findViewById<ImageView>(R.id.play_button)
         val pauseButton = findViewById<ImageView>(R.id.pause_button)
+
+        if (mediaPlayer?.isPlaying == true) {
+            // Если трек уже воспроизводится, скройте кнопку "play" и покажите кнопку "pause"
+            playButton.visibility = View.VISIBLE
+            pauseButton.visibility = View.GONE
+        } else {
+            // Если трек не воспроизводится, скройте кнопку "pause" и покажите кнопку "play"
+            playButton.visibility = View.GONE
+            pauseButton.visibility = View.VISIBLE
+        }
 
 
 
@@ -105,8 +137,7 @@ class MediaLibraryActivity : AppCompatActivity() {
                 // Если трек уже воспроизводится, поставьте его на паузу
                 mediaPlayer?.pause()
                 // Кнопка Pause появляется, кнопка Play исчезает
-                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
-                pauseButtonVisibility.visibility = View.VISIBLE
+                pauseButton.visibility = View.VISIBLE
                 playButton.visibility = View.GONE
 
 
@@ -115,23 +146,13 @@ class MediaLibraryActivity : AppCompatActivity() {
                 // Если трек не воспроизводится, начните его воспроизведение
                 mediaPlayer?.start()
                 // Кнопка Pause появляется, кнопка Play исчезает
-                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
-                pauseButtonVisibility.visibility = View.GONE
+                pauseButton.visibility = View.GONE
                 playButton.visibility = View.VISIBLE
                 // Нужно дописать, чтоб кнопка менялась на Play
 
             }
         }
 
-//        if (mediaPlayer?.isPlaying == true) {
-//            // Если трек уже воспроизводится, скройте кнопку "play" и покажите кнопку "pause"
-//            playButton.visibility = View.GONE
-//            pauseButton.visibility = View.VISIBLE
-//        } else {
-//            // Если трек не воспроизводится, скройте кнопку "pause" и покажите кнопку "play"
-//            pauseButton.visibility = View.GONE
-//            playButton.visibility = View.VISIBLE
-//        }
 
 
 
@@ -141,8 +162,7 @@ class MediaLibraryActivity : AppCompatActivity() {
                 // Если трек уже воспроизводится, поставьте его на паузу
                 mediaPlayer?.pause()
                 // Кнопка Pause появляется, кнопка Play исчезает
-                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
-                pauseButtonVisibility.visibility = View.GONE
+                pauseButton.visibility = View.GONE
                 playButton.visibility = View.VISIBLE
 
 
@@ -151,13 +171,16 @@ class MediaLibraryActivity : AppCompatActivity() {
                 // Если трек не воспроизводится, начните его воспроизведение
                 mediaPlayer?.start()
                 // Кнопка Pause появляется, кнопка Play исчезает
-                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
-                pauseButtonVisibility.visibility = View.VISIBLE
+                pauseButton.visibility = View.VISIBLE
                 playButton.visibility = View.GONE
                 // Нужно дописать, чтоб кнопка менялась на Play
 
             }
         }
+
+
+
+
 
         // Установите обработчик клика на кнопке "назад"
         backButton.setOnClickListener {
@@ -234,26 +257,6 @@ class MediaLibraryActivity : AppCompatActivity() {
             trackTimeMillisTextView.text = trackTimeMillis
         }
 
-        val previewUrl = intent.getStringExtra("previewUrl")
 
-        if (!previewUrl.isNullOrEmpty()) {
-            mediaPlayer = MediaPlayer().apply {
-
-                setDataSource(previewUrl)
-                prepareAsync()
-
-                setOnPreparedListener {
-                    mediaPlayer?.start()
-
-                }
-                setOnCompletionListener {
-                    mediaPlayer?.pause()
-
-                }
-            }
-        } else {
-            val playButtonVisibility = findViewById<View>(R.id.play_button)
-            playButtonVisibility.visibility = View.VISIBLE
-        }
     }
 }

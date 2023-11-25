@@ -114,7 +114,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artist_name"
         app:layout_constraintVertical_bias="0.0"
-        android:visibility="visible"/>
+        />
 
     <ImageView
         android:id="@+id/pause_button"
@@ -128,7 +128,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/artist_name"
         app:layout_constraintVertical_bias="0.0"
-        android:visibility="gone"/>
+        />
 
     <ImageView
         android:id="@+id/add_to_favorite_button"

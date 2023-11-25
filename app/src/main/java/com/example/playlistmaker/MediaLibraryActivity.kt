@@ -133,31 +133,31 @@ class MediaLibraryActivity : AppCompatActivity() {
 //            playButton.visibility = View.VISIBLE
 //        }
 
-//        val pauseButton = findViewById<ImageView>(R.id.pause_button)
-//
-//        pauseButton.setOnClickListener {
-//            // Проверьте, воспроизводится ли трек в данный момент
-//            if (mediaPlayer?.isPlaying == true) {
-//                // Если трек уже воспроизводится, поставьте его на паузу
-//                mediaPlayer?.start()
-//                // Кнопка Pause появляется, кнопка Play исчезает
-//                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
-//                pauseButtonVisibility.visibility = View.VISIBLE
-//                playButton.visibility = View.GONE
-//
-//
-//
-//            } else {
-//                // Если трек не воспроизводится, начните его воспроизведение
-//                mediaPlayer?.pause()
-//                // Кнопка Pause появляется, кнопка Play исчезает
-//                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
-//                pauseButtonVisibility.visibility = View.GONE
-//                playButton.visibility = View.VISIBLE
-//                // Нужно дописать, чтоб кнопка менялась на Play
-//
-//            }
-//        }
+
+
+        pauseButton.setOnClickListener {
+            // Проверьте, воспроизводится ли трек в данный момент
+            if (mediaPlayer?.isPlaying == true) {
+                // Если трек уже воспроизводится, поставьте его на паузу
+                mediaPlayer?.pause()
+                // Кнопка Pause появляется, кнопка Play исчезает
+                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
+                pauseButtonVisibility.visibility = View.GONE
+                playButton.visibility = View.VISIBLE
+
+
+
+            } else {
+                // Если трек не воспроизводится, начните его воспроизведение
+                mediaPlayer?.start()
+                // Кнопка Pause появляется, кнопка Play исчезает
+                val pauseButtonVisibility = findViewById<View>(R.id.pause_button)
+                pauseButtonVisibility.visibility = View.VISIBLE
+                playButton.visibility = View.GONE
+                // Нужно дописать, чтоб кнопка менялась на Play
+
+            }
+        }
 
         // Установите обработчик клика на кнопке "назад"
         backButton.setOnClickListener {

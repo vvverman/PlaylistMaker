@@ -17,6 +17,9 @@ import com.bumptech.glide.request.RequestOptions
 class MediaLibraryActivity : AppCompatActivity() {
     private var mediaPlayer: MediaPlayer? = null
 
+    private lateinit var playButton: ImageView
+    private lateinit var pauseButton: ImageView
+
     private var currentTimeTextView: TextView? = null
     private val handler = Handler()
 
@@ -27,6 +30,8 @@ class MediaLibraryActivity : AppCompatActivity() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
         currentTimeTextView = findViewById(R.id.current_time)
+
+
 
 
         // Получите данные о треке из Intent
@@ -101,8 +106,8 @@ class MediaLibraryActivity : AppCompatActivity() {
 
         val previewUrl = intent.getStringExtra("previewUrl")
 
-        val playButton = findViewById<ImageView>(R.id.play_button)
-        val pauseButton = findViewById<ImageView>(R.id.pause_button)
+        playButton = findViewById(R.id.play_button)
+        pauseButton = findViewById(R.id.pause_button)
 
         if (!previewUrl.isNullOrEmpty()) {
             mediaPlayer = MediaPlayer().apply {
@@ -157,9 +162,6 @@ class MediaLibraryActivity : AppCompatActivity() {
 
         }
 
-
-
-
         pauseButton.setOnClickListener {
             // Проверьте, воспроизводится ли трек в данный момент
 
@@ -169,14 +171,7 @@ class MediaLibraryActivity : AppCompatActivity() {
                 pauseButton.visibility = View.GONE
                 playButton.visibility = View.VISIBLE
 
-
         }
-
-
-
-
-
-
 
         // Установите обработчик клика на кнопке "назад"
         backButton.setOnClickListener {
@@ -201,6 +196,8 @@ class MediaLibraryActivity : AppCompatActivity() {
         editor.apply()
 
         mediaPlayer?.pause()
+        playButton.visibility = View.VISIBLE
+        pauseButton.visibility = View.GONE
 
     }
 
@@ -229,6 +226,8 @@ class MediaLibraryActivity : AppCompatActivity() {
     // Метод вызывается при восстановлении активности из фонового режима
     override fun onResume() {
         super.onResume()
+
+
 
         updateCurrentTime()
         handler.postDelayed({ updateCurrentTime() }, 1000)

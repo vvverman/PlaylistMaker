@@ -208,8 +208,6 @@ class MediaLibraryActivity : AppCompatActivity() {
         mediaPlayer = null
     }
 
-    
-
 //    fun formatTime(milliseconds: Int): String {
 //        val seconds = (milliseconds / 1000) % 60
 //        val minutes = (milliseconds / (1000 * 60)) % 60
@@ -227,9 +225,6 @@ class MediaLibraryActivity : AppCompatActivity() {
 //        // Повторно вызывайте метод updateCurrentTime() каждую секунду
 //        handler.postDelayed({ updateCurrentTime() }, 1000)
 //    }
-
-
-
 
     // Метод вызывается при восстановлении активности из фонового режима
     override fun onResume() {

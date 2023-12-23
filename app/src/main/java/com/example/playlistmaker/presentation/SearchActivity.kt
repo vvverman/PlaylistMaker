@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -17,6 +17,10 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.R
+import com.example.playlistmaker.data.ITunesSearchApi
+import com.example.playlistmaker.data.TracksResponse
+import com.example.playlistmaker.domain.Track
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

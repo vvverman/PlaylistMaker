@@ -1,4 +1,4 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation
 
 import android.content.Context
 import android.media.MediaPlayer
@@ -13,8 +13,13 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.example.playlistmaker.R
+import com.example.playlistmaker.data.TrackService
+import com.example.playlistmaker.data.TrackServiceImpl
 
 class MediaLibraryActivity : AppCompatActivity() {
+
+    val trackService: TrackService = TrackServiceImpl()
     private var mediaPlayer: MediaPlayer? = null
 
     private lateinit var playButton: ImageView
@@ -117,13 +122,13 @@ class MediaLibraryActivity : AppCompatActivity() {
 
                 setOnPreparedListener {
                     mediaPlayer?.start()
-                    updateCurrentTime()
+                    trackService.updateCurrentTime(mediaPlayer, currentTimeTextView)
 
 
                 }
                 setOnCompletionListener {
                     mediaPlayer?.pause()
-                    updateCurrentTime()
+                    trackService.updateCurrentTime(mediaPlayer, currentTimeTextView)
                     // Установите текущее время в 00:00, когда воспроизведение завершается
                     currentTimeTextView?.text = "00:00"
                     // Измените видимость кнопок паузы и воспроизведения
@@ -133,10 +138,6 @@ class MediaLibraryActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
-
 
 
         if (mediaPlayer?.isPlaying == true) {
@@ -207,21 +208,23 @@ class MediaLibraryActivity : AppCompatActivity() {
         mediaPlayer = null
     }
 
-    fun formatTime(milliseconds: Int): String {
-        val seconds = (milliseconds / 1000) % 60
-        val minutes = (milliseconds / (1000 * 60)) % 60
-        return String.format("%02d:%02d", minutes, seconds)
-    }
+//    fun formatTime(milliseconds: Int): String {
+//        val seconds = (milliseconds / 1000) % 60
+//        val minutes = (milliseconds / (1000 * 60)) % 60
+//        return String.format("%02d:%02d", minutes, seconds)
+//    }
 
-    fun updateCurrentTime() {
-        if (mediaPlayer?.isPlaying == true) {
-            val currentPosition = mediaPlayer?.currentPosition ?: 0
-            val currentTime = formatTime(currentPosition)
-            currentTimeTextView?.text = currentTime
-        }
-        // Повторно вызывайте метод updateCurrentTime() каждую секунду
-        handler.postDelayed({ updateCurrentTime() }, 1000)
-    }
+
+
+//    fun updateCurrentTime() {
+//        if (mediaPlayer?.isPlaying == true) {
+//            val currentPosition = mediaPlayer?.currentPosition ?: 0
+//            val currentTime = trackService.formatTime(currentPosition)
+//            currentTimeTextView?.text = currentTime
+//        }
+//        // Повторно вызывайте метод updateCurrentTime() каждую секунду
+//        handler.postDelayed({ updateCurrentTime() }, 1000)
+//    }
 
     // Метод вызывается при восстановлении активности из фонового режима
     override fun onResume() {
@@ -229,8 +232,10 @@ class MediaLibraryActivity : AppCompatActivity() {
 
 
 
-        updateCurrentTime()
-        handler.postDelayed({ updateCurrentTime() }, 1000)
+        trackService.updateCurrentTime(mediaPlayer, currentTimeTextView)
+
+
+        handler.postDelayed({ trackService.updateCurrentTime(mediaPlayer, currentTimeTextView) }, 1000)
 
         // Восстановите состояние экрана "Аудиоплеер" из SharedPreferences
         val sharedPreferences = getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE)

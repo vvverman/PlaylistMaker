@@ -54,6 +54,7 @@ class SearchHistoryAdapter(
             intent.putExtra("country", track.country)
             intent.putExtra("trackTimeMills", formatDuration(track.durationInMillis))
             intent.putExtra("coverImageURL", coverImageURL)
+            intent.putExtra("previewUrl", track.previewUrl)
 
             // Запускаем активность "Аудиоплеер"
             holder.itemView.context.startActivity(intent)

@@ -73,6 +73,7 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
             intent.putExtra("country", track.country)
             intent.putExtra("trackTimeMills", "${minutes}:${seconds}")
             intent.putExtra("coverImageURL", coverImageURL)
+            intent.putExtra("previewUrl", track.previewUrl)
 
             // Запускаем активность "Аудиоплеер"
             holder.itemView.context.startActivity(intent)

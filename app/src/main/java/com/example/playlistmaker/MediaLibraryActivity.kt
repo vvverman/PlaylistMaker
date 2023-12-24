@@ -1,8 +1,10 @@
 package com.example.playlistmaker
 
 import android.content.Context
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
@@ -13,11 +15,23 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 
 class MediaLibraryActivity : AppCompatActivity() {
+    private var mediaPlayer: MediaPlayer? = null
+
+    private lateinit var playButton: ImageView
+    private lateinit var pauseButton: ImageView
+
+    private var currentTimeTextView: TextView? = null
+    private val handler = Handler()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media_library)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
+
+        currentTimeTextView = findViewById(R.id.current_time)
+
+
 
 
         // Получите данные о треке из Intent
@@ -30,6 +44,7 @@ class MediaLibraryActivity : AppCompatActivity() {
         val trackTimeMills = intent.getStringExtra("trackTimeMills")
         val coverImageURL = intent.getStringExtra("coverImageURL")
 
+
         // Найдите соответствующие TextView на макете активности
         val trackNameTextView = findViewById<TextView>(R.id.track_name)
         val artistNameTextView = findViewById<TextView>(R.id.artist_name)
@@ -38,6 +53,7 @@ class MediaLibraryActivity : AppCompatActivity() {
         val primaryGenreNameTextView = findViewById<TextView>(R.id.primary_genre_name)
         val countryTextView = findViewById<TextView>(R.id.country)
         val trackTimeMillsTextView = findViewById<TextView>(R.id.duration_data)
+
 
         // Заполните TextView данными о треке
         trackNameTextView.text = trackName
@@ -88,6 +104,74 @@ class MediaLibraryActivity : AppCompatActivity() {
         }
 
 
+        val previewUrl = intent.getStringExtra("previewUrl")
+
+        playButton = findViewById(R.id.play_button)
+        pauseButton = findViewById(R.id.pause_button)
+
+        if (!previewUrl.isNullOrEmpty()) {
+            mediaPlayer = MediaPlayer().apply {
+
+                setDataSource(previewUrl)
+                prepareAsync()
+
+                setOnPreparedListener {
+                    mediaPlayer?.start()
+                    updateCurrentTime()
+
+
+                }
+                setOnCompletionListener {
+                    mediaPlayer?.pause()
+                    updateCurrentTime()
+                    // Установите текущее время в 00:00, когда воспроизведение завершается
+                    currentTimeTextView?.text = "00:00"
+                    // Измените видимость кнопок паузы и воспроизведения
+                    pauseButton.visibility = View.GONE
+                    playButton.visibility = View.VISIBLE
+
+                }
+            }
+        }
+
+
+
+
+
+
+        if (mediaPlayer?.isPlaying == true) {
+            // Если трек уже воспроизводится, скройте кнопку "play" и покажите кнопку "pause"
+            playButton.visibility = View.VISIBLE
+            pauseButton.visibility = View.GONE
+        } else {
+            // Если трек не воспроизводится, скройте кнопку "pause" и покажите кнопку "play"
+            playButton.visibility = View.GONE
+            pauseButton.visibility = View.VISIBLE
+        }
+
+
+        // Установите слушатель клика для кнопки play
+        playButton.setOnClickListener {
+            // Проверьте, воспроизводится ли трек в данный момент
+
+                // Если трек уже воспроизводится, поставьте его на паузу
+                mediaPlayer?.start()
+                // Кнопка Pause появляется, кнопка Play исчезает
+                pauseButton.visibility = View.VISIBLE
+                playButton.visibility = View.GONE
+
+        }
+
+        pauseButton.setOnClickListener {
+            // Проверьте, воспроизводится ли трек в данный момент
+
+                // Если трек уже воспроизводится, поставьте его на паузу
+                mediaPlayer?.pause()
+                // Кнопка Pause появляется, кнопка Play исчезает
+                pauseButton.visibility = View.GONE
+                playButton.visibility = View.VISIBLE
+
+        }
 
         // Установите обработчик клика на кнопке "назад"
         backButton.setOnClickListener {
@@ -110,11 +194,43 @@ class MediaLibraryActivity : AppCompatActivity() {
         // Сохраните данные о текущем треке или другие параметры
         editor.putString("currentTrackId", currentTrackId)
         editor.apply()
+
+        mediaPlayer?.pause()
+        playButton.visibility = View.VISIBLE
+        pauseButton.visibility = View.GONE
+
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        mediaPlayer?.release()
+        mediaPlayer = null
+    }
+
+    fun formatTime(milliseconds: Int): String {
+        val seconds = (milliseconds / 1000) % 60
+        val minutes = (milliseconds / (1000 * 60)) % 60
+        return String.format("%02d:%02d", minutes, seconds)
+    }
+
+    fun updateCurrentTime() {
+        if (mediaPlayer?.isPlaying == true) {
+            val currentPosition = mediaPlayer?.currentPosition ?: 0
+            val currentTime = formatTime(currentPosition)
+            currentTimeTextView?.text = currentTime
+        }
+        // Повторно вызывайте метод updateCurrentTime() каждую секунду
+        handler.postDelayed({ updateCurrentTime() }, 1000)
     }
 
     // Метод вызывается при восстановлении активности из фонового режима
     override fun onResume() {
         super.onResume()
+
+
+
+        updateCurrentTime()
+        handler.postDelayed({ updateCurrentTime() }, 1000)
 
         // Восстановите состояние экрана "Аудиоплеер" из SharedPreferences
         val sharedPreferences = getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE)
@@ -133,6 +249,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             val countryTextView = findViewById<TextView>(R.id.country)
             val trackTimeMillisTextView = findViewById<TextView>(R.id.duration)
 
+
             // Ваши данные о треке
             val trackName = "Название трека"
             val artistName = "Имя исполнителя"
@@ -141,6 +258,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             val primaryGenreName = "Жанр трека"
             val country = "Страна исполнителя"
             val trackTimeMillis = "Продолжительность трека"
+
 
             // Заполните TextView данными
             trackNameTextView.text = trackName
@@ -151,5 +269,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             countryTextView.text = country
             trackTimeMillisTextView.text = trackTimeMillis
         }
+
+
     }
 }

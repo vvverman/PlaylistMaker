@@ -5,6 +5,8 @@ import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -15,28 +17,34 @@ import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-
 class SearchActivity : AppCompatActivity() {
 
+    // Переменные для отслеживания состояния поиска
     private var valueInSearchString = ""
     private var currentViewState = SearchViewState.NO_INTERNET
+
+    // Переменные для управления историей поиска
     private lateinit var searchHistory: SearchHistory
     private lateinit var sharedPreferences: SharedPreferences
+
+    // Элементы пользовательского интерфейса
     private lateinit var searchField: EditText
     private lateinit var recyclerViewSearchHistory: RecyclerView
     private lateinit var searchInputLayout: LinearLayout
     private lateinit var tracksAdapter: TracksAdapter
     private lateinit var searchHistoryAdapter: SearchHistoryAdapter
 
+    private val debounceTimer = Handler(Looper.getMainLooper())
+    private lateinit var progressBar: ProgressBar
 
 
+    // Enum для управления состоянием поиска
     enum class SearchViewState {
         NO_INTERNET,
         NO_RESULTS,
@@ -45,14 +53,23 @@ class SearchActivity : AppCompatActivity() {
         EMPTY
     }
 
+    private val handler = Handler(Looper.getMainLooper())
+    private var searchRunnable: Runnable = Runnable { }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
 
+        // Инициализация ProgressBar
+        progressBar = findViewById(R.id.progressBar)
+
+
+
+        // Инициализация SharedPreferences и SearchHistory
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
         searchHistory = SearchHistory(sharedPreferences)
 
+        // Инициализация элементов пользовательского интерфейса
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
         searchInputLayout = findViewById(R.id.search_input_layout)
         searchHistoryAdapter = SearchHistoryAdapter(searchHistory.getHistory())
@@ -60,14 +77,18 @@ class SearchActivity : AppCompatActivity() {
 
         tracksAdapter = TracksAdapter(this)
 
-        searchInputLayout.visibility = View.GONE // Отображаем историю поиска сразу
+        // Начальная настройка видимости истории поиска
+        searchInputLayout.visibility = View.GONE
 
         searchField = findViewById(R.id.searchField)
 
+        // Инициализация кнопок и слушателей
         initBackButton()
-
         val clearButton = initClearButton()
 
+
+
+        // Настройка TextWatcher для отслеживания изменений в поле поиска
         val simpleTextWatcher = object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
             }
@@ -77,24 +98,42 @@ class SearchActivity : AppCompatActivity() {
                 clearButton?.let { cb ->
                     cb.visibility = clearButtonVisibility(s)
                 }
-
-
             }
 
             override fun afterTextChanged(s: Editable?) {
-
             }
         }
 
-        // Устанавливаем TextWatcher
+        // Установка TextWatcher
         searchField.addTextChangedListener(simpleTextWatcher)
 
+        searchField.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+            }
 
-        val searchField = findViewById<EditText>(R.id.searchField)
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                // Удаление предыдущего запланированного поиска
+                handler.removeCallbacks(searchRunnable)
 
+                // Планирование нового поиска с задержкой
+                searchRunnable = Runnable {
+                    val searchTerm = s.toString()
+                    if (searchTerm.isNotEmpty()) {
+                        searchTracks(searchTerm)
+                        updateContainersVisibility()
+                    }
+                }
+                handler.postDelayed(searchRunnable, 300) // Задержка в 300 миллисекунд
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+            }
+        })
+
+        // Настройка слушателя для клавиши "Enter" на клавиатуре
         searchField.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                // Вызывайте функцию поиска при нажатии на клавишу "Enter"
+                // Вызов функции поиска при нажатии на клавишу "Enter"
                 val searchTerm = searchField.text.toString()
                 if (searchTerm.isNotEmpty()) {
                     searchTracks(searchTerm)
@@ -104,49 +143,41 @@ class SearchActivity : AppCompatActivity() {
             } else {
                 false
             }
-
         }
 
-
+        // Инициализация RecyclerView для отображения найденных треков
         val itemsRecyclerView = findViewById<RecyclerView>(R.id.recyclerView)
         tracksAdapter = TracksAdapter(this@SearchActivity)
-
-        itemsRecyclerView.layoutManager =
-            LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
-
-
+        itemsRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false)
         itemsRecyclerView.adapter = tracksAdapter
 
-        recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
-        searchHistoryAdapter = SearchHistoryAdapter(emptyList())
-
-        // Устанавливаем слушателя клика на элемент списка:
+        // Настройка слушателя клика на элемент списка
         tracksAdapter.setOnItemClickListener(object : TracksAdapter.OnItemClickListener {
             override fun onItemClick(track: Track) {
+                // Добавление трека в историю поиска с использованием debounce
+                debounceTimer.removeCallbacksAndMessages(null)
+                debounceTimer.postDelayed({
+                    // Обновление RecyclerView для истории поиска
+                    searchHistoryAdapter.updateItems(searchHistory.getHistory())
 
-                //  RecyclerView для истории, надо обновить его:
-                searchHistoryAdapter.updateItems(searchHistory.getHistory())
+                    // Добавление трека в историю поиска
+                    searchHistory.addTrackToHistory(track)
 
-
-                // Внутри onItemClick
-                searchHistory.addTrackToHistory(track)
-
-                // После добавления элемента в историю, обновите отображение истории
-                updateSearchHistoryView()
+                    // После добавления элемента в историю, обновление отображения истории
+                    updateSearchHistoryView()
+                }, 300) // Задержка в 300 миллисекунд
             }
         })
 
-
+        // Обработка фокуса на поле поиска и отображение истории
         searchField.setOnFocusChangeListener { _, hasFocus ->
             if (hasFocus && searchHistory.getHistory().isNotEmpty()) {
-                // Если поле поиска в фокусе и есть элементы в истории поиска, покажите RecyclerView для истории поиска
                 searchInputLayout.visibility = View.VISIBLE
-
             }
         }
 
+        // Настройка кнопки очистки истории поиска
         val clearSearchHistoryButton: RelativeLayout = findViewById(R.id.clearSearchHistoryButton)
-
         clearSearchHistoryButton.setOnClickListener {
             searchHistory.clearHistory()
             val emptyDataList: List<Track> = ArrayList()
@@ -154,8 +185,16 @@ class SearchActivity : AppCompatActivity() {
             currentViewState = SearchViewState.EMPTY
             updateContainersVisibility()
         }
+
     }
 
+    override fun onDestroy() {
+        super.onDestroy()
+        // Удаление запланированного поиска при уничтожении активности
+        handler.removeCallbacks(searchRunnable)
+    }
+
+    // Инициализация кнопки "назад"
     private fun initBackButton() {
         val backButton = findViewById<ImageButton>(R.id.backButton)
         backButton.setOnClickListener {
@@ -163,6 +202,7 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    // Инициализация кнопки очистки поля поиска
     private fun initClearButton(): ImageView? {
         val clearButton = findViewById<ImageView>(R.id.clearIcon)
         clearButton.setOnClickListener {
@@ -178,17 +218,20 @@ class SearchActivity : AppCompatActivity() {
         const val REQUEST_TEXT = "REQUEST_TEXT"
     }
 
+    // Сохранение состояния активности при изменении конфигурации
     override fun onSaveInstanceState(outState: Bundle) {
         super.onSaveInstanceState(outState)
         outState.putString(REQUEST_TEXT, valueInSearchString)
     }
 
+    // Восстановление состояния активности после изменения конфигурации
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
         super.onRestoreInstanceState(savedInstanceState)
         valueInSearchString = savedInstanceState.getString(REQUEST_TEXT, "")
         searchField.text = Editable.Factory.getInstance().newEditable(valueInSearchString)
     }
 
+    // Определение видимости кнопки очистки поля поиска
     private fun clearButtonVisibility(s: CharSequence?): Int {
         return if (s.isNullOrEmpty()) {
             View.GONE
@@ -197,17 +240,25 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    // Функция поиска треков
     private fun searchTracks(searchTerm: String) {
         Log.e("mylog", "Start searching for term: $searchTerm")
 
+        // Показать ProgressBar при начале поиска
+        progressBar.visibility = View.VISIBLE
+
+        // Изменение состояния поиска на "есть результаты"
         currentViewState = SearchViewState.HAS_RESULTS
         updateContainersVisibility()
+
+        // Проверка наличия интернет-соединения
         val internetConnection = hasInternetConnection()
 
         if (!hasInternetConnection()) {
             updateNoNetworkMessageVisibility(internetConnection)
         }
 
+        // Настройка Retrofit для обращения к iTunes API
         val retrofit = Retrofit.Builder()
             .baseUrl("https://itunes.apple.com/")
             .addConverterFactory(GsonConverterFactory.create())
@@ -218,7 +269,7 @@ class SearchActivity : AppCompatActivity() {
         val mediaType = "music"
         val call = iTunesSearchApi.searchTracks(searchTerm, mediaType)
 
-
+        // Обработка ответа от сервера
         call.enqueue(object : Callback<TracksResponse> {
             override fun onResponse(
                 call: Call<TracksResponse>,
@@ -227,16 +278,17 @@ class SearchActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val tracksResponse = response.body()
                     tracksResponse?.tracks?.let { tracks ->
-
                         tracksAdapter.updateTracks(tracks)
                         currentViewState = if (tracks.isNotEmpty()) {
                             SearchViewState.HAS_RESULTS
                         } else {
                             SearchViewState.NO_RESULTS
                         }
-
                     }
                 }
+                // Скрыть ProgressBar
+                progressBar.visibility = View.GONE
+                // Обновить видимость контейнеров
                 updateContainersVisibility()
             }
 
@@ -244,23 +296,18 @@ class SearchActivity : AppCompatActivity() {
                 currentViewState = SearchViewState.NO_INTERNET
                 updateContainersVisibility()
             }
-
         })
         updateContainersVisibility()
     }
 
+    // Обновление отображения истории поиска
     private fun updateSearchHistoryView() {
-        // Получите текущую историю поиска из объекта SearchHistory
         val historyItems = searchHistory.getHistory()
-
-        // Обновите адаптер истории поиска
         searchHistoryAdapter.updateItems(historyItems)
-
-
-        // Убедитесь, что RecyclerView для истории видим
         recyclerViewSearchHistory.visibility = View.VISIBLE
     }
 
+    // Проверка наличия интернет-соединения
     private fun hasInternetConnection(): Boolean {
         val connectivityManager =
             getSystemService(Context.CONNECTIVITY_SERVICE) as? ConnectivityManager
@@ -274,6 +321,7 @@ class SearchActivity : AppCompatActivity() {
         return false
     }
 
+    // Обновление видимости сообщения об отсутствии интернет-соединения
     private fun updateNoNetworkMessageVisibility(hasConnection: Boolean) {
         val communicationProblems = findViewById<FrameLayout>(R.id.communicationProblems)
         if (hasConnection) {
@@ -283,12 +331,11 @@ class SearchActivity : AppCompatActivity() {
         }
     }
 
+    // Обновление видимости контейнеров в зависимости от состояния поиска
     private fun updateContainersVisibility() {
         val noInternetContainer = findViewById<FrameLayout>(R.id.communicationProblems)
         val noResultsContainer = findViewById<FrameLayout>(R.id.noSearchResults)
         val resultsContainer = findViewById<RecyclerView>(R.id.recyclerView)
-
-        println(currentViewState)
 
         when (currentViewState) {
             SearchViewState.NO_INTERNET -> {
@@ -296,7 +343,6 @@ class SearchActivity : AppCompatActivity() {
                 noResultsContainer.visibility = View.GONE
                 resultsContainer.visibility = View.GONE
                 recyclerViewSearchHistory.visibility = View.GONE
-
             }
 
             SearchViewState.NO_RESULTS -> {

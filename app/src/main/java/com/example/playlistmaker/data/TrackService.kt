@@ -2,7 +2,9 @@ package com.example.playlistmaker.data
 
 import android.media.MediaPlayer
 import android.os.Handler
+import android.util.Log
 import android.widget.TextView
+import java.lang.IllegalStateException
 
 // Интерфейс TrackService определяет методы, которые должны быть реализованы классом, предоставляющим сервисы треков
 interface TrackService {
@@ -27,12 +29,16 @@ class TrackServiceImpl : TrackService {
 
     // Обновляет текущее время проигрывания трека и отображает его на TextView
     override fun updateCurrentTime(mediaPlayer: MediaPlayer?, currentTimeTextView: TextView?) {
-        if (mediaPlayer?.isPlaying == true) {
-            val currentPosition = mediaPlayer.currentPosition ?: 0
-            val currentTime = formatTime(currentPosition)
-            currentTimeTextView?.text = currentTime
+        try {
+            if (mediaPlayer?.isPlaying == true) {
+                val currentPosition = mediaPlayer.currentPosition ?: 0
+                val currentTime = formatTime(currentPosition)
+                currentTimeTextView?.text = currentTime
+                // Вызывает метод updateCurrentTime() каждую секунду, используя Handler
+                handler.postDelayed({ updateCurrentTime(mediaPlayer, currentTimeTextView) }, 1000)
+            }
+        } catch (e: IllegalStateException) {
+                Log.e("TrackService", "updateCurrentTime: MediaPlayer is not initialized", e)
         }
-        // Вызывает метод updateCurrentTime() каждую секунду, используя Handler
-        handler.postDelayed({ updateCurrentTime(mediaPlayer, currentTimeTextView) }, 1000)
     }
 }

@@ -15,6 +15,8 @@ data class Track(
     @SerializedName("country") val country: String?, // Страна исполнителя (может быть null)
     @SerializedName("previewUrl") val previewUrl: String? // Ссылка на отрывок трека (может быть null)
 ) {
+
+
 //    // Переопределение метода equals для сравнения объектов типа Track
 //    override fun equals(other: Any?): Boolean {
 //        if (this === other) return true

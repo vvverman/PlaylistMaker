@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
 import com.example.playlistmaker.data.ITunesSearchApi
+import com.example.playlistmaker.data.SearchHistory
 import com.example.playlistmaker.data.TracksResponse
 import com.example.playlistmaker.domain.Track
 import retrofit2.Call

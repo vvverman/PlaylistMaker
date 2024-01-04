@@ -1,6 +1,5 @@
 package com.example.playlistmaker.presentation
 
-import android.content.Context
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,10 +13,10 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.playlistmaker.R
-import com.example.playlistmaker.data.TrackService
-import com.example.playlistmaker.data.TrackServiceImpl
-import com.example.playlistmaker.data.SettingsManager
-import com.example.playlistmaker.data.SettingsManagerImpl
+import com.example.playlistmaker.domain.TrackService
+import com.example.playlistmaker.domain.TrackServiceImpl
+import com.example.playlistmaker.domain.SettingsManager
+import com.example.playlistmaker.domain.SettingsManagerImpl
 
 class MediaLibraryActivity : AppCompatActivity() {
 
@@ -35,7 +34,7 @@ class MediaLibraryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         settingsManager =
-            SettingsManagerImpl(getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE))
+            SettingsManagerImpl(getSharedPreferences("AudioPlayerState", MODE_PRIVATE))
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media_library)

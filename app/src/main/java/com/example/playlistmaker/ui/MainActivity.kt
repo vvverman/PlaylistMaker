@@ -1,10 +1,11 @@
-package com.example.playlistmaker.presentation
+package com.example.playlistmaker.ui
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.playlistmaker.R
+import com.example.playlistmaker.ui.settings.activity.SettingsActivity
 
 // Класс MainActivity является главной активностью приложения
 class MainActivity : AppCompatActivity() {

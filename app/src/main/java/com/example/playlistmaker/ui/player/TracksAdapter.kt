@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.player
+package com.example.playlistmaker.ui.player
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.player.ItemsDiffCallback
 import com.example.playlistmaker.domain.player.model.Track
-import com.example.playlistmaker.ui.player.MediaLibraryActivity
-import com.example.playlistmaker.ui.player.TracksViewHolder
 import com.example.playlistmaker.ui.search.SearchActivity
 
 // Класс ItemsAdapter является адаптером для RecyclerView и отвечает за отображение элементов списка
@@ -92,30 +91,4 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
         return itemsList.size
     }
 
-    // Класс ItemsDiffCallback используется для вычисления разницы между старым и новым списками элементов
-    private class ItemsDiffCallback(
-        private val oldList: List<Track>,
-        private val newList: List<Track>
-    ) : DiffUtil.Callback() {
-
-        // Метод возвращает размер старого списка
-        override fun getOldListSize(): Int {
-            return oldList.size
-        }
-
-        // Метод возвращает размер нового списка
-        override fun getNewListSize(): Int {
-            return newList.size
-        }
-
-        // Метод проверяет, являются ли элементы с одной и той же позицией одинаковыми в старом и новом списках
-        override fun areItemsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
-        }
-
-        // Метод проверяет, являются ли содержимое элементов с одной и той же позицией одинаковыми в старом и новом списках
-        override fun areContentsTheSame(oldItemPosition: Int, newItemPosition: Int): Boolean {
-            return oldList[oldItemPosition] == newList[newItemPosition]
-        }
-    }
 }

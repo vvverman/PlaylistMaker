@@ -18,12 +18,12 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
-import com.example.playlistmaker.data.search.ITunesSearchInteractor
-import com.example.playlistmaker.data.search.impl.HistoryStorageInteractorImpl
+import com.example.playlistmaker.data.search.ITunesSearchRepository
+import com.example.playlistmaker.data.search.impl.HistoryStorageRepositoryImpl
 import com.example.playlistmaker.data.search.model.TracksResponse
-import com.example.playlistmaker.data.search.HistoryStorageInteractor
+import com.example.playlistmaker.data.search.HistoryStorageRepository
 import com.example.playlistmaker.domain.player.model.Track
-import com.example.playlistmaker.domain.player.TracksAdapter
+import com.example.playlistmaker.ui.player.TracksAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -37,7 +37,7 @@ class SearchActivity : AppCompatActivity() {
     private var currentViewState = SearchViewState.NO_INTERNET
 
     // Переменные для управления историей поиска
-    private lateinit var historyStorageInteractor: HistoryStorageInteractor
+    private lateinit var historyStorageRepository: HistoryStorageRepository
     private lateinit var sharedPreferences: SharedPreferences
 
     // Элементы пользовательского интерфейса
@@ -74,12 +74,12 @@ class SearchActivity : AppCompatActivity() {
 
         // Инициализация SharedPreferences и SearchHistory
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
-        historyStorageInteractor = HistoryStorageInteractorImpl(sharedPreferences)
+        historyStorageRepository = HistoryStorageRepositoryImpl(sharedPreferences)
 
         // Инициализация элементов пользовательского интерфейса
         recyclerViewSearchHistory = findViewById(R.id.recyclerViewSearchHistory)
         searchInputLayout = findViewById(R.id.search_input_layout)
-        searchHistoryAdapter = SearchHistoryAdapter(historyStorageInteractor.getHistory())
+        searchHistoryAdapter = SearchHistoryAdapter(historyStorageRepository.getHistory())
         recyclerViewSearchHistory.adapter = searchHistoryAdapter
 
         tracksAdapter = TracksAdapter(this)
@@ -165,10 +165,10 @@ class SearchActivity : AppCompatActivity() {
                 debounceTimer.removeCallbacksAndMessages(null)
                 debounceTimer.postDelayed({
                     // Обновление RecyclerView для истории поиска
-                    searchHistoryAdapter.updateItems(historyStorageInteractor.getHistory())
+                    searchHistoryAdapter.updateItems(historyStorageRepository.getHistory())
 
                     // Добавление трека в историю поиска
-                    historyStorageInteractor.addTrackToHistory(track)
+                    historyStorageRepository.addTrackToHistory(track)
 
                     // После добавления элемента в историю, обновление отображения истории
                     updateSearchHistoryView()
@@ -178,7 +178,7 @@ class SearchActivity : AppCompatActivity() {
 
         // Обработка фокуса на поле поиска и отображение истории
         searchField.setOnFocusChangeListener { _, hasFocus ->
-            if (hasFocus && historyStorageInteractor.getHistory().isNotEmpty()) {
+            if (hasFocus && historyStorageRepository.getHistory().isNotEmpty()) {
                 searchInputLayout.visibility = View.VISIBLE
             }
         }
@@ -186,7 +186,7 @@ class SearchActivity : AppCompatActivity() {
         // Настройка кнопки очистки истории поиска
         val clearSearchHistoryButton: RelativeLayout = findViewById(R.id.clearSearchHistoryButton)
         clearSearchHistoryButton.setOnClickListener {
-            historyStorageInteractor.clearHistory()
+            historyStorageRepository.clearHistory()
             val emptyDataList: List<Track> = ArrayList()
             searchHistoryAdapter.updateItems(emptyDataList)
             currentViewState = SearchViewState.EMPTY
@@ -271,10 +271,10 @@ class SearchActivity : AppCompatActivity() {
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
-        val iTunesSearchInteractor = retrofit.create(ITunesSearchInteractor::class.java)
+        val iTunesSearchRepository = retrofit.create(ITunesSearchRepository::class.java)
 
         val mediaType = "music"
-        val call = iTunesSearchInteractor.searchTracks(searchTerm, mediaType)
+        val call = iTunesSearchRepository.searchTracks(searchTerm, mediaType)
 
         // Обработка ответа от сервера
         call.enqueue(object : Callback<TracksResponse> {
@@ -309,7 +309,7 @@ class SearchActivity : AppCompatActivity() {
 
     // Обновление отображения истории поиска
     private fun updateSearchHistoryView() {
-        val historyItems = historyStorageInteractor.getHistory()
+        val historyItems = historyStorageRepository.getHistory()
         searchHistoryAdapter.updateItems(historyItems)
         recyclerViewSearchHistory.visibility = View.VISIBLE
     }

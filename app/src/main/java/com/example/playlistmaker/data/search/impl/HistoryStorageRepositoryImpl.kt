@@ -1,7 +1,7 @@
 package com.example.playlistmaker.data.search.impl
 
 import android.content.SharedPreferences
-import com.example.playlistmaker.data.search.HistoryStorageInteractor
+import com.example.playlistmaker.data.search.HistoryStorageRepository
 import com.example.playlistmaker.domain.player.model.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
@@ -11,7 +11,7 @@ import com.google.gson.reflect.TypeToken
  *
  * @property sharedPreferences Используется для доступа к хранилищу SharedPreferences.
  */
-class HistoryStorageInteractorImpl(private val sharedPreferences: SharedPreferences) : HistoryStorageInteractor {
+class HistoryStorageRepositoryImpl(private val sharedPreferences: SharedPreferences) : HistoryStorageRepository {
 
     // Создаем объект Gson для сериализации и десериализации данных.
     private val gson = Gson()

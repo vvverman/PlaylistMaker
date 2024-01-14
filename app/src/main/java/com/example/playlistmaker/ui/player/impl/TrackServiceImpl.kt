@@ -1,9 +1,10 @@
-package com.example.playlistmaker.domain.player.impl
+package com.example.playlistmaker.ui.player.impl
 
 import android.media.MediaPlayer
 import android.os.Handler
 import android.util.Log
 import android.widget.TextView
+import com.example.playlistmaker.ui.player.TrackService
 import java.lang.IllegalStateException
 
 // Класс TrackServiceImpl реализует интерфейс TrackService и предоставляет конкретную реализацию его методов

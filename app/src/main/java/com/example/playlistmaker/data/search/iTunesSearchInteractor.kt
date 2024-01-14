@@ -8,7 +8,7 @@ import retrofit2.http.Query
 
 
 // Определение интерфейса для iTunes Search API
-interface ITunesSearchInteractor {
+interface ITunesSearchRepository {
     @GET("/search")
     fun searchTracks(@Query("term") term: String, @Query("media") media: String): Call<TracksResponse>
 }

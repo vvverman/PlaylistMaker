@@ -1,5 +1,6 @@
 package com.example.playlistmaker.ui.player
 
+import android.content.Context
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -14,8 +15,8 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.playlistmaker.R
 import com.example.playlistmaker.data.player.PlayerStateRepository
-import com.example.playlistmaker.domain.player.impl.TrackService
-import com.example.playlistmaker.domain.player.impl.TrackServiceImpl
+import com.example.playlistmaker.data.player.impl.PlayerStateRepositoryImpl
+import com.example.playlistmaker.ui.player.impl.TrackServiceImpl
 import com.example.playlistmaker.domain.player.model.Track
 
 class MediaLibraryActivity : AppCompatActivity() {
@@ -30,6 +31,7 @@ class MediaLibraryActivity : AppCompatActivity() {
 
     private var currentTimeTextView: TextView? = null
     private val handler = Handler()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -193,7 +195,8 @@ val track = Track(
     override fun onPause() {
         super.onPause()
 
-
+        val sharedPreferences = getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE)
+        playerStateRepository = PlayerStateRepositoryImpl(sharedPreferences)
         playerStateRepository.putString("currentTrackId", currentTrackId)
 
 
@@ -223,6 +226,8 @@ val track = Track(
 
 
         // Восстановите состояние экрана "Аудиоплеер" из SharedPreferences
+        val sharedPreferences = getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE)
+        playerStateRepository = PlayerStateRepositoryImpl(sharedPreferences)
         val currentTrackId = playerStateRepository.getString("currentTrackId", null)
         // Используйте значение currentTrackId для выполнения необходимых действий
 

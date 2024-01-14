@@ -1,3 +1,5 @@
+package com.example.playlistmaker.presentation
+
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -6,7 +8,7 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.MultiTransformation
 import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
-import com.example.playlistmaker.Track
+import com.example.playlistmaker.domain.Track
 import com.example.playlistmaker.R
 
 class TracksViewHolder(itemView: View): RecyclerView.ViewHolder(itemView) {

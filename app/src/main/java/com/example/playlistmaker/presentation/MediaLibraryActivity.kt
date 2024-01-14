@@ -1,6 +1,5 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation
 
-import android.content.Context
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,8 +12,17 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
+import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.TrackService
+import com.example.playlistmaker.domain.TrackServiceImpl
+import com.example.playlistmaker.domain.SettingsManager
+import com.example.playlistmaker.domain.SettingsManagerImpl
 
 class MediaLibraryActivity : AppCompatActivity() {
+
+    val trackService: TrackService = TrackServiceImpl()
+    private lateinit var settingsManager: SettingsManager
+
     private var mediaPlayer: MediaPlayer? = null
 
     private lateinit var playButton: ImageView
@@ -24,14 +32,16 @@ class MediaLibraryActivity : AppCompatActivity() {
     private val handler = Handler()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        settingsManager =
+            SettingsManagerImpl(getSharedPreferences("AudioPlayerState", MODE_PRIVATE))
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media_library)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
         currentTimeTextView = findViewById(R.id.current_time)
-
-
 
 
         // Получите данные о треке из Intent
@@ -117,13 +127,13 @@ class MediaLibraryActivity : AppCompatActivity() {
 
                 setOnPreparedListener {
                     mediaPlayer?.start()
-                    updateCurrentTime()
+                    trackService.updateCurrentTime(mediaPlayer, currentTimeTextView)
 
 
                 }
                 setOnCompletionListener {
                     mediaPlayer?.pause()
-                    updateCurrentTime()
+                    trackService.updateCurrentTime(mediaPlayer, currentTimeTextView)
                     // Установите текущее время в 00:00, когда воспроизведение завершается
                     currentTimeTextView?.text = "00:00"
                     // Измените видимость кнопок паузы и воспроизведения
@@ -133,10 +143,6 @@ class MediaLibraryActivity : AppCompatActivity() {
                 }
             }
         }
-
-
-
-
 
 
         if (mediaPlayer?.isPlaying == true) {
@@ -154,22 +160,22 @@ class MediaLibraryActivity : AppCompatActivity() {
         playButton.setOnClickListener {
             // Проверьте, воспроизводится ли трек в данный момент
 
-                // Если трек уже воспроизводится, поставьте его на паузу
-                mediaPlayer?.start()
-                // Кнопка Pause появляется, кнопка Play исчезает
-                pauseButton.visibility = View.VISIBLE
-                playButton.visibility = View.GONE
+            // Если трек уже воспроизводится, поставьте его на паузу
+            mediaPlayer?.start()
+            // Кнопка Pause появляется, кнопка Play исчезает
+            pauseButton.visibility = View.VISIBLE
+            playButton.visibility = View.GONE
 
         }
 
         pauseButton.setOnClickListener {
             // Проверьте, воспроизводится ли трек в данный момент
 
-                // Если трек уже воспроизводится, поставьте его на паузу
-                mediaPlayer?.pause()
-                // Кнопка Pause появляется, кнопка Play исчезает
-                pauseButton.visibility = View.GONE
-                playButton.visibility = View.VISIBLE
+            // Если трек уже воспроизводится, поставьте его на паузу
+            mediaPlayer?.pause()
+            // Кнопка Pause появляется, кнопка Play исчезает
+            pauseButton.visibility = View.GONE
+            playButton.visibility = View.VISIBLE
 
         }
 
@@ -188,12 +194,9 @@ class MediaLibraryActivity : AppCompatActivity() {
     override fun onPause() {
         super.onPause()
 
-        // Сохраните состояние экрана "Аудиоплеер" в SharedPreferences
-        val sharedPreferences = getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        // Сохраните данные о текущем треке или другие параметры
-        editor.putString("currentTrackId", currentTrackId)
-        editor.apply()
+
+        settingsManager.putString("currentTrackId", currentTrackId)
+
 
         mediaPlayer?.pause()
         playButton.visibility = View.VISIBLE
@@ -207,34 +210,23 @@ class MediaLibraryActivity : AppCompatActivity() {
         mediaPlayer = null
     }
 
-    fun formatTime(milliseconds: Int): String {
-        val seconds = (milliseconds / 1000) % 60
-        val minutes = (milliseconds / (1000 * 60)) % 60
-        return String.format("%02d:%02d", minutes, seconds)
-    }
-
-    fun updateCurrentTime() {
-        if (mediaPlayer?.isPlaying == true) {
-            val currentPosition = mediaPlayer?.currentPosition ?: 0
-            val currentTime = formatTime(currentPosition)
-            currentTimeTextView?.text = currentTime
-        }
-        // Повторно вызывайте метод updateCurrentTime() каждую секунду
-        handler.postDelayed({ updateCurrentTime() }, 1000)
-    }
 
     // Метод вызывается при восстановлении активности из фонового режима
     override fun onResume() {
         super.onResume()
 
+        trackService.updateCurrentTime(mediaPlayer, currentTimeTextView)
 
+        handler.postDelayed(
+            { trackService.updateCurrentTime(mediaPlayer, currentTimeTextView) },
+            1000
+        )
 
-        updateCurrentTime()
-        handler.postDelayed({ updateCurrentTime() }, 1000)
 
         // Восстановите состояние экрана "Аудиоплеер" из SharedPreferences
-        val sharedPreferences = getSharedPreferences("AudioPlayerState", Context.MODE_PRIVATE)
-        val currentTrackId = sharedPreferences.getString("currentTrackId", null)
+        val currentTrackId = settingsManager.getString("currentTrackId", null)
+        // Используйте значение currentTrackId для выполнения необходимых действий
+
 
         // Проверьте, что текущий трек не равен null, и отобразите экран "Аудиоплеер" соответствующим образом
         if (currentTrackId != null) {

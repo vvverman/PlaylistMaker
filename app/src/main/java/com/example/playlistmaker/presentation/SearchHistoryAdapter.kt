@@ -1,11 +1,11 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation
 
-import TracksViewHolder
-import android.content.Context
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.Track
 
 class SearchHistoryAdapter(
     private var searchHistory: List<Track>

@@ -1,11 +1,12 @@
-package com.example.playlistmaker
+package com.example.playlistmaker.presentation
 
-import TracksViewHolder
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.Track
 
 // Класс ItemsAdapter является адаптером для RecyclerView и отвечает за отображение элементов списка
 class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<TracksViewHolder>() {

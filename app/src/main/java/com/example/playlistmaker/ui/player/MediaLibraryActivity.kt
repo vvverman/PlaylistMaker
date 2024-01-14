@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.ui.player
 
 import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
@@ -13,15 +13,15 @@ import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.TrackService
-import com.example.playlistmaker.domain.TrackServiceImpl
-import com.example.playlistmaker.domain.SettingsManager
-import com.example.playlistmaker.domain.SettingsManagerImpl
+import com.example.playlistmaker.data.player.PlayerStateRepository
+import com.example.playlistmaker.domain.player.impl.TrackService
+import com.example.playlistmaker.domain.player.impl.TrackServiceImpl
+import com.example.playlistmaker.domain.player.model.Track
 
 class MediaLibraryActivity : AppCompatActivity() {
 
     val trackService: TrackService = TrackServiceImpl()
-    private lateinit var settingsManager: SettingsManager
+    private lateinit var playerStateRepository: PlayerStateRepository
 
     private var mediaPlayer: MediaPlayer? = null
 
@@ -33,8 +33,6 @@ class MediaLibraryActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        settingsManager =
-            SettingsManagerImpl(getSharedPreferences("AudioPlayerState", MODE_PRIVATE))
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_media_library)
@@ -43,17 +41,18 @@ class MediaLibraryActivity : AppCompatActivity() {
 
         currentTimeTextView = findViewById(R.id.current_time)
 
-
-        // Получите данные о треке из Intent
-        val trackName = intent.getStringExtra("trackName")
-        val artistName = intent.getStringExtra("artistName")
-        val collectionName = intent.getStringExtra("collectionName")
-        val releaseDate = intent.getStringExtra("releaseDate")
-        val primaryGenreName = intent.getStringExtra("primaryGenreName")
-        val country = intent.getStringExtra("country")
-        val trackTimeMills = intent.getStringExtra("trackTimeMills")
-        val coverImageURL = intent.getStringExtra("coverImageURL")
-
+val track = Track(
+    compositionName = intent.getStringExtra("trackName") ?: "",
+    artistName = intent.getStringExtra("artistName") ?: "",
+    albumName = intent.getStringExtra("collectionName"),
+    releaseDate = intent.getStringExtra("releaseDate"),
+    genre = intent.getStringExtra("primaryGenreName"),
+    country = intent.getStringExtra("country"),
+    durationInMillis = intent.getStringExtra("trackTimeMills")?.toLongOrNull() ?: 0,
+    coverImageURL = intent.getStringExtra("coverImageURL"),
+    itemId = intent.getStringExtra("itemId")?.toLongOrNull() ?: 0,
+    previewUrl = intent.getStringExtra("previewUrl")
+)
 
         // Найдите соответствующие TextView на макете активности
         val trackNameTextView = findViewById<TextView>(R.id.track_name)
@@ -66,19 +65,19 @@ class MediaLibraryActivity : AppCompatActivity() {
 
 
         // Заполните TextView данными о треке
-        trackNameTextView.text = trackName
-        artistNameTextView.text = artistName
-        collectionNameTextView.text = collectionName
-        releaseDateTextView.text = releaseDate
-        primaryGenreNameTextView.text = primaryGenreName
-        countryTextView.text = country
-        trackTimeMillsTextView.text = trackTimeMills
+        trackNameTextView.text = track.compositionName
+        artistNameTextView.text = track.artistName
+        collectionNameTextView.text = track.albumName
+        releaseDateTextView.text = track.releaseDate
+        primaryGenreNameTextView.text = track.genre
+        countryTextView.text = track.country
+        trackTimeMillsTextView.text = track.durationInMillis.toString()
 
 
         // Проверьте, что releaseDate не равен null и не пуст
-        if (!releaseDate.isNullOrEmpty()) {
+        if (!track.releaseDate.isNullOrEmpty()) {
             // Извлеките только первые четыре символа (год) из строки releaseDate
-            val year = releaseDate.substring(0, 4)
+            val year = track.releaseDate.substring(0, 4)
 
             // Найдите соответствующий TextView на макете активности для отображения года релиза
             val releaseYearTextView = findViewById<TextView>(R.id.release_date)
@@ -93,7 +92,7 @@ class MediaLibraryActivity : AppCompatActivity() {
 
         val coverImageView = findViewById<ImageView>(R.id.coverImageView)
 // Получите URL обложки альбома из объекта Track (предположим, что это поле называется coverImageURL)
-        val imageUrl = coverImageURL
+        val imageUrl = track.coverImageURL
 
         if (!imageUrl.isNullOrEmpty()) {
             // Опции для загрузки изображения
@@ -195,7 +194,7 @@ class MediaLibraryActivity : AppCompatActivity() {
         super.onPause()
 
 
-        settingsManager.putString("currentTrackId", currentTrackId)
+        playerStateRepository.putString("currentTrackId", currentTrackId)
 
 
         mediaPlayer?.pause()
@@ -224,7 +223,7 @@ class MediaLibraryActivity : AppCompatActivity() {
 
 
         // Восстановите состояние экрана "Аудиоплеер" из SharedPreferences
-        val currentTrackId = settingsManager.getString("currentTrackId", null)
+        val currentTrackId = playerStateRepository.getString("currentTrackId", null)
         // Используйте значение currentTrackId для выполнения необходимых действий
 
 

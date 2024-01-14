@@ -1,11 +1,13 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.ui.search
 
 import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.Track
+import com.example.playlistmaker.domain.player.model.Track
+import com.example.playlistmaker.ui.player.TracksViewHolder
+import com.example.playlistmaker.ui.player.MediaLibraryActivity
 
 class SearchHistoryAdapter(
     private var searchHistory: List<Track>
@@ -42,7 +44,7 @@ class SearchHistoryAdapter(
             // Создаем интент для перехода на экран "Аудиоплеер"
             val intent = Intent(holder.itemView.context, MediaLibraryActivity::class.java)
 
-            val coverImageURL = track.coverImageURL.replaceAfterLast("/","512x512bb.jpg", )
+            val coverImageURL = track.coverImageURL?.replaceAfterLast("/","512x512bb.jpg", )
 
 
             // Передаем данные о треке в новую активность

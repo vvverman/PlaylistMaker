@@ -1,6 +1,6 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.data.search.model
 
-import com.example.playlistmaker.domain.Track
+import com.example.playlistmaker.domain.player.model.Track
 import com.google.gson.annotations.SerializedName
 
 

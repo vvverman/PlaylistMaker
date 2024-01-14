@@ -1,21 +1,18 @@
-package com.example.playlistmaker.domain
+package com.example.playlistmaker.data.player.impl
 
 import android.content.SharedPreferences
+import com.example.playlistmaker.data.player.PlayerStateRepository
 
-interface SettingsManager {
-    fun getEditor() : SharedPreferences.Editor
-    fun getString(name : String, defaultValue : String?) : String?
-    fun putString(name: String, value: String?)
-    fun removeString(name: String)
-}
+class PlayerStateRepositoryImpl(private val sharedPreferences: SharedPreferences) :
+    PlayerStateRepository {
 
-
-class SettingsManagerImpl(private val sharedPreferences: SharedPreferences) : SettingsManager {
+    private val AUDIO_PLAYER_STATE = "AudioPlayerState"
     override fun getEditor(): SharedPreferences.Editor {
         return sharedPreferences.edit()
     }
 
     override fun getString(name: String, defaultValue: String?): String? {
+
         return sharedPreferences.getString(name, defaultValue)
     }
 

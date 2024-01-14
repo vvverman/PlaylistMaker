@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.domain.player
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -6,7 +6,10 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.Track
+import com.example.playlistmaker.domain.player.model.Track
+import com.example.playlistmaker.ui.player.MediaLibraryActivity
+import com.example.playlistmaker.ui.player.TracksViewHolder
+import com.example.playlistmaker.ui.search.SearchActivity
 
 // Класс ItemsAdapter является адаптером для RecyclerView и отвечает за отображение элементов списка
 class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<TracksViewHolder>() {
@@ -64,7 +67,7 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
 
             val minutes = track.durationInMillis / 1000 / 60
             val seconds = track.durationInMillis / 1000 % 60
-            val coverImageURL = track.coverImageURL.replaceAfterLast("/","512x512bb.jpg", )
+            val coverImageURL = track.coverImageURL?.replaceAfterLast("/","512x512bb.jpg", )
             // Передаем данные о треке в новую активность
             intent.putExtra("trackName", track.compositionName)
             intent.putExtra("artistName", track.artistName)
@@ -75,6 +78,7 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
             intent.putExtra("trackTimeMills", "${minutes}:${seconds}")
             intent.putExtra("coverImageURL", coverImageURL)
             intent.putExtra("previewUrl", track.previewUrl)
+            intent.putExtra("itemId", track.itemId)
 
             // Запускаем активность "Аудиоплеер"
             holder.itemView.context.startActivity(intent)

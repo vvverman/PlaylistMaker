@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.playlistmaker.R
+import com.example.playlistmaker.ui.player.MediaLibraryActivity
+import com.example.playlistmaker.ui.search.SearchActivity
 import com.example.playlistmaker.ui.settings.activity.SettingsActivity
 
 // Класс MainActivity является главной активностью приложения

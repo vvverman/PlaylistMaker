@@ -1,7 +1,8 @@
-package com.example.playlistmaker.data
+package com.example.playlistmaker.data.search.impl
 
 import android.content.SharedPreferences
-import com.example.playlistmaker.domain.Track
+import com.example.playlistmaker.data.search.HistoryStorageInteractor
+import com.example.playlistmaker.domain.player.model.Track
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
@@ -10,7 +11,7 @@ import com.google.gson.reflect.TypeToken
  *
  * @property sharedPreferences Используется для доступа к хранилищу SharedPreferences.
  */
-class SearchHistory(private val sharedPreferences: SharedPreferences) {
+class HistoryStorageInteractorImpl(private val sharedPreferences: SharedPreferences) : HistoryStorageInteractor {
 
     // Создаем объект Gson для сериализации и десериализации данных.
     private val gson = Gson()
@@ -23,7 +24,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
      *
      * @param track Элемент типа Item, который будет добавлен в историю.
      */
-    fun addTrackToHistory(track: Track) {
+    override fun addTrackToHistory(track: Track) {
         // Получаем текущую историю поиска.
         val history = getHistory()
 
@@ -47,7 +48,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
      *
      * @return Список элементов типа Item, представляющих историю поиска.
      */
-    fun getHistory(): MutableList<Track> {
+    override fun getHistory(): MutableList<Track> {
         // Получаем историю в виде JSON-строки из SharedPreferences.
         val historyString = sharedPreferences.getString(historyKey, "")
 
@@ -63,7 +64,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
     /**
      * Метод для очистки истории поиска.
      */
-    fun clearHistory() {
+    override fun clearHistory() {
         // Удаляем историю из SharedPreferences.
         sharedPreferences.edit().remove(historyKey).apply()
     }
@@ -73,7 +74,7 @@ class SearchHistory(private val sharedPreferences: SharedPreferences) {
      *
      * @param history Список элементов типа Item, представляющих обновленную историю поиска.
      */
-    private fun saveHistory(history: MutableList<Track>) {
+    override fun saveHistory(history: MutableList<Track>) {
         // Сериализуем список элементов в JSON-строку.
         val historyString = gson.toJson(history)
 

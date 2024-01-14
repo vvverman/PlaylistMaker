@@ -1,9 +1,21 @@
-package com.example.playlistmaker.ui
+package com.example.playlistmaker.ui.settings.activity
 
 import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
+import com.example.playlistmaker.data.settings.SettingsRepository
+import com.example.playlistmaker.domain.settings.model.ThemeSettings
 
-class ThemeManager : Application() {
+
+class ThemeManager() : Application() {
+
+    val settingsRepository = SettingsRepository()
+    val themeManager = ThemeManager(settingsRepository)
+
+    constructor() : this(settingsRepository) {
+        // Пустой конструктор без аргументов
+    }
+
+
     companion object {
         private const val PREFS_NAME = "app_settings"
         private const val DARK_THEME_ENABLED = "dark_theme_enabled"
@@ -26,15 +38,15 @@ class ThemeManager : Application() {
     }
 
     private fun loadThemeFromSharedPreferences() {
-        val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-        val darkThemeEnabled = sharedPreferences.getBoolean(DARK_THEME_ENABLED, false)
-        switchTheme(darkThemeEnabled)
+        val themeSettings: ThemeSettings = settingsRepository.getThemeSettings()
+        switchTheme(themeSettings.isDarkThemeEnabled)
     }
 
     private fun saveThemeToSharedPreferences(darkThemeEnabled: Boolean) {
-        val sharedPreferences = getSharedPreferences(PREFS_NAME, MODE_PRIVATE)
-        val editor = sharedPreferences.edit()
-        editor.putBoolean(DARK_THEME_ENABLED, darkThemeEnabled)
-        editor.apply()
+        settingsRepository.updateThemeSetting(ThemeSettings(darkThemeEnabled))
     }
 }
+
+
+
+

@@ -6,13 +6,13 @@ import com.example.playlistmaker.domain.settings.model.ThemeSettings
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 
-class SettingsRepositoryImpl(private val sharedPreferences: SharedPreferences) : SettingsRepository {
+class SettingsRepositoryImpl(private val sharedPreferences: SharedPreferences?) : SettingsRepository {
 
     private val PREFS_NAME = "app_settings"
     private val gson = Gson()
     override fun getThemeSettings(): ThemeSettings {
 
-        val appSettingsString = sharedPreferences.getString(PREFS_NAME, "")
+        val appSettingsString = sharedPreferences?.getString(PREFS_NAME, "")
         return if (appSettingsString.isNullOrBlank()) {
             ThemeSettings(
                 isDarkThemeEnabled = false
@@ -26,7 +26,7 @@ class SettingsRepositoryImpl(private val sharedPreferences: SharedPreferences) :
 
         val appSettingsString = gson.toJson(settings)
 
-        sharedPreferences.edit().putString(PREFS_NAME, appSettingsString).apply()
+        sharedPreferences?.edit()?.putString(PREFS_NAME, appSettingsString)?.apply()
     }
 }
 

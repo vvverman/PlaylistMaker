@@ -2,59 +2,80 @@ package com.example.playlistmaker.ui.player
 
 import android.content.Context
 import android.media.MediaPlayer
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import android.widget.ImageButton
 import android.widget.ImageView
+import android.widget.ProgressBar
 import android.widget.TextView
+import androidx.activity.ComponentActivity
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestOptions
 import com.example.playlistmaker.R
-import com.example.playlistmaker.data.player.PlayerStateRepository
+import com.example.playlistmaker.domain.player.PlayerStateRepository
 import com.example.playlistmaker.data.player.impl.PlayerStateRepositoryImpl
+import com.example.playlistmaker.databinding.ActivityMediaLibraryBinding
 import com.example.playlistmaker.ui.player.impl.TrackServiceImpl
 import com.example.playlistmaker.domain.player.model.Track
+import com.example.playlistmaker.ui.player.view_model.MediaLibraryViewModel
 
-class MediaLibraryActivity : AppCompatActivity() {
+class MediaLibraryActivity : ComponentActivity() {
+
+    private val viewModel by viewModels<MediaLibraryViewModel> { MediaLibraryViewModel.getViewModelFactory("123") }
+    // 1
+    private lateinit var binding: ActivityMediaLibraryBinding
+}
+
+    private lateinit var viewModel: MediaLibraryViewModel
 
     val trackService: TrackService = TrackServiceImpl()
     private lateinit var playerStateRepository: PlayerStateRepository
-
     private var mediaPlayer: MediaPlayer? = null
-
     private lateinit var playButton: ImageView
     private lateinit var pauseButton: ImageView
-
     private var currentTimeTextView: TextView? = null
     private val handler = Handler()
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
+        val track = Track(
+            compositionName = intent.getStringExtra("trackName") ?: "",
+            artistName = intent.getStringExtra("artistName") ?: "",
+            albumName = intent.getStringExtra("collectionName"),
+            releaseDate = intent.getStringExtra("releaseDate"),
+            genre = intent.getStringExtra("primaryGenreName"),
+            country = intent.getStringExtra("country"),
+            durationInMillis = intent.getStringExtra("trackTimeMills")?.toLongOrNull() ?: 0,
+            coverImageURL = intent.getStringExtra("coverImageURL"),
+            itemId = intent.getStringExtra("itemId")?.toLongOrNull() ?: 0,
+            previewUrl = intent.getStringExtra("previewUrl")
+        )
 
         super.onCreate(savedInstanceState)
+
+        binding = ActivityMediaLibraryBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        viewModel = ViewModelProvider(this, MediaLibraryViewModel.getViewModelFactory(track))[MediaLibraryViewModel::class.java]
+
+        viewModel.getLoadingLiveData().observe(this) { isLoading ->
+            changeProgressBarVisibility(isLoading)
+
+
         setContentView(R.layout.activity_media_library)
 
         val backButton = findViewById<ImageButton>(R.id.backButton)
 
         currentTimeTextView = findViewById(R.id.current_time)
 
-val track = Track(
-    compositionName = intent.getStringExtra("trackName") ?: "",
-    artistName = intent.getStringExtra("artistName") ?: "",
-    albumName = intent.getStringExtra("collectionName"),
-    releaseDate = intent.getStringExtra("releaseDate"),
-    genre = intent.getStringExtra("primaryGenreName"),
-    country = intent.getStringExtra("country"),
-    durationInMillis = intent.getStringExtra("trackTimeMills")?.toLongOrNull() ?: 0,
-    coverImageURL = intent.getStringExtra("coverImageURL"),
-    itemId = intent.getStringExtra("itemId")?.toLongOrNull() ?: 0,
-    previewUrl = intent.getStringExtra("previewUrl")
-)
+
 
         // Найдите соответствующие TextView на макете активности
         val trackNameTextView = findViewById<TextView>(R.id.track_name)
@@ -208,9 +229,16 @@ val track = Track(
 
     override fun onDestroy() {
         super.onDestroy()
+        viewModel.removeLoadingObserver()
         mediaPlayer?.release()
         mediaPlayer = null
     }
+        private fun changeProgressBarVisibility(visible: Boolean) {
+            // Обновляем видимость прогресс-бара
+            val progressBar = findViewById<ProgressBar>(R.id.progress_bar)
+            progressBar.isVisible = visible
+            binding.progressBar.isVisible = visible
+        }
 
 
     // Метод вызывается при восстановлении активности из фонового режима

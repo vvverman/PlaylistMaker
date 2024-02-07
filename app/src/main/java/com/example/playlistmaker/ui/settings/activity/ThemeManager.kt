@@ -12,8 +12,9 @@ import com.example.playlistmaker.domain.settings.model.ThemeSettings
 
 class ThemeManager() : Application() {
 
-    private lateinit var settingsRepository: SettingsRepository
-    private lateinit var sharedPreferences: SharedPreferences
+    private var settingsRepository: SettingsRepository? = null
+    private var sharedPreferences: SharedPreferences? = null
+
 
     companion object {
         private const val PREFS_NAME = "app_settings"
@@ -39,14 +40,14 @@ class ThemeManager() : Application() {
     private fun loadThemeFromSharedPreferences() {
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
         settingsRepository = SettingsRepositoryImpl(sharedPreferences)
-        val themeSettings: ThemeSettings = settingsRepository.getThemeSettings()
+        val themeSettings: ThemeSettings = (settingsRepository as SettingsRepositoryImpl).getThemeSettings()
         switchTheme(themeSettings.isDarkThemeEnabled)
     }
 
     private fun saveThemeToSharedPreferences(darkThemeEnabled: Boolean) {
         sharedPreferences = getSharedPreferences("SearchHistory", Context.MODE_PRIVATE)
         settingsRepository = SettingsRepositoryImpl(sharedPreferences)
-        settingsRepository.updateThemeSetting(ThemeSettings(darkThemeEnabled))
+        (settingsRepository as SettingsRepositoryImpl).updateThemeSetting(ThemeSettings(darkThemeEnabled))
     }
 }
 

@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.player.ItemsDiffCallback
 import com.example.playlistmaker.domain.player.model.Track
 import com.example.playlistmaker.ui.search.SearchActivity
+
 
 // Класс ItemsAdapter является адаптером для RecyclerView и отвечает за отображение элементов списка
 class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<TracksViewHolder>() {
@@ -44,6 +44,12 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
 
     // Метод вызывается для создания нового ViewHolder, который будет отображать элемент списка
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TracksViewHolder {
+
+        return TracksViewHolder(
+            LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
+        )
+
+
         // Создаем View элемента списка из layout-ресурса "R.layout.item"
         val view = LayoutInflater.from(parent.context).inflate(R.layout.item, parent, false)
 
@@ -66,7 +72,7 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
 
             val minutes = track.durationInMillis / 1000 / 60
             val seconds = track.durationInMillis / 1000 % 60
-            val coverImageURL = track.coverImageURL?.replaceAfterLast("/","512x512bb.jpg", )
+            val coverImageURL = track.coverImageURL?.replaceAfterLast("/", "512x512bb.jpg")
             // Передаем данные о треке в новую активность
             intent.putExtra("trackName", track.compositionName)
             intent.putExtra("artistName", track.artistName)
@@ -86,6 +92,25 @@ class TracksAdapter(searchActivity: SearchActivity) : RecyclerView.Adapter<Track
         // Вызываем метод bind() ViewHolder'а для отображения данных элемента списка
         holder.bind(track)
     }
+
+    class TracksViewHolder(private val binding: ItemTrackBinding): RecyclerView.ViewHolder(binding.root) {
+
+        fun bind(track: Track) {
+            // 2
+            binding.compositionName.text = track.compositionName
+            binding.durationInMillis.text = track.durationInMillis
+            binding.country.text = track.country
+            binding.artistName.text = track.artistName
+            binding.albumName.text = track.albumName
+            binding.coverImageURL.text = track.coverImageURL
+            binding.genre.text = track.genre
+            binding.itemId.text = track.itemId
+            binding.previewUrl.text = track.previewUrl
+            binding.releaseDate.text = track.releaseDate
+        }
+    }
+
+
     // Метод возвращает общее количество элементов в списке
     override fun getItemCount(): Int {
         return itemsList.size

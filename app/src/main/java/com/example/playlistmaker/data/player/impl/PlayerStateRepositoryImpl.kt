@@ -1,7 +1,7 @@
 package com.example.playlistmaker.data.player.impl
 
 import android.content.SharedPreferences
-import com.example.playlistmaker.data.player.PlayerStateRepository
+import com.example.playlistmaker.domain.player.PlayerStateRepository
 
 class PlayerStateRepositoryImpl(private val sharedPreferences: SharedPreferences) :
     PlayerStateRepository {

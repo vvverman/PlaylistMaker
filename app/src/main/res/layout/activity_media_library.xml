@@ -14,14 +14,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
-        android:id="@+id/progress_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+<!--    <ProgressBar-->
+<!--        android:id="@+id/progress_bar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/leftBorder"
@@ -118,7 +118,8 @@
         android:layout_height="@dimen/offset_100"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:background="@drawable/play_button"
+        android:background="@null"
+        android:src="@drawable/play_button"
         android:layout_marginTop="@dimen/offset_30"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -126,19 +127,21 @@
         app:layout_constraintVertical_bias="0.0"
         />
 
-    <ImageView
-        android:id="@+id/pause_button"
-        android:layout_width="@dimen/offset_100"
-        android:layout_height="@dimen/offset_100"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/pause_button"
-        android:layout_marginTop="@dimen/offset_30"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/artist_name"
-        app:layout_constraintVertical_bias="0.0"
-        />
+<!--    <ImageView-->
+<!--        android:id="@+id/pause_button"-->
+
+<!--        android:layout_width="@dimen/offset_100"-->
+<!--        android:layout_height="@dimen/offset_100"-->
+<!--        android:layout_alignParentStart="true"-->
+<!--        android:layout_alignParentTop="true"-->
+<!--        android:background="@drawable/pause_button"-->
+<!--        android:layout_marginTop="@dimen/offset_30"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/artist_name"-->
+<!--        app:layout_constraintVertical_bias="0.0"-->
+
+<!--        />-->
 
     <ImageView
         android:id="@+id/add_to_favorite_button"

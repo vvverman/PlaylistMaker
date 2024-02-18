@@ -8,7 +8,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
-        android:name=".ui.settings.activity.ThemeManager"
+        android:name=".domain.settings.ThemeManager"
         android:usesCleartextTraffic="true"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -19,11 +19,11 @@
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         tools:targetApi="31">
         <activity
-            android:name=".ui.settings.activity.SettingsActivity"
+            android:name=".ui.settings.SettingsActivity"
             android:exported="false"
             android:label="@string/title_activity_settings" />
         <activity
-            android:name=".ui.player.MediaLibraryActivity"
+            android:name=".ui.medialibrary.MediaLibraryActivity"
             android:exported="false" />
         <activity
             android:name=".ui.search.SearchActivity"

@@ -8,7 +8,7 @@ object SearchCreator {
     private var searchInteractor: SearchInteractorImpl? = null
 
     fun createInteractor(context: Context): SearchInteractor {
-        val trackRepository = TrackRepositoryCreator.createTracksRepository(context)
+        val trackRepository = TrackRepoCreator.createTracksRepository(context)
         return searchInteractor ?: SearchInteractorImpl(trackRepository).apply {
             searchInteractor = this
         }

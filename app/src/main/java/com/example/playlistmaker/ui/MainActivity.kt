@@ -5,9 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import com.example.playlistmaker.R
-import com.example.playlistmaker.ui.player.MediaLibraryActivity
+import com.example.playlistmaker.ui.medialibrary.MediaLibraryActivity
 import com.example.playlistmaker.ui.search.SearchActivity
-import com.example.playlistmaker.ui.settings.activity.SettingsActivity
+import com.example.playlistmaker.ui.settings.SettingsActivity
 
 // Класс MainActivity является главной активностью приложения
 class MainActivity : AppCompatActivity() {
@@ -27,13 +27,13 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Находим кнопку "Медиатека" по ее идентификатору
-        val medialibraryButton = findViewById<Button>(R.id.medialibrary)
+        val PlayerButton = findViewById<Button>(R.id.Player)
 
         // Устанавливаем слушатель клика на кнопку "Медиатека"
-        medialibraryButton.setOnClickListener {
-            // Создаем намерение (Intent) для перехода на активность MediaLibraryActivity
+        PlayerButton.setOnClickListener {
+            // Создаем намерение (Intent) для перехода на активность PlayerActivity
             val intent = Intent(this, MediaLibraryActivity::class.java)
-            // Запускаем активность MediaLibraryActivity
+            // Запускаем активность PlayerActivity
             startActivity(intent)
         }
 

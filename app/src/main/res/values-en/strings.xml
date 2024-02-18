@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search_button">Search</string>
-    <string name="medialibrary_button">Media Library</string>
+    <string name="Player_button">Media Library</string>
     <string name="settings_button">Settings</string>
     <string name="settings_title">Settings</string>
     <string name="color_theme">Dark Theme</string>
@@ -47,5 +47,10 @@
     <string name="update_button_text">Update</string>
 
     <string name="you_were_looking_for">You were looking for</string>
+
+    <string name="url_mail">mailto:test@example.com</string>
+    <string name="type_share_text">sharing text</string>
+
+    <string name="playlist_create">Playlist create</string>
 
 </resources>

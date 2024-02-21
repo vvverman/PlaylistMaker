@@ -70,7 +70,7 @@ class HistoryStorageRepoImpl(
 
     override fun getHistory(): MutableList<Track> {
         return sharedPreferences.getString(KEY_TRACKS_HISTORY, null)?.let {
-            sharedPreferencesConverter.convertJsonToList(it)?.toMutableList()
+            sharedPreferencesConverter.convertJsonToList(it).toMutableList()
         } ?: mutableListOf()
     }
 

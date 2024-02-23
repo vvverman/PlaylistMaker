@@ -2,7 +2,7 @@ package com.example.playlistmaker.data.settings.impl
 
 import android.content.SharedPreferences
 import android.util.Log
-import com.example.playlistmaker.data.settings.SettingsRepo
+import com.example.playlistmaker.domain.settings.SettingsRepo
 import com.example.playlistmaker.domain.settings.model.ThemeSettings
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken

@@ -4,7 +4,6 @@ import android.app.Application
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatDelegate
-import com.example.playlistmaker.data.settings.SettingsRepo
 import com.example.playlistmaker.data.settings.impl.SettingsRepoImpl
 import com.example.playlistmaker.domain.settings.model.ThemeSettings
 

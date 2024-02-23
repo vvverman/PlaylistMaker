@@ -1,7 +1,7 @@
 package com.example.playlistmaker.creator
 
 import android.content.Context
-import com.example.playlistmaker.data.settings.SettingsRepo
+import com.example.playlistmaker.domain.settings.SettingsRepo
 import com.example.playlistmaker.data.settings.impl.SettingsRepoImpl
 import com.example.playlistmaker.domain.settings.SettingsInteractor
 import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl

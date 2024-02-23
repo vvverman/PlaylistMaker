@@ -5,7 +5,7 @@ import android.content.SharedPreferences
 import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.data.search.model.TracksResult
 import com.example.playlistmaker.data.search.model.TracksSearchRequest
-import com.example.playlistmaker.data.search.HistoryStorageRepo
+import com.example.playlistmaker.domain.search.HistoryStorageRepo
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.utils.Resource
 import com.example.playlistmaker.domain.utils.SharedPreferenceConverter
@@ -106,7 +106,7 @@ class HistoryStorageRepoImpl(
 //package com.example.playlistmaker.data.search.impl
 //
 //import android.content.SharedPreferences
-//import com.example.playlistmaker.data.search.HistoryStorageRepo
+//import com.example.playlistmaker.domain.search.HistoryStorageRepo
 //import com.example.playlistmaker.domain.models.Track
 //import com.example.playlistmaker.domain.utils.Resource
 //import com.google.gson.Gson

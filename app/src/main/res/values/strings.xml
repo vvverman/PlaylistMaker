@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="search_button">Поиск</string>
-    <string name="medialibrary_button">Медиатека</string>
+    <string name="Player_button">Медиатека</string>
     <string name="settings_button">Настройки</string>
     <string name="settings_title">Настройки</string>
     <string name="color_theme">Темная тема</string>
@@ -9,7 +9,7 @@
     <string name="support_button">Написать в поддержку</string>
     <string name="terms_of_use_button">Пользовательское соглашение</string>
     <string name="setting_button">Настройки</string>
-    <string name="app_name" translatable="false">Playlist Maker</string>
+    <string name="app_name" translatable="false">Плэйлист мейкер</string>
 
     <string name="search_title">Поиск</string>
     <string name="shareButtonText" translatable="false">https://practicum.yandex.ru/android-developer/</string>
@@ -46,6 +46,11 @@
     <string name="update_button_text">Обновить</string>
 
     <string name="you_were_looking_for">Вы искали</string>
+
+    <string name="url_mail">mailto:test@example.com</string>
+    <string name="type_share_text">текст для шеринга</string>
+
+    <string name="playlist_create">Плэйлист создан</string>
 
 
 </resources>

@@ -38,9 +38,9 @@
 
         <Button
             style="@style/ActivityMainButtonStyle"
-            android:id="@+id/medialibrary"
-            android:text="@string/medialibrary_button"
-            app:icon="@drawable/medialibrary_button" />
+            android:id="@+id/Player"
+            android:text="@string/Player_button"
+            app:icon="@drawable/player_button" />
 
         <Button
             style="@style/ActivityMainButtonStyle"

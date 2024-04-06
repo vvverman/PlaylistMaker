@@ -9,3 +9,4 @@ interface TrackApi {
     @GET("search?entity=song")
     fun searchTracks(@Query("term") text:String) : Call<TracksResult>
 }
+

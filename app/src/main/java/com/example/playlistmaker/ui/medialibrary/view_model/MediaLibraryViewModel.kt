@@ -8,17 +8,20 @@ import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.playlistmaker.creator.MediaLibraryCreator
+import com.example.playlistmaker.domain.medialibrary.MediaLibraryInteractor
 import com.example.playlistmaker.domain.medialibrary.model.MediaLibraryState
 import com.example.playlistmaker.domain.utils.DateFormat
-import com.example.playlistmaker.ui.medialibrary.MediaLibraryScreenState
 import com.example.playlistmaker.ui.medialibrary.MediaLibraryScreenEvent
+import com.example.playlistmaker.ui.medialibrary.MediaLibraryScreenState
 import com.example.playlistmaker.ui.util.SingleLiveEvent
 
-class MediaLibraryViewModel(application: Application) : AndroidViewModel(application) {
+class MediaLibraryViewModel(
+    playerInteractor: MediaLibraryInteractor,
+    application: Application
+) : AndroidViewModel(application) {
 
     companion object {
-        private const val TIME_STEP = 300L
+        private const val TIME_STEP_MILLIS = 300L
     }
 
     private var mediaPlayer: MediaPlayer = MediaPlayer()
@@ -27,15 +30,15 @@ class MediaLibraryViewModel(application: Application) : AndroidViewModel(applica
         override fun run() {
             val time = DateFormat.formatMillisToString(mediaPlayer.currentPosition.toLong())
             if (getCurrentScreenState().mediaLibraryState == MediaLibraryState.PLAYING) {
-                handler.postDelayed(this, TIME_STEP)
+                handler.postDelayed(this, TIME_STEP_MILLIS)
                 _state.postValue(MediaLibraryScreenState(MediaLibraryState.PLAYING, track, time))
             } else {
                 pausePlayer()
             }
         }
     }
-    private val mediaLibraryInteractor = MediaLibraryCreator.provideMediaLibraryInteractor(application)
-    private val track = mediaLibraryInteractor.getTrackForPlaying()
+
+    private val track = playerInteractor.getTrackForPlaying()
 
     private val _state = MutableLiveData<MediaLibraryScreenState>()
     val state: LiveData<MediaLibraryScreenState> = _state

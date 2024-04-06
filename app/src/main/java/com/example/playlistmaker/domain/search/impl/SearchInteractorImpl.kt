@@ -5,21 +5,21 @@ import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.search.SearchInteractor
 import java.util.concurrent.Executors
 
-class SearchInteractorImpl(private val repository: HistoryStorageRepo) : SearchInteractor {
+class SearchInteractorImpl(private val historyStorageRepo: HistoryStorageRepo) : SearchInteractor {
 
     private val executor = Executors.newCachedThreadPool()
 
     override fun searchTracks(request: String, consumer: SearchInteractor.TracksConsumer) {
         executor.execute {
-            consumer.consume(repository.searchTracks(request))
+            consumer.consume(historyStorageRepo.searchTracks(request))
         }
     }
 
-    override fun getTracksHistory(): List<Track> = repository.getHistory()
+    override fun getTracksHistory(): List<Track> = historyStorageRepo.getHistory()
 
-    override fun addTrackToHistory(track: Track) = repository.addTrackToHistory(track)
+    override fun addTrackToHistory(track: Track) = historyStorageRepo.addTrackToHistory(track)
 
-    override fun clearTrackHistory() = repository.clearHistory()
+    override fun clearTrackHistory() = historyStorageRepo.clearHistory()
 
-    override fun saveTrackForPlaying(track: Track) = repository.savePlayingTrack(track)
+    override fun saveTrackForPlaying(track: Track) = historyStorageRepo.savePlayingTrack(track)
 }

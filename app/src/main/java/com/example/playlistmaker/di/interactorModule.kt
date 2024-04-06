@@ -13,7 +13,7 @@ import org.koin.dsl.module
 val interactorModule = module {
 
     single<SearchInteractor> {
-        SearchInteractorImpl(trackRepository = get())
+        SearchInteractorImpl(historyStorageRepo = get())
     }
 
     single<MediaLibraryInteractor> {

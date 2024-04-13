@@ -4,8 +4,6 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.playlistmaker.R
 import com.example.playlistmaker.databinding.ActivityMediaLibraryBinding
 import com.example.playlistmaker.domain.models.Track
@@ -13,40 +11,42 @@ import com.example.playlistmaker.domain.medialibrary.model.MediaLibraryState
 import com.example.playlistmaker.domain.utils.DateFormat
 import com.example.playlistmaker.ui.medialibrary.view_model.MediaLibraryViewModel
 import com.example.playlistmaker.ui.util.load
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MediaLibraryActivity : AppCompatActivity() {
     private var binding: ActivityMediaLibraryBinding? = null
-    private lateinit var viewModel: MediaLibraryViewModel
+//    private lateinit var viewModel: MediaLibraryViewModel
+private val mediaLibraryViewModel: MediaLibraryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMediaLibraryBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        viewModel = ViewModelProvider(this).get<MediaLibraryViewModel>()
+//        viewModel = ViewModelProvider(this).get<MediaLibraryViewModel>()
         initViews()
         initObservers()
     }
 
     override fun onPause() {
         super.onPause()
-        viewModel.onPause()
+        mediaLibraryViewModel.onPause()
     }
 
     override fun onStop() {
         super.onStop()
-        viewModel.onStop()
+        mediaLibraryViewModel.onStop()
     }
 
     private fun initViews(){
         binding?.apply {
             backButton.setOnClickListener { onBackPressed() }
-            addToFavoriteButton.setOnClickListener { viewModel.onLikeButtonClicked() }
-            playButton.setOnClickListener { viewModel.onPlayButtonClicked() }
+            addToFavoriteButton.setOnClickListener { mediaLibraryViewModel.onLikeButtonClicked() }
+            playButton.setOnClickListener { mediaLibraryViewModel.onPlayButtonClicked() }
         }
     }
 
     private fun initObservers() {
-        viewModel.state.observe(this) {
+        mediaLibraryViewModel.state.observe(this) {
             it.track?.let { track -> setTrackData(track) }
             binding?.currentTime?.text = it.trackTime.ifEmpty {
                 "00:00"
@@ -60,7 +60,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.event.observe(this) {
+        mediaLibraryViewModel.event.observe(this) {
             Toast.makeText(this, getString(R.string.playlist_create), Toast.LENGTH_LONG).show()
         }
     }

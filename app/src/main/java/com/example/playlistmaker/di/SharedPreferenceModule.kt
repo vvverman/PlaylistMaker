@@ -10,7 +10,7 @@ import org.koin.dsl.module
 
 private const val KEY_SHARED_PREFERENCES = "shared_preferences"
 
-val sharedPreferencesModule = module {
+val sharedPreferenceModule = module {
 
     single<SharedPreferences> {
         androidContext().getSharedPreferences(KEY_SHARED_PREFERENCES, Application.MODE_PRIVATE)

@@ -7,16 +7,14 @@ import android.widget.ImageButton
 import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.settings.ThemeManager
+import com.example.playlistmaker.domain.settings.ThemeSettings
 import com.google.android.material.switchmaterial.SwitchMaterial
 
 class SettingsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_settings)
-
         val backButton = findViewById<ImageButton>(R.id.backButton)
-
         backButton.setOnClickListener {
             finish()
         }
@@ -60,7 +58,7 @@ class SettingsActivity : AppCompatActivity() {
         val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
 
         themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
-            (applicationContext as ThemeManager).switchTheme(checked)
+            (applicationContext as ThemeSettings).switchTheme(checked)
         }
 
     }

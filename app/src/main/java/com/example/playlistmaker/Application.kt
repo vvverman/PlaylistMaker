@@ -4,8 +4,8 @@ import android.app.Application
 import com.example.playlistmaker.di.interactorModule
 import com.example.playlistmaker.di.navigationModule
 import com.example.playlistmaker.di.networkModule
-import com.example.playlistmaker.di.repositoryModule
-import com.example.playlistmaker.di.sharedPreferencesModule
+import com.example.playlistmaker.di.repoModule
+import com.example.playlistmaker.di.sharedPreferenceModule
 import com.example.playlistmaker.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext
@@ -20,8 +20,8 @@ class Application : Application() {
                 interactorModule,
                 navigationModule,
                 networkModule,
-                repositoryModule,
-                sharedPreferencesModule,
+                repoModule,
+                sharedPreferenceModule,
                 viewModelModule
             )
         }

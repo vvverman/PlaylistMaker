@@ -1,7 +1,7 @@
 package com.example.playlistmaker.di
 
 import com.example.playlistmaker.data.network.NetworkClient
-import com.example.playlistmaker.data.network.TrackApi
+import com.example.playlistmaker.data.network.TracksApi
 import com.example.playlistmaker.data.network.impl.RetrofitNetworkClient
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -18,11 +18,11 @@ val networkModule = module {
             .build()
     }
 
-    single<TrackApi> {
-        get<Retrofit>().create(TrackApi::class.java)
+    single<TracksApi> {
+        get<Retrofit>().create(TracksApi::class.java)
     }
 
     single<NetworkClient> {
-        RetrofitNetworkClient(trackApi = get())
+        RetrofitNetworkClient(tracksApi = get())
     }
 }

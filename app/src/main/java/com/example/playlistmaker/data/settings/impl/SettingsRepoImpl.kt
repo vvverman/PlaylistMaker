@@ -33,4 +33,10 @@ class SettingsRepoImpl(private val sharedPreferences: SharedPreferences?) : Sett
         val appSettingsString = gson.toJson(settings)
         sharedPreferences?.edit()?.putString(PREFS_NAME, appSettingsString)?.apply()
     }
+
+    fun saveThemeSettings(settings: ThemeSettings) {
+        val appSettingsString = gson.toJson(settings)
+        sharedPreferences?.edit()?.putString(PREFS_NAME, appSettingsString)?.apply()
+    }
+
 }

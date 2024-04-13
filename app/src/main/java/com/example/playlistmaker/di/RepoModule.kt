@@ -9,7 +9,7 @@ import com.example.playlistmaker.domain.search.HistoryStorageRepo
 import com.example.playlistmaker.domain.settings.SettingsRepo
 import org.koin.dsl.module
 
-val repositoryModule = module {
+val repoModule = module {
 
     single<SettingsRepo> {
         SettingsRepoImpl(sharedPreferences = get())

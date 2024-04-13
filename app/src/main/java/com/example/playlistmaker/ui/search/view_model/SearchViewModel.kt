@@ -13,6 +13,7 @@ import com.example.playlistmaker.ui.search.SearchScreenEvent
 import com.example.playlistmaker.ui.search.SearchScreenState
 import com.example.playlistmaker.ui.util.SingleLiveEvent
 
+
 class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewModel() {
 
     companion object {

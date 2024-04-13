@@ -9,7 +9,7 @@ import com.example.playlistmaker.domain.settings.model.ThemeSettings
 
 
 
-class ThemeManager() : Application() {
+class ThemeSettings() : Application() {
 
     private var settingsRepo: SettingsRepo? = null
     private var sharedPreferences: SharedPreferences? = null

@@ -17,7 +17,7 @@ val interactorModule = module {
     }
 
     single<MediaLibraryInteractor> {
-        MediaLibraryInteractorImpl(trackRepository = get())
+        MediaLibraryInteractorImpl(historyStorageRepo = get())
     }
 
     single<SettingsInteractor>(createdAtStart = true) {

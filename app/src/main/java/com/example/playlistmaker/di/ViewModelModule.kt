@@ -14,7 +14,7 @@ val viewModelModule = module {
     }
 
     viewModel<MediaLibraryViewModel> {
-        MediaLibraryViewModel(medialibraryInteractor = get(), androidApplication())
+        MediaLibraryViewModel(mediaLibraryInteractor = get(), androidApplication())
     }
 
     viewModel<SettingsViewModel> {

@@ -16,7 +16,7 @@ import com.example.playlistmaker.ui.medialibrary.MediaLibraryScreenState
 import com.example.playlistmaker.ui.util.SingleLiveEvent
 
 class MediaLibraryViewModel(
-    playerInteractor: MediaLibraryInteractor,
+    mediaLibraryInteractor: MediaLibraryInteractor,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -38,7 +38,7 @@ class MediaLibraryViewModel(
         }
     }
 
-    private val track = playerInteractor.getTrackForPlaying()
+    private val track = mediaLibraryInteractor.getTrackForPlaying()
 
     private val _state = MutableLiveData<MediaLibraryScreenState>()
     val state: LiveData<MediaLibraryScreenState> = _state

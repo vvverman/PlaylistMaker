@@ -5,8 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.playlistmaker.domain.settings.SettingsInteractor
-import com.example.playlistmaker.domain.settings.ThemeSettings
-import com.example.playlistmaker.domain.settings.model.ThemeSettings.*
+import com.example.playlistmaker.domain.settings.model.ThemeList.*
 import com.example.playlistmaker.domain.share.SharingInteractor
 
 class SettingsViewModel(
@@ -15,7 +14,7 @@ class SettingsViewModel(
 ) : ViewModel() {
 
     private val _applicationTheme =
-        MutableLiveData<com.example.playlistmaker.domain.settings.model.ThemeSettings>(settingsInteractor.getThemeSettings())
+        MutableLiveData<com.example.playlistmaker.domain.settings.model.ThemeList>(settingsInteractor.getThemeSettings())
     val ThemeSettings: LiveData<Boolean> = _applicationTheme.map { it == DARK }
 
     fun onShareAppButtonClicked() = sharingInteractor.shareApp()

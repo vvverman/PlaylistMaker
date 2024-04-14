@@ -1,66 +1,44 @@
 package com.example.playlistmaker.ui.settings
 
-import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
-import android.widget.ImageButton
-import android.widget.LinearLayout
 import androidx.appcompat.app.AppCompatActivity
-import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.settings.ThemeSettings
-import com.google.android.material.switchmaterial.SwitchMaterial
+import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.get
+import com.example.playlistmaker.databinding.ActivitySettingsBinding
+import com.example.playlistmaker.ui.settings.view_model.SettingsViewModel
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SettingsActivity : AppCompatActivity() {
+
+    private var binding: ActivitySettingsBinding? = null
+    private  val settingsViewModel: SettingsViewModel by viewModel()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_settings)
-        val backButton = findViewById<ImageButton>(R.id.backButton)
-        backButton.setOnClickListener {
-            finish()
+        binding = ActivitySettingsBinding.inflate(layoutInflater)
+        setContentView(binding?.root)
+        setUpToolbar()
+        setUpButtons()
+        setUpThemeSwitch()
         }
 
-        val shareButton = findViewById<LinearLayout>(R.id.shareButton)
+    private fun setUpToolbar() = binding?.backButton?.setOnClickListener {
+        onBackPressed()
+    }
 
-        shareButton.setOnClickListener {
-            val sendIntent: Intent = Intent().apply {
-                action = Intent.ACTION_SEND
-                val shareButtonText = resources.getString(R.string.shareButtonText)
-                putExtra(Intent.EXTRA_TEXT, shareButtonText)
-                type = "text/plain"
+    private fun setUpButtons() {
+        binding?.apply {
+            shareButton.setOnClickListener { settingsViewModel.onShareAppButtonClicked() }
+            supportButton.setOnClickListener { settingsViewModel.onWriteSupportButtonClicked() }
+            termsOfUseButton.setOnClickListener { settingsViewModel.onUserAgreementsButtonClicked() }
+        }
+    }
+
+    private fun setUpThemeSwitch() {
+        binding?.themeSwitcher?.apply {
+            settingsViewModel.ThemeSettings.observe(this@SettingsActivity) {
+                isChecked = it
             }
-
-            val shareIntent = Intent.createChooser(sendIntent, null)
-            startActivity(shareIntent)
+            setOnClickListener { settingsViewModel.onThemeSwitchClicked(this.isChecked) }
         }
-
-        val supportButton = findViewById<LinearLayout>(R.id.supportButton)
-
-        supportButton.setOnClickListener {
-            val shareIntent = Intent(Intent.ACTION_SENDTO)
-            val supportButtonMessage = resources.getString(R.string.supportButtonMessage)
-            val supportButtonText = resources.getString(R.string.supportButtonText)
-            shareIntent.data = Uri.parse("mailto:")
-            shareIntent.putExtra(Intent.EXTRA_EMAIL, arrayOf("vermosti@ya.ru"))
-            shareIntent.putExtra(Intent.EXTRA_TEXT, supportButtonMessage)
-            shareIntent.putExtra(Intent.EXTRA_SUBJECT, supportButtonText)
-            startActivity(shareIntent)
-        }
-
-        val termsOfUseButton = findViewById<LinearLayout>(R.id.termsOfUseButton)
-
-        termsOfUseButton.setOnClickListener {
-            val shareIntent = Intent(Intent.ACTION_VIEW)
-            val termsOfUseArticle = resources.getString(R.string.termsOfUseArticle)
-            shareIntent.data = Uri.parse(termsOfUseArticle)
-            startActivity(shareIntent)
-        }
-
-        val themeSwitcher = findViewById<SwitchMaterial>(R.id.themeSwitcher)
-
-        themeSwitcher.setOnCheckedChangeListener { switcher, checked ->
-            (applicationContext as ThemeSettings).switchTheme(checked)
-        }
-
     }
 }
-

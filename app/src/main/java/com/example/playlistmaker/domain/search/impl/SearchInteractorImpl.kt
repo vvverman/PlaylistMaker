@@ -1,6 +1,6 @@
 package com.example.playlistmaker.domain.search.impl
 
-import com.example.playlistmaker.domain.search.HistoryStorageRepo
+import com.example.playlistmaker.data.search.HistoryStorageRepo
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.search.SearchInteractor
 import java.util.concurrent.Executors

@@ -3,9 +3,7 @@ package com.example.playlistmaker.domain.share.impl
 import com.example.playlistmaker.data.share.ExternalBrowser
 import com.example.playlistmaker.domain.share.SharingInteractor
 
-class SharingInteractorImpl(
-    private val externalBrowser: ExternalBrowser
-) : SharingInteractor {
+class SharingInteractorImpl(private val externalBrowser: ExternalBrowser) : SharingInteractor {
 
     companion object{
         private const val SHARE_APP_URL = "https://practicum.yandex.ru/android-developer/"

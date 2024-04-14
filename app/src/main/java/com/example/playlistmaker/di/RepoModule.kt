@@ -3,16 +3,16 @@ package com.example.playlistmaker.di
 import com.example.playlistmaker.data.search.impl.HistoryStorageRepoImpl
 
 
-import com.example.playlistmaker.data.settings.impl.ThemeManager
-import com.example.playlistmaker.domain.search.HistoryStorageRepo
+import com.example.playlistmaker.data.settings.impl.SettingsRepoImpl
+import com.example.playlistmaker.data.search.HistoryStorageRepo
 
-import com.example.playlistmaker.domain.settings.SettingsRepo
+import com.example.playlistmaker.data.settings.SettingsRepo
 import org.koin.dsl.module
 
 val repoModule = module {
 
     single<SettingsRepo> {
-        ThemeManager(sharedPreferences = get())
+        SettingsRepoImpl(sharedPreferences = get())
     }
 
     single<HistoryStorageRepo> {

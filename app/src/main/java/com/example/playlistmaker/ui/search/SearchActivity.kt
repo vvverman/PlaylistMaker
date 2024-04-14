@@ -9,8 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.ui.medialibrary.MediaLibraryActivity
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
@@ -25,8 +23,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-
-
         initViews()
         initObservers()
     }

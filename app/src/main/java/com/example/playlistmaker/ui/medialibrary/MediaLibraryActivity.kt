@@ -77,7 +77,7 @@ class MediaLibraryActivity : AppCompatActivity() {
             releaseDate.text = DateFormat.getYearFromReleaseDate(track.releaseDate)
             durationData.text = DateFormat.formatMillisToString(track.trackTimeMillis).replaceFirst("0", "")
             primaryGenreName.text = track.genre
-            coverImageView.load(track.previewUrl)
+            coverImageView.load(track.artworkUrl100)
         }
     }
 }

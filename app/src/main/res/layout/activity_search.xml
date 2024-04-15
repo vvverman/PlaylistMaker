@@ -87,6 +87,7 @@
 
         <!-- Изображение для отображения отсутствия результатов -->
         <ImageView
+            android:id="@+id/noSearchResultsImage"
             android:layout_width="@dimen/offset_120"
             android:layout_height="@dimen/offset_120"
             android:layout_gravity="center_horizontal"
@@ -95,6 +96,7 @@
 
         <!-- Текстовое сообщение о отсутствии результатов -->
         <TextView
+            android:id="@+id/noSearchResultsText"
             style="@style/NoSearchResultsImageTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -172,6 +174,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_8"
+
         />
 
     <androidx.recyclerview.widget.RecyclerView

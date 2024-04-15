@@ -11,7 +11,9 @@ class SharingInteractorImpl(private val externalBrowser: ExternalBrowser) : Shar
         private const val EMAIL_ADDRESS = "vermosti@yandex.ru"
     }
 
-    override fun shareApp() = externalBrowser.shareLink(SHARE_APP_URL)
+    override fun shareApp() {
+        externalBrowser.shareLink(SHARE_APP_URL)
+    }
 
     override fun openUserAgreement() = externalBrowser.openUserAgreement(USER_AGREEMENT_URL)
 

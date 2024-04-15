@@ -8,6 +8,7 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import com.example.playlistmaker.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.ui.medialibrary.MediaLibraryActivity
@@ -81,7 +82,18 @@ class SearchActivity : AppCompatActivity() {
                 trackHistoryAdapter.update(it.tracksHistory)
                 searchInputLayout.searchInputLayout.isVisible = it.tracksHistoryVisible
                 progressBar.isVisible = it.progressVisible
+                communicationProblems.isVisible = it.noWebVisible
+//
+                val messageResId = if (it.noTracksVisible) R.string.no_search_results_message else R.string.communication_problems_message
+                noSearchResultsText.text = getString(messageResId)
 
+                val messageImageResId =
+                    if (it.noTracksVisible) R.drawable.no_search_results_image else R.drawable.communication_problems_image
+
+                noSearchResultsImage.setImageResource(messageImageResId)
+
+                noSearchResults.isVisible = it.messageVisible
+                //
             }
         }
 

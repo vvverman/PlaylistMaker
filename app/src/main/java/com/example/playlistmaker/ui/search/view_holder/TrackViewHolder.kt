@@ -16,7 +16,7 @@ class TrackViewHolder(
             artistName.text = track.artistName
             compositionName.text = track.trackName
             duration.text = DateFormat.formatMillisToString(track.trackTimeMillis)
-            coverImageURL.load(track.previewUrl)
+            coverImageURL.load(track.artworkUrl100)
         }
     }
 }

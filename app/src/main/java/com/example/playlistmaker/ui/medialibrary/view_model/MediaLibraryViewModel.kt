@@ -76,7 +76,7 @@ class MediaLibraryViewModel(
     }
 
     fun onLikeButtonClicked() {
-        event.postValue(MediaLibraryScreenEvent.ShowPlayListCreatedToast)
+//        event.postValue(MediaLibraryScreenEvent.ShowPlayListCreatedToast)
     }
 
     private fun pausePlayer() {

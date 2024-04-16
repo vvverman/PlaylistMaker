@@ -48,7 +48,7 @@
     <string name="you_were_looking_for">Вы искали</string>
 
     <string name="url_mail">mailto:test@example.com</string>
-    <string name="type_share_text">текст для шеринга</string>
+    <string name="type_share_text">text/plain</string>
 
     <string name="playlist_create">Плэйлист создан</string>
 

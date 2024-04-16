@@ -49,7 +49,7 @@
     <string name="you_were_looking_for">You were looking for</string>
 
     <string name="url_mail">mailto:test@example.com</string>
-    <string name="type_share_text">sharing text</string>
+    <string name="type_share_text">text/plain</string>
 
     <string name="playlist_create">Playlist create</string>
 

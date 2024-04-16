@@ -54,7 +54,6 @@
     <style name="ArtistNameStyle">
         <item name="android:textSize">@dimen/miniFontSize</item>
         <item name="android:textColor">@color/grey</item>
-
     </style>
 
     <style name="DurationStyle">

@@ -38,7 +38,7 @@
 
         <Button
             style="@style/ActivityMainButtonStyle"
-            android:id="@+id/Player"
+            android:id="@+id/medialibrary"
             android:text="@string/Player_button"
             app:icon="@drawable/player_button" />
 

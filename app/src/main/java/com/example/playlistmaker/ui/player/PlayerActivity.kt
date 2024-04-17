@@ -1,25 +1,25 @@
-package com.example.playlistmaker.ui.medialibrary
+package com.example.playlistmaker.ui.player
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import com.example.playlistmaker.R
-import com.example.playlistmaker.databinding.ActivityMediaLibraryBinding
+import com.example.playlistmaker.databinding.ActivityPlayerBinding
 import com.example.playlistmaker.domain.models.Track
-import com.example.playlistmaker.domain.medialibrary.model.MediaLibraryState
+import com.example.playlistmaker.domain.player.model.PlayerState
 import com.example.playlistmaker.domain.utils.DateFormat
-import com.example.playlistmaker.ui.medialibrary.view_model.MediaLibraryViewModel
+import com.example.playlistmaker.ui.player.view_model.MediaLibraryViewModel
 import com.example.playlistmaker.ui.util.load
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MediaLibraryActivity : AppCompatActivity() {
-    private var binding: ActivityMediaLibraryBinding? = null
+class PlayerActivity : AppCompatActivity() {
+    private var binding: ActivityPlayerBinding? = null
     private val mediaLibraryViewModel: MediaLibraryViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMediaLibraryBinding.inflate(layoutInflater)
+        binding = ActivityPlayerBinding.inflate(layoutInflater)
         setContentView(binding?.root)
         initViews()
         initObservers()
@@ -49,11 +49,11 @@ class MediaLibraryActivity : AppCompatActivity() {
             binding?.currentTime?.text = it.trackTime.ifEmpty {
                 "00:00"
             }
-            it?.mediaLibraryState?.let { state ->
+            it?.playerState?.let { state ->
                 when (state) {
-                    MediaLibraryState.PLAYING -> binding?.playButton?.setImageResource(R.drawable.pause_button)
-                    MediaLibraryState.PREPARED,
-                    MediaLibraryState.PAUSED -> binding?.playButton?.setImageResource(R.drawable.play_button)
+                    PlayerState.PLAYING -> binding?.playButton?.setImageResource(R.drawable.pause_button)
+                    PlayerState.PREPARED,
+                    PlayerState.PAUSED -> binding?.playButton?.setImageResource(R.drawable.play_button)
                 }
             }
         }

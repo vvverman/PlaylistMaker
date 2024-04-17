@@ -11,7 +11,7 @@ import androidx.core.widget.doOnTextChanged
 import com.example.playlistmaker.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.playlistmaker.databinding.ActivitySearchBinding
-import com.example.playlistmaker.ui.medialibrary.MediaLibraryActivity
+import com.example.playlistmaker.ui.player.PlayerActivity
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 
 class SearchActivity : AppCompatActivity() {
@@ -100,7 +100,7 @@ class SearchActivity : AppCompatActivity() {
         viewModel.event.observe(this) {
             when (it) {
                 is SearchScreenEvent.OpenPlayerScreen -> {
-                    startActivity(Intent(this, MediaLibraryActivity()::class.java))
+                    startActivity(Intent(this, PlayerActivity()::class.java))
                 }
                 is SearchScreenEvent.ClearSearch->binding?.searchField?.text?.clear()
 

@@ -51,6 +51,13 @@
     <string name="type_share_text">text/plain</string>
 
     <string name="playlist_create">Плэйлист создан</string>
+    <string name="media_library">Медиатека</string>
+
+    <string name="there_is_not_a_single_playlist">Нет ни одного плейлиста</string>
+    <string name="create_playlist">Создать плейлист</string>
+    <string name="favorites">Избранное</string>
+    <string name="playlists">Плейлисты</string>
+    <string name="no_tracks_in_favorites">Нет треков в избранном</string>
 
 
 </resources>

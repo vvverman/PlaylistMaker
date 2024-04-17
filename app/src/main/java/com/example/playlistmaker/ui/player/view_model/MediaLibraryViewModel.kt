@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.medialibrary.view_model
+package com.example.playlistmaker.ui.player.view_model
 
 import android.app.Application
 import android.media.MediaPlayer
@@ -8,15 +8,15 @@ import android.os.Looper
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import com.example.playlistmaker.domain.medialibrary.MediaLibraryInteractor
-import com.example.playlistmaker.domain.medialibrary.model.MediaLibraryState
+import com.example.playlistmaker.domain.player.PlayerInteractor
+import com.example.playlistmaker.domain.player.model.PlayerState
 import com.example.playlistmaker.domain.utils.DateFormat
-import com.example.playlistmaker.ui.medialibrary.MediaLibraryScreenEvent
-import com.example.playlistmaker.ui.medialibrary.MediaLibraryScreenState
+import com.example.playlistmaker.ui.player.PlayerScreenEvent
+import com.example.playlistmaker.ui.player.PlayerScreenState
 import com.example.playlistmaker.ui.util.SingleLiveEvent
 
 class MediaLibraryViewModel(
-    mediaLibraryInteractor: MediaLibraryInteractor,
+    playerInteractor: PlayerInteractor,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -29,24 +29,24 @@ class MediaLibraryViewModel(
     private var trackDurationRunnable = object : Runnable {
         override fun run() {
             val time = DateFormat.formatMillisToString(mediaPlayer.currentPosition.toLong())
-            if (getCurrentScreenState().mediaLibraryState == MediaLibraryState.PLAYING) {
+            if (getCurrentScreenState().playerState == PlayerState.PLAYING) {
                 handler.postDelayed(this, TIME_STEP_MILLIS)
-                _state.postValue(MediaLibraryScreenState(MediaLibraryState.PLAYING, track, time))
+                _state.postValue(PlayerScreenState(PlayerState.PLAYING, track, time))
             } else {
                 pausePlayer()
             }
         }
     }
 
-    private val track = mediaLibraryInteractor.getTrackForPlaying()
+    private val track = playerInteractor.getTrackForPlaying()
 
-    private val _state = MutableLiveData<MediaLibraryScreenState>()
-    val state: LiveData<MediaLibraryScreenState> = _state
+    private val _state = MutableLiveData<PlayerScreenState>()
+    val state: LiveData<PlayerScreenState> = _state
 
-    val event = SingleLiveEvent<MediaLibraryScreenEvent>()
+    val event = SingleLiveEvent<PlayerScreenEvent>()
 
     init {
-        _state.value = MediaLibraryScreenState(MediaLibraryState.PAUSED, track)
+        _state.value = PlayerScreenState(PlayerState.PAUSED, track)
         initPlayer()
     }
 
@@ -59,7 +59,7 @@ class MediaLibraryViewModel(
     fun onPause() = pausePlayer()
 
     fun onStop() {
-        if (getCurrentScreenState().mediaLibraryState != MediaLibraryState.PAUSED) {
+        if (getCurrentScreenState().playerState != PlayerState.PAUSED) {
             handler.removeCallbacks(trackDurationRunnable)
             mediaPlayer.release()
         }
@@ -67,9 +67,9 @@ class MediaLibraryViewModel(
 
     fun onPlayButtonClicked() {
         track?.let {
-            when (getCurrentScreenState().mediaLibraryState) {
-                MediaLibraryState.PLAYING -> pausePlayer()
-                MediaLibraryState.PREPARED, MediaLibraryState.PAUSED -> startPlayer()
+            when (getCurrentScreenState().playerState) {
+                PlayerState.PLAYING -> pausePlayer()
+                PlayerState.PREPARED, PlayerState.PAUSED -> startPlayer()
             }
             handler.post(trackDurationRunnable)
         }
@@ -81,13 +81,13 @@ class MediaLibraryViewModel(
 
     private fun pausePlayer() {
         mediaPlayer.pause()
-        _state.value = getCurrentScreenState().copy(mediaLibraryState = MediaLibraryState.PAUSED)
+        _state.value = getCurrentScreenState().copy(playerState = PlayerState.PAUSED)
     }
 
     private fun startPlayer() {
-        if (getCurrentScreenState().mediaLibraryState != MediaLibraryState.PLAYING) {
+        if (getCurrentScreenState().playerState != PlayerState.PLAYING) {
             mediaPlayer.start()
-            _state.value = getCurrentScreenState().copy(mediaLibraryState = MediaLibraryState.PLAYING)
+            _state.value = getCurrentScreenState().copy(playerState = PlayerState.PLAYING)
         }
     }
 
@@ -97,12 +97,12 @@ class MediaLibraryViewModel(
                 setDataSource(getApplication(), Uri.parse(it.previewUrl))
                 prepareAsync()
                 setOnPreparedListener {
-                    _state.value = getCurrentScreenState().copy(mediaLibraryState = MediaLibraryState.PREPARED)
+                    _state.value = getCurrentScreenState().copy(playerState = PlayerState.PREPARED)
                 }
                 setOnCompletionListener {
                     _state.value =
                         getCurrentScreenState().copy(
-                            mediaLibraryState = MediaLibraryState.PREPARED,
+                            playerState = PlayerState.PREPARED,
                             trackTime = ""
                         )
                 }
@@ -110,5 +110,5 @@ class MediaLibraryViewModel(
         }
     }
 
-    private fun getCurrentScreenState() = _state.value ?: MediaLibraryScreenState()
+    private fun getCurrentScreenState() = _state.value ?: PlayerScreenState()
 }

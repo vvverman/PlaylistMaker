@@ -1,8 +1,8 @@
-package com.example.playlistmaker.domain.medialibrary
+package com.example.playlistmaker.domain.player
 
 import com.example.playlistmaker.domain.models.Track
 
-interface MediaLibraryInteractor {
+interface PlayerInteractor {
 
     fun getTrackForPlaying(): Track?
 }

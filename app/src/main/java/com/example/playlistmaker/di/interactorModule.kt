@@ -1,7 +1,7 @@
 package com.example.playlistmaker.di
 
-import com.example.playlistmaker.domain.medialibrary.MediaLibraryInteractor
-import com.example.playlistmaker.domain.medialibrary.impl.MediaLibraryInteractorImpl
+import com.example.playlistmaker.domain.player.PlayerInteractor
+import com.example.playlistmaker.domain.player.impl.PlayerInteractorImpl
 import com.example.playlistmaker.domain.search.SearchInteractor
 import com.example.playlistmaker.domain.search.impl.SearchInteractorImpl
 import com.example.playlistmaker.domain.settings.SettingsInteractor
@@ -16,8 +16,8 @@ val interactorModule = module {
         SearchInteractorImpl(historyStorageRepo = get())
     }
 
-    single<MediaLibraryInteractor> {
-        MediaLibraryInteractorImpl(historyStorageRepo = get())
+    single<PlayerInteractor> {
+        PlayerInteractorImpl(historyStorageRepo = get())
     }
 
     single<SettingsInteractor>(createdAtStart = true) {

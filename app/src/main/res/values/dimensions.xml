@@ -43,6 +43,7 @@
     <dimen name="offset_72">72dp</dimen>
     <dimen name="offset_100">100dp</dimen>
     <dimen name="offset_124">124dp</dimen>
+    <dimen name="offset_240">240dp</dimen>
     <dimen name="offset_minus8">-8dp</dimen>
 
     <dimen name="offset_458">458dp</dimen>

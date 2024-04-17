@@ -20,7 +20,7 @@
     <string name="input_hint">Поиск</string>
 
     <string name="song_name">Название песни</string>
-    <string name="artist_name">Исполнитель</string>
+    <string name="artist_name">ИсполнительИсполнительИсполнительИсполнительИсполнительИсполнительИсполнитель</string>
     <string name="duration">Длительность</string>
 
     <string name="title_activity_settings">Настройки</string>
@@ -48,7 +48,7 @@
     <string name="you_were_looking_for">Вы искали</string>
 
     <string name="url_mail">mailto:test@example.com</string>
-    <string name="type_share_text">текст для шеринга</string>
+    <string name="type_share_text">text/plain</string>
 
     <string name="playlist_create">Плэйлист создан</string>
 

@@ -72,7 +72,7 @@
         style="@style/SongTitle"
         android:layout_width="@dimen/offset_0"
         android:layout_height="@dimen/offset_26"
-        android:text="yesterday_r"
+        android:text="Example Song Name"
         android:gravity="top"
         android:layout_marginStart="@dimen/offset_24"
         android:layout_marginEnd="@dimen/offset_24"
@@ -88,7 +88,7 @@
         style="@style/ArtistTitleInAudioPlayer"
         android:layout_width="@dimen/offset_0"
         android:layout_height="@dimen/offset_16"
-        android:text="the_beatles"
+        android:text="Example Group Name"
         android:gravity="top"
         android:layout_marginStart="@dimen/offset_24"
         android:layout_marginEnd="@dimen/offset_24"
@@ -127,21 +127,6 @@
         app:layout_constraintVertical_bias="0.0"
         />
 
-<!--    <ImageView-->
-<!--        android:id="@+id/pause_button"-->
-
-<!--        android:layout_width="@dimen/offset_100"-->
-<!--        android:layout_height="@dimen/offset_100"-->
-<!--        android:layout_alignParentStart="true"-->
-<!--        android:layout_alignParentTop="true"-->
-<!--        android:background="@drawable/pause_button"-->
-<!--        android:layout_marginTop="@dimen/offset_30"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintEnd_toEndOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/artist_name"-->
-<!--        app:layout_constraintVertical_bias="0.0"-->
-
-<!--        />-->
 
     <ImageView
         android:id="@+id/add_to_favorite_button"
@@ -193,7 +178,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/offset_minus8"
         android:layout_marginTop="@dimen/offset_40"
-        android:text="3:45"
+        android:text="--:--"
         app:layout_constraintTop_toBottomOf="@+id/current_time"
         app:layout_constraintEnd_toEndOf="@+id/coverImageView"/>
 
@@ -223,7 +208,7 @@
         android:layout_marginTop="@dimen/offset_16"
         android:layout_marginEnd="@dimen/offset_minus8"
         android:gravity="end"
-        android:text="Дьявол кроется в деталях"
+        android:text="etc"
         app:layout_constraintEnd_toEndOf="@+id/coverImageView"
         app:layout_constraintTop_toBottomOf="@+id/duration_data" />
 
@@ -251,7 +236,7 @@
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_16"
         android:gravity="end"
-        android:text="1666"
+        android:text="2077"
         android:layout_marginEnd="@dimen/offset_minus8"
         app:layout_constraintEnd_toEndOf="@+id/coverImageView"
         app:layout_constraintTop_toBottomOf="@+id/collection_name" />
@@ -280,7 +265,7 @@
         android:layout_marginStart="@dimen/offset_16"
         android:layout_marginTop="@dimen/offset_20"
         android:gravity="end"
-        android:text="Блэк Митол"
+        android:text="Example"
         android:layout_marginEnd="@dimen/offset_minus8"
         app:layout_constraintEnd_toEndOf="@+id/coverImageView"
         app:layout_constraintTop_toBottomOf="@+id/release_date" />
@@ -308,7 +293,7 @@
         android:layout_marginTop="@dimen/offset_16"
         android:layout_marginEnd="@dimen/offset_minus8"
         android:gravity="end"
-        android:text="Российская Федерация"
+        android:text="Россия-матушка"
         app:layout_constraintEnd_toEndOf="@+id/coverImageView"
         app:layout_constraintTop_toBottomOf="@+id/primary_genre_name" />
 

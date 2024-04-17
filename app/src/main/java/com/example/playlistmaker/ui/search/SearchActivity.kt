@@ -8,15 +8,15 @@ import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.get
+import com.example.playlistmaker.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.playlistmaker.databinding.ActivitySearchBinding
 import com.example.playlistmaker.ui.medialibrary.MediaLibraryActivity
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 
 class SearchActivity : AppCompatActivity() {
     private var binding: ActivitySearchBinding? = null
-    private lateinit var viewModel: SearchViewModel
+    private val viewModel: SearchViewModel by viewModel()
     private lateinit var trackHistoryAdapter: TrackHistoryAdapter
     private lateinit var trackAdapter: TrackAdapter
 
@@ -24,8 +24,6 @@ class SearchActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivitySearchBinding.inflate(layoutInflater)
         setContentView(binding?.root)
-        viewModel = ViewModelProvider(this).get<SearchViewModel>()
-
         initViews()
         initObservers()
     }
@@ -33,7 +31,7 @@ class SearchActivity : AppCompatActivity() {
     private fun initViews() {
         binding?.apply {
             backButton.setOnClickListener { onBackPressed() }
-//            btnMessage.setOnClickListener { viewModel.onMessageButtonClicked() }
+            noNetworkUpdateButton.setOnClickListener { viewModel.onMessageButtonClicked() }
             initTracksRecyclerView()
             initTracksHistoryRecyclerView()
             clearButton.setOnClickListener {
@@ -84,17 +82,18 @@ class SearchActivity : AppCompatActivity() {
                 trackHistoryAdapter.update(it.tracksHistory)
                 searchInputLayout.searchInputLayout.isVisible = it.tracksHistoryVisible
                 progressBar.isVisible = it.progressVisible
-//                btnMessage.isVisible = it.noWebVisible
+                communicationProblems.isVisible = it.noWebVisible
+//
+                val messageResId = if (it.noTracksVisible) R.string.no_search_results_message else R.string.communication_problems_message
+                noSearchResultsText.text = getString(messageResId)
 
-//                val messageResId = if (it.noTracksVisible) R.string.no_content else R.string.no_web
-//                tvMessage.text = getString(messageResId)
+                val messageImageResId =
+                    if (it.noTracksVisible) R.drawable.no_search_results_image else R.drawable.communication_problems_image
 
-//                val messageImageResId =
-//                    if (it.noTracksVisible) R.drawable.no_content else R.drawable.no_web
+                noSearchResultsImage.setImageResource(messageImageResId)
 
-//                ivMessage.setImageResource(messageImageResId)
-
-//                layoutMessage.isVisible = it.messageVisible
+                noSearchResults.isVisible = it.messageVisible
+                //
             }
         }
 

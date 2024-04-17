@@ -1,27 +1,21 @@
 package com.example.playlistmaker.ui.settings.view_model
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
-import com.example.playlistmaker.creator.SettingsCreator
-import com.example.playlistmaker.creator.ShareCreator
 import com.example.playlistmaker.domain.settings.SettingsInteractor
-import com.example.playlistmaker.domain.settings.model.ThemeSettings
+import com.example.playlistmaker.domain.settings.model.ThemeList.*
 import com.example.playlistmaker.domain.share.SharingInteractor
 
 class SettingsViewModel(
-    application: Application
-) : AndroidViewModel(application) {
+    private val settingsInteractor: SettingsInteractor,
+    private val sharingInteractor: SharingInteractor
+) : ViewModel() {
 
-    private val sharingInteractor: SharingInteractor = ShareCreator.createInteractor(application)
-    private val settingsInteractor: SettingsInteractor =
-        SettingsCreator.createInteractor(application)
-
-    private val _ThemeSettings =
-        MutableLiveData<ThemeSettings>(settingsInteractor.getThemeSettings())
-    val ThemeSettings: LiveData<Boolean> = _ThemeSettings.map { it == com.example.playlistmaker.domain.settings.model.ThemeSettings.DARK }
+    private val _applicationTheme =
+        MutableLiveData<com.example.playlistmaker.domain.settings.model.ThemeList>(settingsInteractor.getThemeSettings())
+    val ThemeSettings: LiveData<Boolean> = _applicationTheme.map { it == DARK }
 
     fun onShareAppButtonClicked() = sharingInteractor.shareApp()
 
@@ -30,7 +24,7 @@ class SettingsViewModel(
     fun onUserAgreementsButtonClicked() = sharingInteractor.openUserAgreement()
 
     fun onThemeSwitchClicked(isChecked: Boolean) {
-        val ThemeSettings = if (isChecked) com.example.playlistmaker.domain.settings.model.ThemeSettings.DARK else com.example.playlistmaker.domain.settings.model.ThemeSettings.LIGHT
-        settingsInteractor.updateThemeSettings(ThemeSettings)
+        val applicationTheme = if (isChecked) DARK else LIGHT
+        settingsInteractor.updateThemeSettings(applicationTheme)
     }
 }

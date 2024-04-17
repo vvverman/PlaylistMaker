@@ -33,16 +33,17 @@ data class Track(
     }
 
     override fun hashCode(): Int {
-        var result = trackName.hashCode()
-        result = 31 * result + artistName.hashCode()
-        result = 31 * result + trackTimeMillis.hashCode()
-        result = 31 * result + artworkUrl100.hashCode()
-        result = 31 * result + genre.hashCode()
-        result = 31 * result + albumName.hashCode()
-        result = 31 * result + country.hashCode()
-        result = 31 * result + releaseDate.hashCode()
-        result = 31 * result + previewUrl.hashCode()
-        result = 31 * result + itemId.hashCode()
+        var result = 17
+        result = 31 * result + (trackName?.hashCode() ?: 0)
+        result = 31 * result + (artistName?.hashCode() ?: 0)
+        result = 31 * result + (trackTimeMillis?.hashCode() ?: 0)
+        result = 31 * result + (artworkUrl100?.hashCode() ?: 0)
+        result = 31 * result + (genre?.hashCode() ?: 0)
+        result = 31 * result + (albumName?.hashCode() ?: 0)
+        result = 31 * result + (country?.hashCode() ?: 0)
+        result = 31 * result + (releaseDate?.hashCode() ?: 0)
+        result = 31 * result + (previewUrl?.hashCode() ?: 0)
+        result = 31 * result + (itemId?.hashCode() ?: 0)
         return result
     }
 }

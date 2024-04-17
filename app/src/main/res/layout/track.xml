@@ -31,7 +31,8 @@
             android:gravity="top"
             tools:text="@string/song_name"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            />
 
         <TextView
             android:id="@+id/artistName"
@@ -42,7 +43,9 @@
             android:layout_marginStart="@dimen/layout_marginStart"
             tools:text="@string/artist_name"
             android:maxLines="1"
-            android:ellipsize="end"/>
+            android:ellipsize="end"
+            android:maxWidth="@dimen/offset_240"
+            />
 
         <View
             android:id="@+id/ellipse_1"

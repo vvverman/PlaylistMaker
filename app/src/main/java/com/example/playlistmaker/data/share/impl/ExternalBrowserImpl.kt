@@ -27,14 +27,12 @@ class ExternalBrowserImpl(private val context: Context) : ExternalBrowser {
         }
     }
 
-    override fun openEmail(email: String) {
-//        val message = context.getString(R.string.email_message)
-//        val theme = context.getString(R.string.email_theme)
+    override fun openEmail(email: String, subject: String, message: String) {
+
         Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse(context.getString(R.string.url_mail))
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
-//            putExtra(Intent.EXTRA_SUBJECT, theme)
-//            putExtra(Intent.EXTRA_TEXT, message)
+
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(this)
         }

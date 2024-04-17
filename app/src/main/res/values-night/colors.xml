@@ -12,4 +12,7 @@
 
     <color name="ellipse">#FFFFFFFF</color>
     <color name="placeholder_track">#FFFFFFFF</color>
+
+    <color name="clear_history_word">#FFFFFFFF</color>
+    <color name="clear_history_background">#FF000000</color>
 </resources>

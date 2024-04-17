@@ -60,7 +60,7 @@
             android:paddingHorizontal="@dimen/offset_12"
             android:paddingVertical="@dimen/offset_10"
             android:textColor="@color/black"
-            android:textColorHint="@color/black"
+            android:textColorHint="@color/grey"
             android:contentDescription="Search input field"
             android:imeOptions="actionSearch"/>
 
@@ -87,6 +87,7 @@
 
         <!-- Изображение для отображения отсутствия результатов -->
         <ImageView
+            android:id="@+id/noSearchResultsImage"
             android:layout_width="@dimen/offset_120"
             android:layout_height="@dimen/offset_120"
             android:layout_gravity="center_horizontal"
@@ -95,6 +96,7 @@
 
         <!-- Текстовое сообщение о отсутствии результатов -->
         <TextView
+            android:id="@+id/noSearchResultsText"
             style="@style/NoSearchResultsImageTextStyle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -112,7 +114,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:visibility="gone">
+        android:visibility="visible">
 
         <!-- Изображение для отображения проблем с сетью -->
         <ImageView
@@ -163,21 +165,24 @@
                 android:layout_gravity="center"
                 android:indeterminateTint="@color/progressbar_color"
                 android:layout_marginTop="248dp"
-                android:visibility="gone"/>
+                android:visibility="visible"/>
 
     <include
         android:id="@+id/search_input_layout"
         layout="@layout/search_input_layout"
-        android:visibility="visible"
+        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/offset_8"
+
+
         />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:visibility="gone"
         android:layout_marginTop="@dimen/offset_8"
         android:orientation="vertical"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
@@ -187,6 +192,4 @@
 
 </LinearLayout>
 
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="wrap_content"-->
-<!--    android:layout_marginTop="@dimen/offset_8"-->
+

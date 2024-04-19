@@ -21,4 +21,7 @@
     <color name="medialibrary_title_color">#FFFFFFFF</color>
     <color name="tab_title_color">#FFFFFFFF</color>
     <color name="there_is_not_a_single_playlist_color">#FFFFFFFF</color>
+
+    <color name="searchFieldHint">#FF000000</color>
+    <color name="new_playlist_button_color">#FFFFFFFF</color>
 </resources>

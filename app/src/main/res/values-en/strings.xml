@@ -53,10 +53,10 @@
 
     <string name="playlist_create">Playlist create</string>
     <string name="media_library">Media Library</string>
-    <string name="there_is_not_a_single_playlist">There is not a single playlist</string>
+    <string name="there_is_not_a_single_playlist">You have not created any playlists</string>
     <string name="no_tracks_in_favorites">No tracks in favorites</string>
-    <string name="create_playlist">Create Playlist</string>
-    <string name="favorites">Favorites</string>
+    <string name="create_playlist">New Playlist</string>
+    <string name="favorites">Favorite tracks</string>
     <string name="playlists">Playlists</string>
 
 </resources>

@@ -143,7 +143,12 @@
         <item name="android:background">@color/white</item>
     </style>
 
-
+    <style name="ThemeButtonNewPlaylist">
+        <!-- Customize your theme here -->
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <!-- Other theme attributes -->
+    </style>
 
 
 

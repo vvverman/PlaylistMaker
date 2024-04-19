@@ -60,7 +60,7 @@
             android:paddingHorizontal="@dimen/offset_12"
             android:paddingVertical="@dimen/offset_10"
             android:textColor="@color/black"
-            android:textColorHint="@color/grey"
+            android:textColorHint="@color/searchFieldHint"
             android:contentDescription="Search input field"
             android:imeOptions="actionSearch"/>
 
@@ -75,7 +75,8 @@
             android:layout_marginVertical="@dimen/offset_10"
             android:contentDescription="TODO"
             android:src="@drawable/clear_button"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:fillColor="@color/searchFieldHint"/>
     </FrameLayout>
 
     <!-- Сообщение о том, что поиск не дал результатов -->

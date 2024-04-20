@@ -12,17 +12,6 @@
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
-        <!-- Кнопка "назад" -->
-        <ImageButton
-            android:id="@+id/backButton"
-            style="@style/ActivitySettingsColorAndFontStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/offset_29"
-            android:contentDescription="This is an arrow - this is a button leading back"
-            app:srcCompat="@drawable/arrow_back_button" />
-
         <!-- Заголовок активности -->
         <TextView
             style="@style/ActivitySettingsColorAndFontStyle"

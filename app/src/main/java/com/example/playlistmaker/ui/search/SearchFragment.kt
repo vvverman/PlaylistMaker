@@ -43,7 +43,7 @@ class SearchFragment : Fragment() {
 
     private fun initViews() {
         binding?.run {
-            backButton.setOnClickListener { viewModel.onMessageButtonClicked() }
+//            backButton.setOnClickListener { viewModel.onMessageButtonClicked() }
             clearButton.setOnClickListener {
                 viewModel.onClearButtonClicked()
             }

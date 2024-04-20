@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         app:layout_constraintTop_toTopOf="parent"
-        app:navigationIcon="@drawable/arrow_back_button"
+
         app:title="@string/media_library"
         app:titleTextColor="@color/medialibrary_title_color" />
 

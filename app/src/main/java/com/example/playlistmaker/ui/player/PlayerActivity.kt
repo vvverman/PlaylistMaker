@@ -68,16 +68,16 @@ class PlayerActivity : AppCompatActivity() {
             artistName.text = track.artistName
             trackName.text = track.trackName
             if (track.albumName.isNotEmpty())
-                collectionName.text = track.albumName
+                albumValue.text = track.albumName
             else {
-                collectionName.isVisible = false
-                collectionNameTitle.isVisible = false
+                albumValue.isVisible = false
+                albumTitle.isVisible = false
             }
-            country.text = track.country
-            releaseDate.text = DateFormat.getYearFromReleaseDate(track.releaseDate)
-            durationData.text = DateFormat.formatMillisToString(track.trackTimeMillis).replaceFirst("0", "")
-            primaryGenreName.text = track.genre
-            coverImageView.load(track.artworkUrl100)
+            countryTitle.text = track.country
+            yearTitle.text = DateFormat.getYearFromReleaseDate(track.releaseDate)
+            durationTitle.text = DateFormat.formatMillisToString(track.trackTimeMillis).replaceFirst("0", "")
+            genreTitle.text = track.genre
+            coverImage.load(track.artworkUrl100)
         }
     }
 }

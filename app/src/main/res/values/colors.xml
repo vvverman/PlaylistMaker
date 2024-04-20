@@ -36,7 +36,7 @@
     <color name="new_playlist_button_color">#FF000000</color>
 
     <color name="navtab_bg_color">#FFFFFFFF</color>
-    <color name="toolbar_text_color">#FF000000</color>
+    <color name="toolbar_text_color">#FFFFFFFF</color>
 
     <color name="color_text">#FF000000</color>
 

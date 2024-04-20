@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="blue">#FF3772E7</color>
-    <color name="black">#FF000000</color>
+    <color name="black">#FF1A1B22</color>
     <color name="white">#FFFFFFFF</color>
     <color name="grey">#FFAEAFB4</color>
     <color name="deepgrey">#FF1A1B22</color>
@@ -23,22 +23,24 @@
     <color name="placeholder_track">#FFAEAFB4</color>
     <color name="progressbar_color">#FF3772E7</color>
 
-    <color name="clear_history_word">#FF000000</color>
+    <color name="clear_history_word">#FF1A1B22</color>
     <color name="clear_history_background">#FFFFFFFF</color>
 
-    <color name="no_tracks_in_favorites_text_color">#FF000000</color>
-    <color name="arrow_back_button_color">#FF000000</color>
-    <color name="medialibrary_title_color">#FF000000</color>
-    <color name="tab_title_color">#FF000000</color>
-    <color name="there_is_not_a_single_playlist_color">#FF000000</color>
+    <color name="no_tracks_in_favorites_text_color">#FF1A1B22</color>
+    <color name="arrow_back_button_color">#FF1A1B22</color>
+    <color name="medialibrary_title_color">#FF1A1B22</color>
+    <color name="tab_title_color">#FF1A1B22</color>
+    <color name="there_is_not_a_single_playlist_color">#FF1A1B22</color>
 
     <color name="searchFieldHint">#FFAEAFB4</color>
-    <color name="new_playlist_button_color">#FF000000</color>
+    <color name="new_playlist_button_color">#FF1A1B22</color>
 
     <color name="navtab_bg_color">#FFFFFFFF</color>
     <color name="toolbar_text_color">#FFFFFFFF</color>
 
-    <color name="color_text">#FF000000</color>
+    <color name="color_text">#FF1A1B22</color>
+    <color name="switch_thumb_color">#FF3772E7</color>
+    <color name="switch_bg">#FF2F457D</color>
 
 
 

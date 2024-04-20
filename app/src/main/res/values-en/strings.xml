@@ -59,4 +59,24 @@
     <string name="favorites">Favorite tracks</string>
     <string name="playlists">Playlists</string>
 
+    <string name="duration_title">Duration</string>
+    <string name="album_title">Album</string>
+    <string name="year_title">Year</string>
+    <string name="genre_title">Genre</string>
+    <string name="country_title">Country</string>
+
+    <string name="duration_value">00:00</string>
+    <string name="album_value">Name album here</string>
+    <string name="year_value">Year rodation here</string>
+    <string name="genre_value">Genre here</string>
+    <string name="country_value">Russian Federation</string>
+
+    <string name="current_time">02:15</string>
+    <string name="name_track">Name of track</string>
+
+    <string name="search_bottom_menu_title">Search</string>
+    <string name="medialibrary_bottom_menu_title">Media Library</string>
+    <string name="settings_bottom_menu_title">Settings</string>
+
+
 </resources>

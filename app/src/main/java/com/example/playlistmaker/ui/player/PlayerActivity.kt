@@ -37,7 +37,7 @@ class PlayerActivity : AppCompatActivity() {
 
     private fun initViews(){
         binding?.apply {
-            backButton.setOnClickListener { onBackPressed() }
+            toolbarMedialibrary.setOnClickListener { onBackPressed() }
             addToFavoriteButton.setOnClickListener { mediaLibraryViewModel.onLikeButtonClicked() }
             playButton.setOnClickListener { mediaLibraryViewModel.onPlayButtonClicked() }
         }

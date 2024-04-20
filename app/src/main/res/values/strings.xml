@@ -59,5 +59,23 @@
     <string name="playlists">Плейлисты</string>
     <string name="no_tracks_in_favorites">Ваша медиатека пуста</string>
 
+    <string name="duration_title">Длительность</string>
+    <string name="album_title">Альбом</string>
+    <string name="year_title">Год</string>
+    <string name="genre_title">Жанр</string>
+    <string name="country_title">Страна</string>
+
+    <string name="duration_value">00:00</string>
+    <string name="album_value">Название альбома тут</string>
+    <string name="year_value">Год выпуска тут</string>
+    <string name="genre_value">Такой вот жанр</string>
+    <string name="country_value">Россия-Матушка</string>
+
+    <string name="current_time">01:13</string>
+    <string name="name_track">Название трека</string>
+
+    <string name="search_bottom_menu_title">Поиск</string>
+    <string name="medialibrary_bottom_menu_title">Медиатека</string>
+    <string name="settings_bottom_menu_title">Настройки</string>
 
 </resources>

@@ -30,7 +30,7 @@
         android:layout_marginTop="48dp">
 
         <ImageView
-            android:id="@+id/iv_no_playlists"
+            android:id="@+id/no_playlists_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
@@ -39,7 +39,7 @@
             app:srcCompat="@drawable/no_search_results_image" />
 
         <TextView
-            android:id="@+id/tv_no_playlists"
+            android:id="@+id/no_playlists_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -49,7 +49,7 @@
             android:textColor="@color/there_is_not_a_single_playlist_color"
             android:textSize="19sp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/iv_no_playlists"
+            app:layout_constraintTop_toBottomOf="@id/no_playlists_image"
             app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

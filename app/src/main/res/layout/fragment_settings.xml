@@ -34,7 +34,8 @@
         android:paddingVertical="@dimen/paddingVertical"
         android:text="@string/color_theme"
         app:thumbTint="@color/switch_thumb_color"
-        app:trackTint="@color/switch_bg"/>
+        app:trackTint="@color/switch_bg"
+        />
 
 
     <LinearLayout

@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
-
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
@@ -132,36 +134,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginTop="20dp"
         android:fontFamily="@font/ys_display_regular"
         android:text="@string/duration_title"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/album_title"
+        app:layout_constraintTop_toBottomOf="@+id/current_time"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintVertical_chainStyle="spread_inside"/>
 
-        <TextView
-            android:id="@+id/duration_value"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="17dp"
-            android:fontFamily="@font/ys_display_regular"
-            android:text="@string/duration_value"
-            android:textColor="@color/color_text"
-            android:textSize="13sp"
-            app:layout_constraintBottom_toTopOf="@+id/album_value"
-            app:layout_constraintEnd_toEndOf="parent"/>
+    <TextView
+        android:id="@+id/duration_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="16dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/ys_display_regular"
+        android:text="@string/duration_value"
+        android:textColor="@color/color_text"
+        android:textSize="13sp"
+        app:layout_constraintTop_toBottomOf="@+id/current_time"
+        app:layout_constraintEnd_toEndOf="parent"/>
 
     <TextView
         android:id="@+id/album_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
         android:fontFamily="@font/ys_display_regular"
         android:text="@string/album_title"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/year_title"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/duration_title"
         app:layout_constraintStart_toStartOf="@+id/duration_title" />
 
     <TextView
@@ -176,7 +178,8 @@
         android:text="@string/album_value"
         android:textColor="@color/color_text"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/year_value"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/duration_title"
         app:layout_constraintEnd_toEndOf="@+id/duration_value" />
 
     <TextView
@@ -187,7 +190,8 @@
         android:fontFamily="@font/ys_display_regular"
         android:text="@string/year_title"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/genre_title"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/album_title"
         app:layout_constraintStart_toStartOf="@+id/album_title" />
 
     <TextView
@@ -199,54 +203,56 @@
         android:text="@string/year_value"
         android:textColor="@color/color_text"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/genre_value"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/album_value"
         app:layout_constraintEnd_toEndOf="@+id/album_value" />
 
     <TextView
         android:id="@+id/genre_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
         android:fontFamily="@font/ys_display_regular"
         android:text="@string/genre_title"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/country_title"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/year_title"
         app:layout_constraintStart_toStartOf="@+id/year_title" />
 
     <TextView
         android:id="@+id/genre_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="17dp"
         android:fontFamily="@font/ys_display_regular"
         android:text="@string/genre_value"
         android:textColor="@color/color_text"
         android:textSize="13sp"
-        app:layout_constraintBottom_toTopOf="@+id/country_value"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/year_value"
         app:layout_constraintEnd_toEndOf="@+id/year_value" />
 
     <TextView
         android:id="@+id/country_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
         android:fontFamily="@font/ys_display_regular"
         android:text="@string/country_title"
         android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/genre_title"
-        app:layout_constraintVertical_chainStyle="spread_inside" />
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/genre_title"
+        app:layout_constraintVertical_chainStyle="spread_inside"
+        app:layout_constraintStart_toStartOf="@+id/year_title"/>
 
     <TextView
         android:id="@+id/country_value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="28dp"
         android:fontFamily="@font/ys_display_regular"
         android:text="@string/country_value"
         android:textColor="@color/color_text"
         android:textSize="13sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="15dp"
+        app:layout_constraintTop_toBottomOf="@+id/genre_value"
         app:layout_constraintEnd_toEndOf="@+id/genre_value" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

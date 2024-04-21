@@ -73,10 +73,10 @@ class PlayerActivity : AppCompatActivity() {
                 albumValue.isVisible = false
                 albumTitle.isVisible = false
             }
-            countryTitle.text = track.country
-            yearTitle.text = DateFormat.getYearFromReleaseDate(track.releaseDate)
-            durationTitle.text = DateFormat.formatMillisToString(track.trackTimeMillis).replaceFirst("0", "")
-            genreTitle.text = track.genre
+            countryValue.text = track.country
+            yearValue.text = DateFormat.getYearFromReleaseDate(track.releaseDate)
+            durationValue.text = DateFormat.formatMillisToString(track.trackTimeMillis).replaceFirst("0", "")
+            genreValue.text = track.genre
             coverImage.load(track.artworkUrl100)
         }
     }

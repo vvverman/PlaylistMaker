@@ -10,6 +10,7 @@ import com.example.playlistmaker.domain.share.SharingInteractor
 import com.example.playlistmaker.domain.share.impl.SharingInteractorImpl
 import org.koin.dsl.module
 
+
 val interactorModule = module {
 
     single<SearchInteractor> {
@@ -25,6 +26,6 @@ val interactorModule = module {
     }
 
     single<SharingInteractor> {
-        SharingInteractorImpl(externalBrowser = get())
+        SharingInteractorImpl(get(), get())
     }
 }

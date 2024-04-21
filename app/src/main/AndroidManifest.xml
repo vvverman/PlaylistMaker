@@ -38,6 +38,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.settings.AgreementActivity">
+            <!-- Add any additional intent filters or configurations here if needed -->
+        </activity>
     </application>
 
     <uses-permission android:name="android.permission.INTERNET" />

@@ -34,6 +34,9 @@
     <color name="switch_thumb_color">#FF3772E7</color>
     <color name="switch_bg">#FF2F457D</color>
     <color name="control_activated_color">#FFFFFFFF</color>
+    <color name="background">#FF1A1B22</color>
+
+
 
 
 </resources>

@@ -78,5 +78,10 @@
     <string name="medialibrary_bottom_menu_title">Media Library</string>
     <string name="settings_bottom_menu_title">Settings</string>
 
+    <string name="agreement_title">Agreement</string>
+    <string name="agreement_h1">Offer for the provision of educational services of additional education Yandex.Workshop for individuals</string>
+    <string name="agreement_text1">This document is valid if located at: https://yandex.ru/legal/practicum_offer\n\nRussian Federation, Moscow</string>
+    <string name="agreement_h2">1. TERMS</string>
+    <string name="agreement_text2">The terms used in the Offer mean the following:\n\nAuthorized addresses are the email addresses of each Party. The authorized address of the Contractor is the email address specified in section 11 of the Offer. The authorized address of the Student is the email address specified by the Student in the Personal Account.\n\nIntroductory course - an initial course of study according to the Training Programs presented on the Service within the framework of the Profession or Course chosen by the Student, designed for a certain number of hours of self-study, which is provided to the Student once when registering on the Service free of charge. During the learning process as part of the Introductory Course, the Student is given the opportunity to familiarize himself with the work of the Service and determine the Student’s ability to continue studying as part of the Full Course according to the Study Program chosen by the Student. The exact number of hours of training within the Introductory Course depends on the Profession or Course chosen by the Student and is determined in the Training Program posted on the Service. The maximum period for completing the Introductory Course is 1 (one) year from the start date of training.</string>
 
 </resources>

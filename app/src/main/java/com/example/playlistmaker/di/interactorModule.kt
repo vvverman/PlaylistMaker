@@ -8,6 +8,8 @@ import com.example.playlistmaker.domain.settings.SettingsInteractor
 import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl
 import com.example.playlistmaker.domain.share.SharingInteractor
 import com.example.playlistmaker.domain.share.impl.SharingInteractorImpl
+import com.example.playlistmaker.ui.navigation.AgreementNavigator
+import com.example.playlistmaker.ui.navigation.impl.AgreementNavigatorImpl
 import org.koin.dsl.module
 
 
@@ -26,6 +28,11 @@ val interactorModule = module {
     }
 
     single<SharingInteractor> {
-        SharingInteractorImpl(get(), get())
+        SharingInteractorImpl(get(), get()) // Добавьте параметр agreementNavigator
     }
+
+    single<AgreementNavigator>(createdAtStart = true) {
+        AgreementNavigatorImpl(context = get())
+    }
+
 }

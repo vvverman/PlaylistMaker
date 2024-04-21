@@ -51,7 +51,9 @@
             android:textColor="@color/black"
             android:textColorHint="@color/searchFieldHint"
             android:contentDescription="Search input field"
-            android:imeOptions="actionSearch"/>
+            android:imeOptions="actionSearch"
+            android:textCursorDrawable="@drawable/search_cursor_edittext"
+            />
 
 
         <!-- Иконка для очистки поля поиска -->

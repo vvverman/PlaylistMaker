@@ -4,10 +4,9 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.example.playlistmaker.R
-import com.example.playlistmaker.data.share.ExternalBrowser
+import com.example.playlistmaker.domain.share.ExternalService
 
-class ExternalBrowserImpl(private val context: Context) : ExternalBrowser {
-
+class ExternalServiceImpl(private val context: Context) : ExternalService {
     override fun shareLink(url: String) {
         val sendIntent = Intent().apply {
             action = Intent.ACTION_SEND
@@ -20,21 +19,13 @@ class ExternalBrowserImpl(private val context: Context) : ExternalBrowser {
         context.startActivity(shareIntent)
     }
 
-    override fun openUserAgreement(url: String) {
-        Intent(Intent.ACTION_VIEW, Uri.parse(url)).apply {
-            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-            context.startActivity(this)
-        }
-    }
-
     override fun openEmail(email: String, subject: String, message: String) {
-
         Intent(Intent.ACTION_SENDTO).apply {
             data = Uri.parse(context.getString(R.string.url_mail))
             putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
 
             addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
             context.startActivity(this)
-        }
     }
-}
+
+}}

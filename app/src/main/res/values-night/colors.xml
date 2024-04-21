@@ -31,10 +31,14 @@
 
     <color name="toolbar_text_color">#FF1A1B22</color>
 
-    <color name="switch_thumb_color">#FF3772E7</color>
-    <color name="switch_bg">#FF2F457D</color>
+    <color name="switch_thumb_color_active">#FF3772E7</color>
+    <color name="switch_track_color_active">#FF2F457D</color>
+    <color name="switch_thumb_color_disabled">#FFAEAFB4</color>
+    <color name="switch_track_color_disabled">#FFE6E8EB</color>
+
     <color name="control_activated_color">#FFFFFFFF</color>
     <color name="background">#FF1A1B22</color>
+
 
 
 

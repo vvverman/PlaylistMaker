@@ -15,6 +15,6 @@ class AgreementActivity : AppCompatActivity() {
         backButton.setOnClickListener {
             onBackPressed()
         }
-
     }
+
 }

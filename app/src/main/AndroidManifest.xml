@@ -16,16 +16,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
         tools:targetApi="31">
-<!--        <activity-->
-<!--            android:name=".ui.settings.SettingsFragment"-->
-<!--            android:exported="false"-->
-<!--            android:label="@string/title_activity_settings" />-->
-<!--        <activity-->
-<!--            android:name=".ui.medialibrary.MedialibraryFragment"-->
-<!--            android:exported="false" />-->
-<!--        <activity-->
-<!--            android:name=".ui.search.SearchFragment"-->
-<!--            android:exported="false" />-->
+
         <activity
             android:name=".ui.player.PlayerActivity"
             android:exported="false" />
@@ -51,8 +42,4 @@
 
 </manifest>
 
-<!--<action android:name="android.intent.action.SEND" />-->
-<!--<action android:name="android.intent.action.ACTION_SEND" />-->
-<!--<action android:name="android.intent.action.CHOOSER" />-->
-<!--<category android:name="android.intent.category.DEFAULT"-->
-<!--<data android:mimeType="*/*"-->
+

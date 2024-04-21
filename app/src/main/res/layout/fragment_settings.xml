@@ -22,7 +22,8 @@
             app:icon="@drawable/arrow_back_button"
             app:iconGravity="textStart"
             app:iconPadding="@dimen/iconPadding"
-            app:iconTint="@color/black" />
+            app:iconTint="@color/black"
+            android:background="@color/background"/>
     </LinearLayout>
 
     <com.google.android.material.switchmaterial.SwitchMaterial
@@ -33,8 +34,8 @@
         android:layout_marginTop="@dimen/paddingVertical"
         android:paddingVertical="@dimen/paddingVertical"
         android:text="@string/color_theme"
-        app:thumbTint="@color/switch_thumb_color"
-        app:trackTint="@color/switch_bg"
+        app:thumbTint="@color/switch_thumb_color_active"
+        app:trackTint="@color/switch_thumb_color_active"
         />
 
 

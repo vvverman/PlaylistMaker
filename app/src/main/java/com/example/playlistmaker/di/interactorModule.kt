@@ -1,14 +1,17 @@
 package com.example.playlistmaker.di
 
-import com.example.playlistmaker.domain.medialibrary.MediaLibraryInteractor
-import com.example.playlistmaker.domain.medialibrary.impl.MediaLibraryInteractorImpl
+import com.example.playlistmaker.domain.player.PlayerInteractor
+import com.example.playlistmaker.domain.player.impl.PlayerInteractorImpl
 import com.example.playlistmaker.domain.search.SearchInteractor
 import com.example.playlistmaker.domain.search.impl.SearchInteractorImpl
 import com.example.playlistmaker.domain.settings.SettingsInteractor
 import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl
 import com.example.playlistmaker.domain.share.SharingInteractor
 import com.example.playlistmaker.domain.share.impl.SharingInteractorImpl
+import com.example.playlistmaker.ui.navigation.AgreementNavigator
+import com.example.playlistmaker.ui.navigation.impl.AgreementNavigatorImpl
 import org.koin.dsl.module
+
 
 val interactorModule = module {
 
@@ -16,8 +19,8 @@ val interactorModule = module {
         SearchInteractorImpl(historyStorageRepo = get())
     }
 
-    single<MediaLibraryInteractor> {
-        MediaLibraryInteractorImpl(historyStorageRepo = get())
+    single<PlayerInteractor> {
+        PlayerInteractorImpl(historyStorageRepo = get())
     }
 
     single<SettingsInteractor>(createdAtStart = true) {
@@ -25,6 +28,11 @@ val interactorModule = module {
     }
 
     single<SharingInteractor> {
-        SharingInteractorImpl(externalBrowser = get())
+        SharingInteractorImpl(get(), get()) // Добавьте параметр agreementNavigator
     }
+
+    single<AgreementNavigator>(createdAtStart = true) {
+        AgreementNavigatorImpl(context = get())
+    }
+
 }

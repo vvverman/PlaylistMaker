@@ -19,7 +19,7 @@
         <item name="android:textFontWeight">400</item>
         <item name="android:textSize">@dimen/typesettingFontSize</item>
         <item name="android:tint">@color/white</item>
-        <item name="android:background">@color/black</item>
+        <item name="android:background">@color/background</item>
     </style>
 
     <style name="ActivityMainButtonStyle">
@@ -140,6 +140,16 @@
         <item name="android:tint">@color/gray_text</item>
         <item name="android:background">@color/black</item>
     </style>
+
+    <style name="ThemeButtonNewPlaylist">
+        <!-- Customize your theme here -->
+        <item name="android:background">@color/white</item>
+        <item name="android:textColor">@color/black</item>
+        <!-- Other theme attributes -->
+    </style>
+
+
+
 
 </resources>
 

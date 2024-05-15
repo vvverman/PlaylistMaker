@@ -37,8 +37,8 @@ class HistoryStorageRepoImpl(
                         genre = it.primaryGenreName,
                         albumName = it.collectionName,
                         country = it.country,
-                        releaseDate = it.releaseDate,
-                        previewUrl = it.previewUrl
+                        releaseDate = it.releaseDate?:"unknown",
+                        previewUrl = it.previewUrl?:"unknown"
                     )
                 })
             }

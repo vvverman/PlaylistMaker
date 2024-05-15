@@ -12,17 +12,6 @@
         android:orientation="horizontal"
         tools:ignore="UseCompoundDrawables">
 
-        <!-- Кнопка "назад" -->
-        <ImageButton
-            android:id="@+id/backButton"
-            style="@style/ActivitySettingsColorAndFontStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginEnd="@dimen/offset_29"
-            android:contentDescription="This is an arrow - this is a button leading back"
-            app:srcCompat="@drawable/arrow_back_button" />
-
         <!-- Заголовок активности -->
         <TextView
             style="@style/ActivitySettingsColorAndFontStyle"
@@ -60,9 +49,11 @@
             android:paddingHorizontal="@dimen/offset_12"
             android:paddingVertical="@dimen/offset_10"
             android:textColor="@color/black"
-            android:textColorHint="@color/grey"
+            android:textColorHint="@color/searchFieldHint"
             android:contentDescription="Search input field"
-            android:imeOptions="actionSearch"/>
+            android:imeOptions="actionSearch"
+            android:textCursorDrawable="@drawable/search_cursor_edittext"
+            />
 
 
         <!-- Иконка для очистки поля поиска -->
@@ -75,7 +66,8 @@
             android:layout_marginVertical="@dimen/offset_10"
             android:contentDescription="TODO"
             android:src="@drawable/clear_button"
-            android:visibility="gone" />
+            android:visibility="gone"
+            android:fillColor="@color/searchFieldHint"/>
     </FrameLayout>
 
     <!-- Сообщение о том, что поиск не дал результатов -->

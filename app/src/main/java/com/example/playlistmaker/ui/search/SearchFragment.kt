@@ -3,44 +3,60 @@ package com.example.playlistmaker.ui.search
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.core.widget.doOnTextChanged
+import androidx.fragment.app.Fragment
 import com.example.playlistmaker.R
 import org.koin.androidx.viewmodel.ext.android.viewModel
-import com.example.playlistmaker.databinding.ActivitySearchBinding
-import com.example.playlistmaker.ui.medialibrary.MediaLibraryActivity
+import com.example.playlistmaker.databinding.FragmentSearchBinding
+import com.example.playlistmaker.ui.player.PlayerActivity
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
 
-class SearchActivity : AppCompatActivity() {
-    private var binding: ActivitySearchBinding? = null
+class SearchFragment : Fragment() {
+    private var binding: FragmentSearchBinding? = null
     private val viewModel: SearchViewModel by viewModel()
     private lateinit var trackHistoryAdapter: TrackHistoryAdapter
     private lateinit var trackAdapter: TrackAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivitySearchBinding.inflate(layoutInflater)
-        setContentView(binding?.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        binding = FragmentSearchBinding.inflate(layoutInflater)
+        return binding?.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
         initViews()
         initObservers()
     }
 
+
     private fun initViews() {
-        binding?.apply {
-            backButton.setOnClickListener { onBackPressed() }
-            noNetworkUpdateButton.setOnClickListener { viewModel.onMessageButtonClicked() }
-            initTracksRecyclerView()
-            initTracksHistoryRecyclerView()
+        binding?.run {
+//            backButton.setOnClickListener { viewModel.onMessageButtonClicked() }
             clearButton.setOnClickListener {
                 viewModel.onClearButtonClicked()
             }
         }
+        initTracksRecyclerView()
+        initTracksHistoryRecyclerView()
         initEditTextSearch()
         initClearButton()
     }
+
+
+
+
 
     private fun initTracksRecyclerView() {
         trackAdapter = TrackAdapter(viewModel::onTrackClicked)
@@ -97,10 +113,10 @@ class SearchActivity : AppCompatActivity() {
             }
         }
 
-        viewModel.event.observe(this) {
+        viewModel.event.observe(viewLifecycleOwner) {
             when (it) {
                 is SearchScreenEvent.OpenPlayerScreen -> {
-                    startActivity(Intent(this, MediaLibraryActivity()::class.java))
+                    startActivity(Intent(requireContext(), PlayerActivity()::class.java))
                 }
                 is SearchScreenEvent.ClearSearch->binding?.searchField?.text?.clear()
 
@@ -110,7 +126,7 @@ class SearchActivity : AppCompatActivity() {
     }
 
     private fun hideKeyboard() {
-        val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        val imm = requireContext().getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(binding?.clearButton?.windowToken, 0)
     }
 }

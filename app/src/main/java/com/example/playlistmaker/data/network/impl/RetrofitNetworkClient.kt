@@ -4,23 +4,27 @@ import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.data.network.Result
 import com.example.playlistmaker.data.network.TracksApi
 import com.example.playlistmaker.data.search.model.TracksSearchRequest
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 
 class RetrofitNetworkClient (private val tracksApi: TracksApi): NetworkClient {
 
-    override fun doRequest(dto: Any): Result {
-        return if (dto is TracksSearchRequest) {
+
+override suspend fun doRequest(dto: Any): Result {
+    return if (dto is TracksSearchRequest) {
+        withContext(Dispatchers.IO) {
             try {
-                val response = tracksApi.searchTracks(dto.text).execute()
-                response.body()?.apply {
-                    resultCode = response.code()
-                } ?: Result(resultCode = response.code())
+                tracksApi.searchTracks(dto.text).apply {
+                    resultCode = 200
+                }
             } catch (e: Throwable) {
                 Result(resultCode = -1)
             }
-        } else {
-            Result(resultCode = 400)
         }
+    } else {
+        Result(resultCode = 400)
     }
+}
 }
 
 

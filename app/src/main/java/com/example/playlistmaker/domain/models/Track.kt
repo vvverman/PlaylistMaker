@@ -1,6 +1,7 @@
 package com.example.playlistmaker.domain.models
 
 data class Track(
+    val id:Long,
     val trackName: String,
     val artistName: String,
     val trackTimeMillis: Long,
@@ -11,6 +12,7 @@ data class Track(
     val releaseDate: String,
     val previewUrl: String,
     val itemId: Long,
+    val isFavorite: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
         if (this === other) return true

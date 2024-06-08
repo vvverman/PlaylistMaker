@@ -7,6 +7,7 @@ import com.example.playlistmaker.di.networkModule
 import com.example.playlistmaker.di.repoModule
 import com.example.playlistmaker.di.sharedPreferenceModule
 import com.example.playlistmaker.di.viewModelModule
+import com.example.playlistmaker.di.databaseModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.GlobalContext
 
@@ -22,7 +23,8 @@ class Application : Application() {
                 networkModule,
                 repoModule,
                 sharedPreferenceModule,
-                viewModelModule
+                viewModelModule,
+                databaseModule
             )
         }
     }

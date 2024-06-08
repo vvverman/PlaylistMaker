@@ -3,12 +3,12 @@ package com.example.playlistmaker.ui.player.view_model
 import android.app.Application
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
+import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.domain.favorites.FavoritesInteractor
 import com.example.playlistmaker.domain.player.PlayerInteractor
 import com.example.playlistmaker.domain.player.model.PlayerState
 import com.example.playlistmaker.domain.utils.DateFormat
@@ -20,6 +20,7 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class MediaLibraryViewModel(
+    private val favoritesInteractor: FavoritesInteractor,
     playerInteractor: PlayerInteractor,
     application: Application
 ) : AndroidViewModel(application) {
@@ -31,7 +32,7 @@ class MediaLibraryViewModel(
     private val mediaPlayer: MediaPlayer = MediaPlayer()
     private var trackDurationRunnable: Job? = null
 
-    private val track = playerInteractor.getTrackForPlaying()
+    private var track = playerInteractor.getTrackForPlaying()
 
     private val _state = MutableLiveData<PlayerScreenState>()
     val state: LiveData<PlayerScreenState> = _state
@@ -40,6 +41,7 @@ class MediaLibraryViewModel(
 
     init {
         _state.value = PlayerScreenState(PlayerState.PAUSED, track)
+        subscribeOnFavorites()
         initPlayer()
     }
 
@@ -67,7 +69,13 @@ class MediaLibraryViewModel(
     }
 
     fun onLikeButtonClicked() {
-//        event.postValue(MediaLibraryScreenEvent.ShowPlayListCreatedToast)
+        viewModelScope.launch(Dispatchers.IO) {
+            track?.apply {
+                if (isFavorite) {
+                    favoritesInteractor.deleteFromFavorites(this)
+                } else favoritesInteractor.addToFavorites(this)
+            }
+        }
     }
 
     private fun pausePlayer() {
@@ -80,9 +88,15 @@ class MediaLibraryViewModel(
             mediaPlayer.start()
             trackDurationRunnable?.cancel()
             trackDurationRunnable = viewModelScope.launch {
-                while (mediaPlayer.isPlaying){
-                    val time = DateFormat.formatMillisToString(mediaPlayer.currentPosition.toLong())
-                    _state.postValue(PlayerScreenState(PlayerState.PLAYING, track, time))
+                while (mediaPlayer.isPlaying){                    val time =
+                    DateFormat.formatMillisToString(mediaPlayer.currentPosition.toLong())
+                    _state.postValue(
+                        getCurrentScreenState().copy(
+                            playerState = PlayerState.PLAYING,
+                            track = track,
+                            trackTime = time
+                        )
+                    )
                     delay(TIME_STEP_MILLIS)
                 }
             }
@@ -103,6 +117,21 @@ class MediaLibraryViewModel(
                             playerState = PlayerState.PREPARED,
                             trackTime = ""
                         )
+                }
+            }
+        }
+    }
+
+    private fun subscribeOnFavorites() {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoritesInteractor.getFavorites().collect { favorites ->
+                track?.let {
+                    track = it.copy(isFavorite = it.id in favorites.map { track ->
+                        track.id
+                    }.toSet())
+                    _state.postValue(
+                        getCurrentScreenState().copy(isFavorites = track?.isFavorite ?: false)
+                    )
                 }
             }
         }

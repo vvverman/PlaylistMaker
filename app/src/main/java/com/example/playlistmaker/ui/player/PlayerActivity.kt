@@ -56,6 +56,13 @@ class PlayerActivity : AppCompatActivity() {
                     PlayerState.PAUSED -> binding?.playButton?.setImageResource(R.drawable.play_button)
                 }
             }
+
+
+            if (it.isFavorites)
+                binding?.addToFavoriteButton?.setImageResource(R.drawable.ic_like_filled)
+            else
+                binding?.addToFavoriteButton?.setImageResource(R.drawable.add_to_favorite)
+
         }
 
         mediaLibraryViewModel.event.observe(this) {

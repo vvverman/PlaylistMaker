@@ -15,6 +15,7 @@ import com.example.playlistmaker.ui.util.SingleLiveEvent
 import com.example.playlistmaker.ui.util.debounce
 import kotlinx.coroutines.launch
 import androidx.lifecycle.viewModelScope
+import kotlinx.coroutines.Dispatchers
 
 
 class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewModel() {
@@ -113,7 +114,7 @@ class SearchViewModel(private val searchInteractor: SearchInteractor) : ViewMode
 
     private fun searchTracks() {
         _state.value = getCurrentScreenState().copy(progressVisible = true)
-        viewModelScope.launch {
+        viewModelScope.launch(Dispatchers.IO) {
             searchInteractor.searchTracks(searchRequest)
                 .collect { tracks ->
                     if (tracks.data.isNullOrEmpty() &&

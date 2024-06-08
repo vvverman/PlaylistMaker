@@ -2,6 +2,7 @@ package com.example.playlistmaker.data.search.impl
 
 
 import android.content.SharedPreferences
+import com.example.playlistmaker.data.db.FavoritesDao
 import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.data.search.model.TracksResult
 import com.example.playlistmaker.data.search.model.TracksSearchRequest
@@ -15,7 +16,8 @@ import kotlinx.coroutines.flow.flow
 class HistoryStorageRepoImpl(
     private val networkClient: NetworkClient,
     private val sharedPreferences: SharedPreferences,
-    private val sharedPreferencesConverter: SharedPreferenceConverter
+    private val sharedPreferencesConverter: SharedPreferenceConverter,
+    private val favoritesDao: FavoritesDao
 ) : HistoryStorageRepo {
     companion object {
         const val KEY_TRACKS_HISTORY = "key_tracks_history"
@@ -30,26 +32,21 @@ class HistoryStorageRepoImpl(
             when (response.resultCode) {
                 -1 -> emit(Resource.Error("Проверьте подключение к интернету"))
                 200 -> {
-                    val tracks = (response as TracksResult).results.map {
-                        Track(
-                            it.trackName,
-                            it.artistName,
-                            it.trackTimeMillis,
-                            it.artworkUrl100,
-                            it.primaryGenreName,
-                            it.collectionName,
-                            it.country,
-                            it.releaseDate,
-                            it.previewUrl,
-                            it.itemId
+                    val tracks = (response as TracksResult).results.map { it.mapToDomain() }
+                    val favoritesIds = favoritesDao.getTracksIds().toSet()
+                    emit(
+                        Resource.Success(
+                            tracks.map { it.copy(isFavorite = it.id in favoritesIds) }
                         )
-                    }
-                    emit(Resource.Success(tracks))
+                    )
                 }
+
                 else -> emit(Resource.Error("Ошибка сервера"))
             }
         }
     }
+
+
 
 
 

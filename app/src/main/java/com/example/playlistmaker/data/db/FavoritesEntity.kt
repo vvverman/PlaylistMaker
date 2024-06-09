@@ -19,9 +19,9 @@ data class  FavoritesEntity
     @ColumnInfo("artwork_url_100")
     val artworkUrl100: String,
     @ColumnInfo("genre")
-    val genre: String,
+    val genre: String?,
     @ColumnInfo("album_name")
-    val albumName: String,
+    val albumName: String?,
     @ColumnInfo("country")
     val country: String,
     @ColumnInfo("release_date")

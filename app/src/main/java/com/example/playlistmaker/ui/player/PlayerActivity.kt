@@ -74,7 +74,7 @@ class PlayerActivity : AppCompatActivity() {
         binding?.apply {
             artistName.text = track.artistName
             trackName.text = track.trackName
-            if (track.albumName.isNotEmpty())
+            if (track.albumName?.isNotEmpty() == true)
                 albumValue.text = track.albumName
             else {
                 albumValue.isVisible = false
@@ -83,7 +83,7 @@ class PlayerActivity : AppCompatActivity() {
             countryValue.text = track.country
             yearValue.text = DateFormat.getYearFromReleaseDate(track.releaseDate)
             durationValue.text = DateFormat.formatMillisToString(track.trackTimeMillis).replaceFirst("0", "")
-            genreValue.text = track.genre
+            genreValue.text = track.genre ?: ""
             coverImage.load(track.artworkUrl100)
         }
     }

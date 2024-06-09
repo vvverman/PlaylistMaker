@@ -59,7 +59,7 @@ class PlayerActivity : AppCompatActivity() {
 
 
             if (it.isFavorites)
-                binding?.addToFavoriteButton?.setImageResource(R.drawable.ic_like_filled)
+                binding?.addToFavoriteButton?.setImageResource(R.drawable.add_to_favorites_filled)
             else
                 binding?.addToFavoriteButton?.setImageResource(R.drawable.add_to_favorite)
 

@@ -18,7 +18,6 @@ class FavoritesViewModel(
     private val _tracks = MutableLiveData<List<Track>>(listOf())
     val tracks: LiveData<List<Track>> = _tracks
 
-
     val event = SingleLiveEvent<FavoritesScreenEvent>()
 
     init {

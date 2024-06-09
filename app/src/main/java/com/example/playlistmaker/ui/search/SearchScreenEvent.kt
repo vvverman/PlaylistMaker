@@ -1,7 +1,7 @@
 package com.example.playlistmaker.ui.search
 
 sealed class SearchScreenEvent{
-    object HideKeyboard : SearchScreenEvent()
-    object OpenPlayerScreen : SearchScreenEvent()
-    object ClearSearch : SearchScreenEvent()
+    data object HideKeyboard : SearchScreenEvent()
+    data object OpenPlayerScreen : SearchScreenEvent()
+    data object ClearSearch : SearchScreenEvent()
 }

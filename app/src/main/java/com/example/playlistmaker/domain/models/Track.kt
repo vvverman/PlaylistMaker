@@ -11,7 +11,6 @@ data class Track(
     val country: String,
     val releaseDate: String,
     val previewUrl: String,
-    val itemId: Long,
     val isFavorite: Boolean = false
 ) {
     override fun equals(other: Any?): Boolean {
@@ -29,7 +28,6 @@ data class Track(
         if (country != other.country) return false
         if (releaseDate != other.releaseDate) return false
         if (previewUrl != other.previewUrl) return false
-        if (itemId != other.itemId) return false
 
         return true
     }
@@ -45,7 +43,6 @@ data class Track(
         result = 31 * result + (country?.hashCode() ?: 0)
         result = 31 * result + (releaseDate?.hashCode() ?: 0)
         result = 31 * result + (previewUrl?.hashCode() ?: 0)
-        result = 31 * result + (itemId?.hashCode() ?: 0)
         return result
     }
 }

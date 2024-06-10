@@ -12,6 +12,7 @@ import com.example.playlistmaker.domain.utils.Resource
 import com.example.playlistmaker.domain.utils.SharedPreferenceConverter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.first
 
 class HistoryStorageRepoImpl(
     private val networkClient: NetworkClient,
@@ -33,7 +34,7 @@ class HistoryStorageRepoImpl(
                 -1 -> emit(Resource.Error("Проверьте подключение к интернету"))
                 200 -> {
                     val tracks = (response as TracksResult).results.map { it.mapToDomain() }
-                    val favoritesIds = favoritesDao.getTracksIds().toSet()
+                    val favoritesIds = favoritesDao.getTracksIds().first().toSet()
                     emit(
                         Resource.Success(
                             tracks.map { it.copy(isFavorite = it.id in favoritesIds) }

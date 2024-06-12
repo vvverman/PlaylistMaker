@@ -13,16 +13,19 @@ import com.example.playlistmaker.ui.navigation.impl.AgreementNavigatorImpl
 import com.example.playlistmaker.domain.favorites.FavoritesInteractor
 import com.example.playlistmaker.domain.favorites.impl.FavoritesInteractorImpl
 import org.koin.dsl.module
-
+import com.example.playlistmaker.domain.main.NavigationInteractor
+import com.example.playlistmaker.domain.main.impl.NavigationInteractorImpl
+import com.example.playlistmaker.domain.playlist.PlaylistInteractor
+import com.example.playlistmaker.domain.playlist.impl.PlaylistInteractorImpl
 
 val interactorModule = module {
 
     single<SearchInteractor> {
-        SearchInteractorImpl(historyStorageRepo = get())
+        SearchInteractorImpl(tracksRepo = get())
     }
 
     single<PlayerInteractor> {
-        PlayerInteractorImpl(historyStorageRepo = get())
+        PlayerInteractorImpl(tracksRepo = get())
     }
 
     single<SettingsInteractor>(createdAtStart = true) {
@@ -38,7 +41,16 @@ val interactorModule = module {
     }
 
     single<FavoritesInteractor> {
-        FavoritesInteractorImpl(favoritesRepo = get(), historyStorageRepo = get())
+        FavoritesInteractorImpl(favoritesRepo = get(), tracksRepo = get())
+    }
+
+
+    single<NavigationInteractor> {
+        NavigationInteractorImpl(navigationRepo = get())
+    }
+
+    single<PlaylistInteractor> {
+        PlaylistInteractorImpl(externalStorageRepo = get(), playlistRepo = get())
     }
 
 }

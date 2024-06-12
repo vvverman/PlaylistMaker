@@ -2,24 +2,24 @@ package com.example.playlistmaker.data.search.impl
 
 
 import android.content.SharedPreferences
-import com.example.playlistmaker.data.db.FavoritesDao
+import com.example.playlistmaker.data.db.favorites.FavoritesDao
 import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.data.search.model.TracksResult
 import com.example.playlistmaker.data.search.model.TracksSearchRequest
-import com.example.playlistmaker.data.search.HistoryStorageRepo
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.data.search.TracksRepo
+import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.utils.Resource
 import com.example.playlistmaker.domain.utils.SharedPreferenceConverter
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.first
 
-class HistoryStorageRepoImpl(
+class TracksRepoImpl(
     private val networkClient: NetworkClient,
     private val sharedPreferences: SharedPreferences,
     private val sharedPreferencesConverter: SharedPreferenceConverter,
     private val favoritesDao: FavoritesDao
-) : HistoryStorageRepo {
+) : TracksRepo {
     companion object {
         const val KEY_TRACKS_HISTORY = "key_tracks_history"
         const val MAX_TRACKS_HISTORY_SIZE = 10

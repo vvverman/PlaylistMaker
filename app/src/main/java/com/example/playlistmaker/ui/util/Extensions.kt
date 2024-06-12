@@ -10,15 +10,19 @@ import com.bumptech.glide.request.RequestOptions
 import com.example.playlistmaker.R
 
 private const val IMAGE_SIZE = "512x512bb.jpg"
-private const val RADIUS_CORNERS = 2.0f
+private const val RADIUS_CORNERS = 8.0f
 
-fun ImageView.load(imageUrl: String) {
+fun ImageView.load(imageUrl: String, increaseQuality: Boolean = false) {
     val requestOptions = RequestOptions()
-        .placeholder(R.drawable.placeholder_track)
+        .placeholder(R.drawable.placeholder)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
     val density = Resources.getSystem().displayMetrics.density
+    val newImageUrl = if (increaseQuality) imageUrl.replaceAfterLast('/', IMAGE_SIZE) else imageUrl
+
     Glide.with(context)
         .applyDefaultRequestOptions(requestOptions)
+        .load(newImageUrl)
+
         .load(imageUrl.replaceAfterLast('/', IMAGE_SIZE))
         .transform(CenterCrop(), RoundedCorners((RADIUS_CORNERS * density).toInt()))
         .into(this)

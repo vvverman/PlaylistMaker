@@ -1,5 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <plurals name="track">
+        <item quantity="one">track</item>
+        <item quantity="few">tracks</item>
+        <item quantity="many">tracks</item>
+        <item quantity="other">tracks</item>
+    </plurals>
     <string name="search_button">Search</string>
     <string name="Player_button">Media Library</string>
     <string name="settings_button">Settings</string>
@@ -86,4 +92,19 @@
 
     <string name="subject">Message to developers and developers...</string>
     <string name="message">Thank you to the developers and developers for a great application!!!</string>
+    <string name="new_playlist">Create playlist</string>
+    <string name="playlist_name">Playlist Name*</string>
+    <string name="playlist_description">Description</string>
+    <string name="playlist_button_text">Create</string>
+    <string name="confirmation_dialog_title">Finish creating playlist?</string>
+    <string name="confirmation_dialog_message">All unsaved data will be lost</string>
+    <string name="confirmation_dialog_negative">Cancel</string>
+    <string name="confirmation_dialog_positive">Finish</string>
+    <string name="playlist_created_snackbar">Playlist %1$s created</string>
+    <string name="add_to_playlist">Add to playlist</string>
+    <string name="added_to_playlist">Added to playlist %1$s</string>
+    <string name="track_already_in_playlist">Track is already in playlist %1$s</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
 </resources>

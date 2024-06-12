@@ -1,10 +1,10 @@
 package com.example.playlistmaker.domain.player.impl
 
-import com.example.playlistmaker.data.search.HistoryStorageRepo
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.data.search.TracksRepo
+import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.player.PlayerInteractor
-class PlayerInteractorImpl(private val historyStorageRepo: HistoryStorageRepo) : PlayerInteractor {
+class PlayerInteractorImpl(private val tracksRepo: TracksRepo) : PlayerInteractor {
 
-    override fun getTrackForPlaying(): Track? = historyStorageRepo.getPlayingTrack()
+    override fun getTrackForPlaying(): Track? = tracksRepo.getPlayingTrack()
 
 }

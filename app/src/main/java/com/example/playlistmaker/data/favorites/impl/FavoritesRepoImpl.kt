@@ -1,9 +1,9 @@
 package com.example.playlistmaker.data.favorites.impl
 
-import com.example.playlistmaker.data.db.FavoritesDao
-import com.example.playlistmaker.data.db.FavoritesEntity
+import com.example.playlistmaker.data.db.favorites.FavoritesDao
+import com.example.playlistmaker.data.db.favorites.FavoritesEntity
 import com.example.playlistmaker.data.favorites.FavoritesRepo
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.model.Track
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 

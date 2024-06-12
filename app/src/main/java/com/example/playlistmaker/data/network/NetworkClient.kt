@@ -1,5 +1,6 @@
 package com.example.playlistmaker.data.network
 
 interface NetworkClient {
-    fun doRequest(dto: Any): Result
+
+    suspend fun doRequest(dto: Any): Result
 }

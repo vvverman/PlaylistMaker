@@ -42,7 +42,7 @@ class SettingsFragment : Fragment() {
 
     private fun setupThemeSwitch() {
         binding?.themeSwitcher?.apply {
-            settingsViewModel.ThemeSettings.observe(viewLifecycleOwner) { isChecked ->
+            settingsViewModel.themeSettings.observe(viewLifecycleOwner) { isChecked ->
                 this.isChecked = isChecked
 
                 if (isChecked) {

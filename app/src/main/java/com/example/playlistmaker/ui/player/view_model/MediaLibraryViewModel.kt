@@ -3,19 +3,24 @@ package com.example.playlistmaker.ui.player.view_model
 import android.app.Application
 import android.media.MediaPlayer
 import android.net.Uri
-import android.os.Handler
-import android.os.Looper
+import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.viewModelScope
+import com.example.playlistmaker.domain.favorites.FavoritesInteractor
 import com.example.playlistmaker.domain.player.PlayerInteractor
 import com.example.playlistmaker.domain.player.model.PlayerState
 import com.example.playlistmaker.domain.utils.DateFormat
 import com.example.playlistmaker.ui.player.PlayerScreenEvent
 import com.example.playlistmaker.ui.player.PlayerScreenState
 import com.example.playlistmaker.ui.util.SingleLiveEvent
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class MediaLibraryViewModel(
+    private val favoritesInteractor: FavoritesInteractor,
     playerInteractor: PlayerInteractor,
     application: Application
 ) : AndroidViewModel(application) {
@@ -24,21 +29,10 @@ class MediaLibraryViewModel(
         private const val TIME_STEP_MILLIS = 300L
     }
 
-    private var mediaPlayer: MediaPlayer = MediaPlayer()
-    private val handler = Handler(Looper.getMainLooper())
-    private var trackDurationRunnable = object : Runnable {
-        override fun run() {
-            val time = DateFormat.formatMillisToString(mediaPlayer.currentPosition.toLong())
-            if (getCurrentScreenState().playerState == PlayerState.PLAYING) {
-                handler.postDelayed(this, TIME_STEP_MILLIS)
-                _state.postValue(PlayerScreenState(PlayerState.PLAYING, track, time))
-            } else {
-                pausePlayer()
-            }
-        }
-    }
+    private val mediaPlayer: MediaPlayer = MediaPlayer()
+    private var trackDurationRunnable: Job? = null
 
-    private val track = playerInteractor.getTrackForPlaying()
+    private var track = playerInteractor.getTrackForPlaying()
 
     private val _state = MutableLiveData<PlayerScreenState>()
     val state: LiveData<PlayerScreenState> = _state
@@ -47,11 +41,11 @@ class MediaLibraryViewModel(
 
     init {
         _state.value = PlayerScreenState(PlayerState.PAUSED, track)
+        subscribeOnFavorites()
         initPlayer()
     }
 
     override fun onCleared() {
-        handler.removeCallbacks(trackDurationRunnable)
         mediaPlayer.release()
         super.onCleared()
     }
@@ -60,7 +54,7 @@ class MediaLibraryViewModel(
 
     fun onStop() {
         if (getCurrentScreenState().playerState != PlayerState.PAUSED) {
-            handler.removeCallbacks(trackDurationRunnable)
+            trackDurationRunnable?.cancel()
             mediaPlayer.release()
         }
     }
@@ -71,12 +65,17 @@ class MediaLibraryViewModel(
                 PlayerState.PLAYING -> pausePlayer()
                 PlayerState.PREPARED, PlayerState.PAUSED -> startPlayer()
             }
-            handler.post(trackDurationRunnable)
         }
     }
 
     fun onLikeButtonClicked() {
-//        event.postValue(MediaLibraryScreenEvent.ShowPlayListCreatedToast)
+        viewModelScope.launch(Dispatchers.IO) {
+            track?.apply {
+                if (isFavorite) {
+                    favoritesInteractor.deleteFromFavorites(this)
+                } else favoritesInteractor.addToFavorites(this)
+            }
+        }
     }
 
     private fun pausePlayer() {
@@ -87,7 +86,20 @@ class MediaLibraryViewModel(
     private fun startPlayer() {
         if (getCurrentScreenState().playerState != PlayerState.PLAYING) {
             mediaPlayer.start()
-            _state.value = getCurrentScreenState().copy(playerState = PlayerState.PLAYING)
+            trackDurationRunnable?.cancel()
+            trackDurationRunnable = viewModelScope.launch {
+                while (mediaPlayer.isPlaying){                    val time =
+                    DateFormat.formatMillisToString(mediaPlayer.currentPosition.toLong())
+                    _state.postValue(
+                        getCurrentScreenState().copy(
+                            playerState = PlayerState.PLAYING,
+                            track = track,
+                            trackTime = time
+                        )
+                    )
+                    delay(TIME_STEP_MILLIS)
+                }
+            }
         }
     }
 
@@ -105,6 +117,21 @@ class MediaLibraryViewModel(
                             playerState = PlayerState.PREPARED,
                             trackTime = ""
                         )
+                }
+            }
+        }
+    }
+
+    private fun subscribeOnFavorites() {
+        viewModelScope.launch(Dispatchers.IO) {
+            favoritesInteractor.getFavorites().collect { favorites ->
+                track?.let {
+                    track = it.copy(isFavorite = it.id in favorites.map { track ->
+                        track.id
+                    }.toSet())
+                    _state.postValue(
+                        getCurrentScreenState().copy(isFavorites = track?.isFavorite ?: false)
+                    )
                 }
             }
         }

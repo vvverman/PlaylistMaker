@@ -14,8 +14,8 @@ class SettingsViewModel(
 ) : ViewModel() {
 
     private val _applicationTheme =
-        MutableLiveData<com.example.playlistmaker.domain.settings.model.ThemeList>(settingsInteractor.getThemeSettings())
-    val ThemeSettings: LiveData<Boolean> = _applicationTheme.map { it == DARK }
+        MutableLiveData(settingsInteractor.getThemeSettings())
+    val themeSettings: LiveData<Boolean> = _applicationTheme.map { it == DARK }
 
     fun onShareAppButtonClicked() = sharingInteractor.shareApp()
 

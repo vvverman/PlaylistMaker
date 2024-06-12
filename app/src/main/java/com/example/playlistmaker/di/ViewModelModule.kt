@@ -16,7 +16,10 @@ val viewModelModule = module {
     }
 
     viewModel<MediaLibraryViewModel> {
-        MediaLibraryViewModel(playerInteractor = get(), androidApplication())
+        MediaLibraryViewModel(
+            favoritesInteractor = get(),
+            playerInteractor = get(),
+            application = androidApplication())
     }
 
     viewModel<SettingsViewModel> {
@@ -24,7 +27,7 @@ val viewModelModule = module {
     }
 
     viewModel<FavoritesViewModel> {
-        FavoritesViewModel()
+        FavoritesViewModel(favoritesInteractor = get())
     }
 
     viewModel<PlaylistsViewModel> {

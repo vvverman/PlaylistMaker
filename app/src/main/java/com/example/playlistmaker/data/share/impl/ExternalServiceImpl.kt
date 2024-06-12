@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.Intent
 import android.net.Uri
 import com.example.playlistmaker.R
-import com.example.playlistmaker.domain.share.ExternalService
+import com.example.playlistmaker.data.share.ExternalService
 
 class ExternalServiceImpl(private val context: Context) : ExternalService {
     override fun shareLink(url: String) {
@@ -17,6 +17,10 @@ class ExternalServiceImpl(private val context: Context) : ExternalService {
             .createChooser(sendIntent, null)
             .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
         context.startActivity(shareIntent)
+    }
+
+    override fun openUserAgreement(url: String) {
+        TODO("Not yet implemented")
     }
 
     override fun openEmail(email: String, subject: String, message: String) {

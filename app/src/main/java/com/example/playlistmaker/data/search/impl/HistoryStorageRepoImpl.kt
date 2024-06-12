@@ -2,6 +2,7 @@ package com.example.playlistmaker.data.search.impl
 
 
 import android.content.SharedPreferences
+import com.example.playlistmaker.data.db.FavoritesDao
 import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.data.search.model.TracksResult
 import com.example.playlistmaker.data.search.model.TracksSearchRequest
@@ -9,11 +10,15 @@ import com.example.playlistmaker.data.search.HistoryStorageRepo
 import com.example.playlistmaker.domain.models.Track
 import com.example.playlistmaker.domain.utils.Resource
 import com.example.playlistmaker.domain.utils.SharedPreferenceConverter
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.first
 
 class HistoryStorageRepoImpl(
     private val networkClient: NetworkClient,
     private val sharedPreferences: SharedPreferences,
-    private val sharedPreferencesConverter: SharedPreferenceConverter
+    private val sharedPreferencesConverter: SharedPreferenceConverter,
+    private val favoritesDao: FavoritesDao
 ) : HistoryStorageRepo {
     companion object {
         const val KEY_TRACKS_HISTORY = "key_tracks_history"
@@ -22,29 +27,28 @@ class HistoryStorageRepoImpl(
 
     private var playingTrack: Track? = null
 
-    override fun searchTracks(text: String): Resource<List<Track>> {
-        val response = networkClient.doRequest(TracksSearchRequest(text))
-        return when (response.resultCode){
-            -1 -> Resource.Error("Проверьте подключение к интернету")
-            200 -> {
-                Resource.Success((response as TracksResult).results.map {
-                    Track(
-                        itemId = it.itemId,
-                        trackName = it.trackName,
-                        artistName = it.artistName,
-                        trackTimeMillis = it.trackTimeMillis,
-                        artworkUrl100 = it.artworkUrl100,
-                        genre = it.primaryGenreName,
-                        albumName = it.collectionName,
-                        country = it.country,
-                        releaseDate = it.releaseDate?:"unknown",
-                        previewUrl = it.previewUrl?:"unknown"
+    override fun searchTracks(text: String): Flow<Resource<List<Track>>> {
+        return flow {
+            val response = networkClient.doRequest(TracksSearchRequest(text))
+            when (response.resultCode) {
+                -1 -> emit(Resource.Error("Проверьте подключение к интернету"))
+                200 -> {
+                    val tracks = (response as TracksResult).results.map { it.mapToDomain() }
+                    val favoritesIds = favoritesDao.getTracksIds().first().toSet()
+                    emit(
+                        Resource.Success(
+                            tracks.map { it.copy(isFavorite = it.id in favoritesIds) }
+                        )
                     )
-                })
+                }
+
+                else -> emit(Resource.Error("Ошибка сервера"))
             }
-            else -> Resource.Error("Ошибка сервера")
         }
     }
+
+
+
 
 
 
@@ -78,11 +82,9 @@ class HistoryStorageRepoImpl(
         sharedPreferences.edit().putString(KEY_TRACKS_HISTORY, null).apply()
     }
 
-
     override fun saveHistory(history: MutableList<Track>) {
         TODO("Not yet implemented")
     }
-
 
 
     override fun getPlayingTrack(): Track? {

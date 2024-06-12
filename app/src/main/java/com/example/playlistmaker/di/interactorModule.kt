@@ -10,6 +10,8 @@ import com.example.playlistmaker.domain.share.SharingInteractor
 import com.example.playlistmaker.domain.share.impl.SharingInteractorImpl
 import com.example.playlistmaker.ui.navigation.AgreementNavigator
 import com.example.playlistmaker.ui.navigation.impl.AgreementNavigatorImpl
+import com.example.playlistmaker.domain.favorites.FavoritesInteractor
+import com.example.playlistmaker.domain.favorites.impl.FavoritesInteractorImpl
 import org.koin.dsl.module
 
 
@@ -33,6 +35,10 @@ val interactorModule = module {
 
     single<AgreementNavigator>(createdAtStart = true) {
         AgreementNavigatorImpl(context = get())
+    }
+
+    single<FavoritesInteractor> {
+        FavoritesInteractorImpl(favoritesRepo = get(), historyStorageRepo = get())
     }
 
 }

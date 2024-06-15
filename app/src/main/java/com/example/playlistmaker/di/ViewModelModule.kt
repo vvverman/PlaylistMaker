@@ -20,7 +20,7 @@ val viewModelModule = module {
         SearchViewModel(searchInteractor = get())
     }
 
-    single { MediaPlayer() }
+    factory { MediaPlayer() }
 
     viewModel<MediaLibraryViewModel> {
         MediaLibraryViewModel(

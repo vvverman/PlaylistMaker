@@ -3,6 +3,7 @@ package com.example.playlistmaker.ui.player.fragment.view_model
 import android.app.Application
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
@@ -145,19 +146,24 @@ class MediaLibraryViewModel(
     }
 
     private fun initPlayer() {
-        track?.let {
+        track?.let { track ->
             mediaPlayer.apply {
-                setDataSource(getApplication(), Uri.parse(it.previewUrl))
-                prepareAsync()
-                setOnPreparedListener {
-                    _state.value = getCurrentScreenState().copy(playerState = PlayerState.PREPARED)
-                }
-                setOnCompletionListener {
-                    _state.value =
-                        getCurrentScreenState().copy(
+                reset() // Сбросить MediaPlayer в состояние IDLE
+                try {
+                    setDataSource(getApplication(), Uri.parse(track.previewUrl))
+                    prepareAsync()
+                    setOnPreparedListener {
+                        _state.value = getCurrentScreenState().copy(playerState = PlayerState.PREPARED)
+                    }
+                    setOnCompletionListener {
+                        _state.value = getCurrentScreenState().copy(
                             playerState = PlayerState.PREPARED,
                             trackTime = ""
                         )
+                    }
+                } catch (e: Exception) {
+                    // Обработать исключения корректно, например, залогировать ошибку или уведомить пользователя
+                    Log.e("MediaLibraryViewModel", "Ошибка при установке источника данных", e)
                 }
             }
         }

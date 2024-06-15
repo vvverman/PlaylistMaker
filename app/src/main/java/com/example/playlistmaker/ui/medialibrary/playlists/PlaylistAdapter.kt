@@ -28,8 +28,8 @@ class PlaylistAdapter :
 
         fun bind(playlist: Playlist) {
             with(binding) {
-                playlist.coverUri?.let { ivCover.load(it) }
-                textName.text = playlist.name
+                playlist.coverUri?.let { playlistCover.load(it) }
+                playlistName.text = playlist.name
                 textTracksCount.text = getTracksCountText(playlist.tracksCount)
             }
         }

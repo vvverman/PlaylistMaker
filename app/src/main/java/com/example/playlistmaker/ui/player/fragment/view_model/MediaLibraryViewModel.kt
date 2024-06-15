@@ -27,6 +27,7 @@ class MediaLibraryViewModel(
     private val favoritesInteractor: FavoritesInteractor,
     private val playlistInteractor: PlaylistInteractor,
     playerInteractor: PlayerInteractor,
+    private val mediaPlayer: MediaPlayer,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -34,7 +35,7 @@ class MediaLibraryViewModel(
         private const val TIME_STEP_MILLIS = 300L
     }
 
-    private val mediaPlayer: MediaPlayer = MediaPlayer()
+    //    private val mediaPlayer: MediaPlayer = MediaPlayer()
     private var trackDurationRunnable: Job? = null
 
     private var track = playerInteractor.getTrackForPlaying()

@@ -64,7 +64,7 @@ class NewPlaylistFragment : Fragment() {
 
     private fun setupTextListeners() {
         binding?.apply {
-            editTextName.doAfterTextChanged { viewModel.onPlaylistNameChanged(it.toString()) }
+            editPlaylistName.doAfterTextChanged { viewModel.onPlaylistNameChanged(it.toString()) }
             editTextDescription.doAfterTextChanged {
                 viewModel.onPlaylistDescriptionChanged(it.toString())
             }
@@ -73,7 +73,7 @@ class NewPlaylistFragment : Fragment() {
 
     private fun setupClickListeners() {
         binding?.apply {
-            ibCover.setOnClickListener {
+            playlistPlaceholder.setOnClickListener {
                 pickMedia.launch(PickVisualMediaRequest(ActivityResultContracts.PickVisualMedia.ImageOnly))
             }
             btnCreate.setOnClickListener { viewModel.onCreatePlaylistClicked() }
@@ -124,6 +124,6 @@ class NewPlaylistFragment : Fragment() {
     }
 
     private fun setSelectedCover(uri: Uri) {
-        binding?.ibCover?.load(uri.toString())
+        binding?.playlistPlaceholder?.load(uri.toString())
     }
 }

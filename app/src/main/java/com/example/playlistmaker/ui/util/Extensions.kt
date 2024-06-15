@@ -22,8 +22,7 @@ fun ImageView.load(imageUrl: String, increaseQuality: Boolean = false) {
     Glide.with(context)
         .applyDefaultRequestOptions(requestOptions)
         .load(newImageUrl)
-
-        .load(imageUrl.replaceAfterLast('/', IMAGE_SIZE))
         .transform(CenterCrop(), RoundedCorners((RADIUS_CORNERS * density).toInt()))
         .into(this)
 }
+

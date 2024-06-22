@@ -64,8 +64,8 @@ class PlaylistInfoFragment : Fragment() {
             toolbar.setNavigationOnClickListener {
                 requireActivity().onBackPressedDispatcher.onBackPressed()
             }
-            btnShare.setOnClickListener { viewModel.onShareButtonClicked() }
-            btnMenu.setOnClickListener { viewModel.onMenuButtonClicked() }
+            playlistInfoSharingButton.setOnClickListener { viewModel.onShareButtonClicked() }
+            playlistMenuButton.setOnClickListener { viewModel.onMenuButtonClicked() }
         }
     }
 
@@ -155,10 +155,10 @@ class PlaylistInfoFragment : Fragment() {
         binding?.apply {
             Glide.with(requireContext())
                 .load(coverUri)
-                .into(ivCover)
-            tvName.text = name
-            tvDescription.text = description
-            tvTracksInfo.text = getTracksInfoText(tracksDuration, tracksCount)
+                .into(playlistInfoCover)
+            playlistNameInInfo.text = name
+            playlistDescriptionInInfo.text = description
+            tracksInfoInPlaylist.text = getTracksInfoText(tracksDuration, tracksCount)
         }
     }
 
@@ -166,7 +166,7 @@ class PlaylistInfoFragment : Fragment() {
         trackAdapter.updateData(tracks)
         binding?.apply {
             tracksListInPlaylist.isVisible = tracks.isNotEmpty()
-            lytNoTracks.isVisible = tracks.isEmpty()
+            noTracksInPlaylistImage.isVisible = tracks.isEmpty()
         }
     }
 

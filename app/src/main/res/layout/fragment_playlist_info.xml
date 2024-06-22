@@ -13,7 +13,7 @@
         tools:context=".ui.media.playlist_info.PlaylistInfoFragment">
 
         <ImageView
-            android:id="@+id/iv_cover"
+            android:id="@+id/playlist_info_cover"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:scaleType="fitXY"
@@ -22,7 +22,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <LinearLayout
-            android:id="@+id/lyt_info"
+            android:id="@+id/playlist_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
@@ -30,7 +30,7 @@
             app:layout_constraintTop_toBottomOf="@id/guideline">
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/playlist_name_in_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
@@ -41,7 +41,7 @@
                 tools:text="Best songs 2021" />
 
             <TextView
-                android:id="@+id/tv_description"
+                android:id="@+id/playlist_description_in_info"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -51,7 +51,7 @@
                 tools:text="2022" />
 
             <TextView
-                android:id="@+id/tv_tracksInfo"
+                android:id="@+id/tracks_info_in_playlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -63,17 +63,17 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/lyt_buttons"
+            android:id="@+id/playlist_info_buttons"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="16dp"
             android:layout_marginTop="16dp"
             android:orientation="horizontal"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/lyt_info">
+            app:layout_constraintTop_toBottomOf="@id/playlist_info">
 
             <ImageButton
-                android:id="@+id/btnShare"
+                android:id="@+id/playlist_info_sharing_button"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:background="@android:color/transparent"
@@ -82,7 +82,7 @@
                 app:tint="@color/colorCommonText" />
 
             <ImageButton
-                android:id="@+id/btnMenu"
+                android:id="@+id/playlist_menu_button"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
@@ -135,7 +135,7 @@
             android:background="@drawable/background_grey_round" />
 
         <LinearLayout
-            android:id="@+id/lyt_no_tracks"
+            android:id="@+id/no_tracks_in_playlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="top|center"
@@ -144,14 +144,14 @@
             tools:visibility="visible">
 
             <ImageView
-                android:id="@+id/iv_no_favorite_tracks"
+                android:id="@+id/no_tracks_in_playlist_image"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 app:srcCompat="@drawable/no_search_results_image" />
 
             <TextView
-                android:id="@+id/tv_no_favorite_tracks"
+                android:id="@+id/no_tracks_in_playlist_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"

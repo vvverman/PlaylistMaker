@@ -1,7 +1,7 @@
 package com.example.playlistmaker.domain.search.impl
 
-import com.example.playlistmaker.data.search.HistoryStorageRepo
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.data.search.TracksRepo
+import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.search.SearchInteractor
 import com.example.playlistmaker.domain.utils.Resource
 import kotlinx.coroutines.flow.Flow
@@ -9,9 +9,9 @@ import kotlinx.coroutines.flow.Flow
 /**
  * Реализация интерфейса SearchInteractor, которая предоставляет функциональность поиска и работы с историей треков.
  *
- * @param historyStorageRepo Репозиторий для работы с историей треков в хранилище.
+ * @param tracksRepo Репозиторий для работы с историей треков в хранилище.
  */
-class SearchInteractorImpl(private val historyStorageRepo: HistoryStorageRepo) : SearchInteractor {
+class SearchInteractorImpl(private val tracksRepo: TracksRepo) : SearchInteractor {
 
     /**
      * Выполняет поиск треков, соответствующих указанному запросу.
@@ -20,7 +20,7 @@ class SearchInteractorImpl(private val historyStorageRepo: HistoryStorageRepo) :
      * @return Поток ресурсов, содержащий список треков в виде ресурса.
      */
     override fun searchTracks(request: String): Flow<Resource<List<Track>>> {
-        return historyStorageRepo.searchTracks(request)
+        return tracksRepo.searchTracks(request)
     }
 
     /**
@@ -28,24 +28,24 @@ class SearchInteractorImpl(private val historyStorageRepo: HistoryStorageRepo) :
      *
      * @return Список треков.
      */
-    override fun getTracksHistory(): List<Track> = historyStorageRepo.getHistory()
+    override fun getTracksHistory(): List<Track> = tracksRepo.getHistory()
 
     /**
      * Добавляет указанный трек в историю.
      *
      * @param track Трек, который нужно добавить в историю.
      */
-    override fun addTrackToHistory(track: Track) = historyStorageRepo.addTrackToHistory(track)
+    override fun addTrackToHistory(track: Track) = tracksRepo.addTrackToHistory(track)
 
     /**
      * Очищает историю треков.
      */
-    override fun clearTrackHistory() = historyStorageRepo.clearHistory()
+    override fun clearTrackHistory() = tracksRepo.clearHistory()
 
     /**
      * Сохраняет указанный трек для последующего воспроизведения.
      *
      * @param track Трек, который нужно сохранить для воспроизведения.
      */
-    override fun saveTrackForPlaying(track: Track) = historyStorageRepo.savePlayingTrack(track)
+    override fun saveTrackForPlaying(track: Track) = tracksRepo.savePlayingTrack(track)
 }

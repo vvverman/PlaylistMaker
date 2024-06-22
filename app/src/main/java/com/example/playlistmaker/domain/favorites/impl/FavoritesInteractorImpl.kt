@@ -1,14 +1,14 @@
 package com.example.playlistmaker.domain.favorites.impl
 
 import com.example.playlistmaker.data.favorites.FavoritesRepo
-import com.example.playlistmaker.data.search.HistoryStorageRepo
+import com.example.playlistmaker.data.search.TracksRepo
 import com.example.playlistmaker.domain.favorites.FavoritesInteractor
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.model.Track
 import kotlinx.coroutines.flow.Flow
 
 class FavoritesInteractorImpl(
     private val favoritesRepo: FavoritesRepo,
-    private val historyStorageRepo: HistoryStorageRepo
+    private val tracksRepo: TracksRepo
 ): FavoritesInteractor {
     override suspend fun addToFavorites(track: Track) {
         favoritesRepo.addTrackToFavorites(track)
@@ -22,5 +22,5 @@ class FavoritesInteractorImpl(
         return favoritesRepo.getFavorites()
     }
 
-    override fun saveTrackForPlaying(track: Track) = historyStorageRepo.savePlayingTrack(track)
+    override fun saveTrackForPlaying(track: Track) = tracksRepo.savePlayingTrack(track)
 }

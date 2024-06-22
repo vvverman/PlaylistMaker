@@ -39,6 +39,11 @@
     <color name="control_activated_color">#FFFFFFFF</color>
     <color name="background">#FF1A1B22</color>
 
+    <color name="colorTopView">#FFFFFF</color>
+    <color name="colorBottomSheetBackground">#1A1B22</color>
+    <color name="colorBottomSheetOverlay">#99000000</color>
+
+    <color name="input_text_color">#FFFFFFFF</color>
 
 
 

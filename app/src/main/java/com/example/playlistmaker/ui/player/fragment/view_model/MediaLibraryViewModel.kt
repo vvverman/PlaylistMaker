@@ -1,27 +1,34 @@
-package com.example.playlistmaker.ui.player.view_model
+package com.example.playlistmaker.ui.player.fragment.view_model
 
 import android.app.Application
 import android.media.MediaPlayer
 import android.net.Uri
+import android.util.Log
 import kotlinx.coroutines.Dispatchers
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.domain.favorites.FavoritesInteractor
+import com.example.playlistmaker.domain.model.Playlist
 import com.example.playlistmaker.domain.player.PlayerInteractor
 import com.example.playlistmaker.domain.player.model.PlayerState
+import com.example.playlistmaker.domain.playlist.PlaylistInteractor
 import com.example.playlistmaker.domain.utils.DateFormat
-import com.example.playlistmaker.ui.player.PlayerScreenEvent
-import com.example.playlistmaker.ui.player.PlayerScreenState
+import com.example.playlistmaker.ui.player.fragment.PlayerScreenEvent
+import com.example.playlistmaker.ui.player.fragment.PlayerScreenState
 import com.example.playlistmaker.ui.util.SingleLiveEvent
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+
 
 class MediaLibraryViewModel(
     private val favoritesInteractor: FavoritesInteractor,
+    private val playlistInteractor: PlaylistInteractor,
     playerInteractor: PlayerInteractor,
+    private val mediaPlayer: MediaPlayer,
     application: Application
 ) : AndroidViewModel(application) {
 
@@ -29,7 +36,7 @@ class MediaLibraryViewModel(
         private const val TIME_STEP_MILLIS = 300L
     }
 
-    private val mediaPlayer: MediaPlayer = MediaPlayer()
+    //    private val mediaPlayer: MediaPlayer = MediaPlayer()
     private var trackDurationRunnable: Job? = null
 
     private var track = playerInteractor.getTrackForPlaying()
@@ -37,11 +44,15 @@ class MediaLibraryViewModel(
     private val _state = MutableLiveData<PlayerScreenState>()
     val state: LiveData<PlayerScreenState> = _state
 
+    private val _playlists = MutableLiveData<List<Playlist>>(listOf())
+    val playlists: LiveData<List<Playlist>> = _playlists
+
     val event = SingleLiveEvent<PlayerScreenEvent>()
 
     init {
         _state.value = PlayerScreenState(PlayerState.PAUSED, track)
         subscribeOnFavorites()
+        subscribeOnPlaylists()
         initPlayer()
     }
 
@@ -57,6 +68,10 @@ class MediaLibraryViewModel(
             trackDurationRunnable?.cancel()
             mediaPlayer.release()
         }
+    }
+
+    fun onAddButtonClicked() {
+        event.value = PlayerScreenEvent.OpenPlaylistsBottomSheet
     }
 
     fun onPlayButtonClicked() {
@@ -77,6 +92,33 @@ class MediaLibraryViewModel(
             }
         }
     }
+
+    fun onCreatePlaylistButtonClicked() {
+        event.postValue(PlayerScreenEvent.NavigateToCreatePlaylistScreen)
+    }
+
+    fun onPlaylistClicked(playlist: Playlist) {
+        track?.let {
+            if (it.id !in playlist.tracksIds.toSet()) {
+                viewModelScope.launch(Dispatchers.IO) {
+                    playlistInteractor.updatePlaylist(playlist, it)
+                    withContext(Dispatchers.Main) {
+                        event.value = PlayerScreenEvent.ClosePlaylistsBottomSheet
+                        event.value = PlayerScreenEvent.ShowTrackAddedMessage(playlist.name)
+                    }
+                }
+            } else {
+                event.value = PlayerScreenEvent.ShowTrackAlreadyInPlaylistMessage(playlist.name)
+            }
+        }
+    }
+
+    private fun subscribeOnPlaylists() {
+        viewModelScope.launch(Dispatchers.IO) {
+            playlistInteractor.getPlaylists().collect { _playlists.postValue(it) }
+        }
+    }
+
 
     private fun pausePlayer() {
         mediaPlayer.pause()
@@ -104,19 +146,24 @@ class MediaLibraryViewModel(
     }
 
     private fun initPlayer() {
-        track?.let {
+        track?.let { track ->
             mediaPlayer.apply {
-                setDataSource(getApplication(), Uri.parse(it.previewUrl))
-                prepareAsync()
-                setOnPreparedListener {
-                    _state.value = getCurrentScreenState().copy(playerState = PlayerState.PREPARED)
-                }
-                setOnCompletionListener {
-                    _state.value =
-                        getCurrentScreenState().copy(
+                reset() // Сбросить MediaPlayer в состояние IDLE
+                try {
+                    setDataSource(getApplication(), Uri.parse(track.previewUrl))
+                    prepareAsync()
+                    setOnPreparedListener {
+                        _state.value = getCurrentScreenState().copy(playerState = PlayerState.PREPARED)
+                    }
+                    setOnCompletionListener {
+                        _state.value = getCurrentScreenState().copy(
                             playerState = PlayerState.PREPARED,
                             trackTime = ""
                         )
+                    }
+                } catch (e: Exception) {
+                    // Обработать исключения корректно, например, залогировать ошибку или уведомить пользователя
+                    Log.e("MediaLibraryViewModel", "Ошибка при установке источника данных", e)
                 }
             }
         }

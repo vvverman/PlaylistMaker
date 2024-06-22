@@ -43,4 +43,4 @@
         android:background="@drawable/clear_history_button_day" />
 </LinearLayout>
 
-<!--    android:layout_marginStart="106dp"-->
+

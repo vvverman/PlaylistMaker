@@ -1,6 +1,6 @@
 package com.example.playlistmaker.domain.favorites
 
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.model.Track
 import kotlinx.coroutines.flow.Flow
 
 interface FavoritesInteractor {

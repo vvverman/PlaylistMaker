@@ -1,6 +1,6 @@
 package com.example.playlistmaker.data.search.model
 
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.model.Track
 import com.google.gson.annotations.SerializedName
 
 data class TrackDto(

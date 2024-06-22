@@ -1,9 +1,9 @@
-package com.example.playlistmaker.data.db
+package com.example.playlistmaker.data.db.favorites
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import com.example.playlistmaker.domain.models.Track
+import com.example.playlistmaker.domain.model.Track
 
 @Entity(tableName = "favorites")
 data class  FavoritesEntity

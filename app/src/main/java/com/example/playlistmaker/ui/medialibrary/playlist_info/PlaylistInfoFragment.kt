@@ -100,7 +100,7 @@ class PlaylistInfoFragment : Fragment() {
                         override fun onSlide(bottomSheet: View, slideOffset: Float) {}
                     })
             }
-            it.rvMenu.adapter = menuAdapter
+            it.playlistActionsRecyclerView.adapter = menuAdapter
         }
     }
 
@@ -172,9 +172,9 @@ class PlaylistInfoFragment : Fragment() {
 
     private fun setMenuInfo(coverUri: String?, name: String, tracksCount: Int) {
         binding?.apply {
-            coverUri?.let { ivCoverMenu.load(it) }
-            tvNameMenu.text = name
-            tvTracksCount.text = "$tracksCount " +
+            coverUri?.let { playlistCoverImage.load(it) }
+            playlistNameText.text = name
+            playlistTracksCountText.text = "$tracksCount " +
                     resources.getQuantityString(R.plurals.track, tracksCount, tracksCount)
         }
     }
@@ -197,7 +197,7 @@ class PlaylistInfoFragment : Fragment() {
         MaterialAlertDialogBuilder(requireContext())
             .setTitle(getString(R.string.delete_track_dialog_title))
             .setMessage(getString(R.string.delete_track_dialog_message))
-            .setNegativeButton(getString(R.string.confirmation_dialog_negative)) { dialog, _ -> viewModel.onDeleteTrackCanceled() }
+            .setNegativeButton(getString(R.string.confirmation_dialog_negative)) { _, _ -> viewModel.onDeleteTrackCanceled() }
             .setPositiveButton(getString(R.string.delete_track_dialog_positive)) { _, _ -> viewModel.onDeleteTrackConfirmed() }
             .show()
     }

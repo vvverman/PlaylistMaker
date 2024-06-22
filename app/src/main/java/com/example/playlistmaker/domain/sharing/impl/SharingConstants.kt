@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.share.impl
+package com.example.playlistmaker.domain.sharing.impl
 
 object SharingConstants {
     const val SHARE_APP_URL = "https://practicum.yandex.ru/android-developer/"

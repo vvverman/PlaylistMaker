@@ -75,7 +75,7 @@
             <ImageButton
                 android:id="@+id/btnShare"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:background="@android:color/transparent"
                 android:foreground="?attr/selectableItemBackground"
                 android:src="@drawable/share_button"
@@ -164,12 +164,14 @@
         </LinearLayout>
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rv_tracks"
+            android:id="@+id/tracks_list_in_playlist"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_track_list" />
+            tools:listitem="@layout/item_track_list"
+            android:padding="16dp"
+            />
     </LinearLayout>
 
     <LinearLayout

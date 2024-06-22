@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.share
+package com.example.playlistmaker.domain.sharing
 
 import com.example.playlistmaker.domain.model.Track
 

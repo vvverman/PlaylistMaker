@@ -9,7 +9,7 @@ import com.example.playlistmaker.domain.main.NavigationInteractor
 import com.example.playlistmaker.domain.model.Playlist
 import com.example.playlistmaker.domain.model.Track
 import com.example.playlistmaker.domain.playlist.PlaylistInteractor
-import com.example.playlistmaker.domain.share.SharingInteractor
+import com.example.playlistmaker.domain.sharing.SharingInteractor
 import com.example.playlistmaker.ui.media.playlist_info.PlaylistInfoScreenEvent
 import com.example.playlistmaker.ui.media.playlist_info.PlaylistInfoScreenState
 import com.example.playlistmaker.ui.media.playlist_info.menu.PlaylistInfoMenuItem

@@ -82,7 +82,7 @@ class PlaylistInfoFragment : Fragment() {
                     })
             }
             trackAdapter = TrackAdapter(viewModel::onTrackClicked, viewModel::onTrackLongClicked)
-            it.rvTracks.adapter = trackAdapter
+            it.tracksListInPlaylist.adapter = trackAdapter
         }
     }
 
@@ -165,7 +165,7 @@ class PlaylistInfoFragment : Fragment() {
     private fun setTracksInfo(tracks: List<Track>) {
         trackAdapter.updateData(tracks)
         binding?.apply {
-            rvTracks.isVisible = tracks.isNotEmpty()
+            tracksListInPlaylist.isVisible = tracks.isNotEmpty()
             lytNoTracks.isVisible = tracks.isEmpty()
         }
     }

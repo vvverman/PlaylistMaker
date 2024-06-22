@@ -91,7 +91,7 @@ class PlayerFragment : Fragment() {
                     })
             }
             playlistAdapter = BottomSheetPlaylistAdapter(viewModel::onPlaylistClicked)
-            it.rvPlaylists.adapter = playlistAdapter
+            it.playlists.adapter = playlistAdapter
         }
     }
 

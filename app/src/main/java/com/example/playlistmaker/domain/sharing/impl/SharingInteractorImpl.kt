@@ -1,8 +1,8 @@
-package com.example.playlistmaker.domain.share.impl
+package com.example.playlistmaker.domain.sharing.impl
 
 import com.example.playlistmaker.data.share.impl.ExternalServiceImpl
 import com.example.playlistmaker.domain.model.Track
-import com.example.playlistmaker.domain.share.SharingInteractor
+import com.example.playlistmaker.domain.sharing.SharingInteractor
 import com.example.playlistmaker.ui.navigation.AgreementNavigator
 
 

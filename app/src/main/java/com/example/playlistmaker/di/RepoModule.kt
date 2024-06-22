@@ -26,7 +26,8 @@ val repoModule = module {
             networkClient = get(),
             sharedPreferences = get(),
             sharedPreferencesConverter = get(),
-            favoritesDao = get()
+            favoritesDao = get(),
+            trackDao = get()
         )
     }
 

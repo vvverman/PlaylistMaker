@@ -19,4 +19,6 @@ interface TracksRepo {
     fun getPlayingTrack(): Track?
 
     fun savePlayingTrack(track: Track?)
+
+    suspend fun deleteTrack(trackId: Long)
 }

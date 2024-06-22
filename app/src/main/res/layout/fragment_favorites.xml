@@ -54,6 +54,6 @@
         android:layout_marginTop="16dp"
         android:paddingHorizontal="16dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:listitem="@layout/track"/>
+        tools:listitem="@layout/item_track_list"/>
 
 </FrameLayout>

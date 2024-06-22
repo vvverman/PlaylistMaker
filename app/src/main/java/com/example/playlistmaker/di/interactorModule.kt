@@ -50,7 +50,11 @@ val interactorModule = module {
     }
 
     single<PlaylistInteractor> {
-        PlaylistInteractorImpl(externalStorageRepo = get(), playlistRepo = get())
+        PlaylistInteractorImpl(
+            externalStorageRepo = get(),
+            playlistRepo = get(),
+            trackRepo = get()
+        )
     }
 
 }

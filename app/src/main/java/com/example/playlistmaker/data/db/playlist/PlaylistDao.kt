@@ -1,10 +1,12 @@
 package com.example.playlistmaker.data.db.playlist
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
+import com.example.playlistmaker.domain.model.Playlist
 import kotlinx.coroutines.flow.Flow
 
 @Dao
@@ -14,8 +16,17 @@ interface PlaylistDao {
     suspend fun addPlaylist(playlist: PlaylistEntity)
 
     @Query("SELECT * FROM playlists")
-    fun getPlaylists(): Flow<List<PlaylistEntity>>
+    fun getPlaylists(): List<PlaylistEntity>
+
+    @Query("SELECT * FROM playlists")
+    fun getPlaylistsFlow(): Flow<List<PlaylistEntity>>
 
     @Update
     fun updatePlaylist(playlist: PlaylistEntity)
+
+    @Query("SELECT * FROM playlists WHERE id = :playlistId")
+    fun getPlaylistById(playlistId: String): Flow<PlaylistEntity?>
+
+    @Delete
+    suspend fun deletePlaylist(playlist: PlaylistEntity)
 }

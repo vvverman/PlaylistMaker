@@ -52,4 +52,7 @@
     <dimen name="offset_120">120dp</dimen>
     <dimen name="offset_210">210dp</dimen>
     <dimen name="cornerRadiusUpdateButton">54dp</dimen>
+
+    <dimen name="margin_top_toolbar">24dp</dimen>
+    <dimen name="corner_radius">8dp</dimen>
 </resources>

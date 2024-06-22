@@ -11,7 +11,9 @@ import org.koin.android.ext.koin.androidApplication
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
 import com.example.playlistmaker.ui.main.view_model.MainViewModel
-import com.example.playlistmaker.ui.medialibrary.new_playlist.view_model.NewPlaylistViewModel
+import com.example.playlistmaker.ui.media.playlist_info.view_model.PlaylistInfoViewModel
+import com.example.playlistmaker.ui.medialibrary.create_playlist.view_model.CreatePlaylistViewModel
+import com.example.playlistmaker.ui.medialibrary.edit_playlist.view_model.EditPlaylistViewModel
 
 
 val viewModelModule = module {
@@ -41,15 +43,32 @@ val viewModelModule = module {
 
     viewModel<PlaylistsViewModel> {
         PlaylistsViewModel(
-            navigationInteractor = get(),
-            playlistInteractor = get()
-        )
+            navigationInteractor = get(), playlistInteractor = get())
     }
-    viewModel<NewPlaylistViewModel> {
-        NewPlaylistViewModel(navigationInteractor = get(), playlistInteractor = get())
+    viewModel<CreatePlaylistViewModel> {
+        CreatePlaylistViewModel(navigationInteractor = get(), playlistInteractor = get())
     }
 
     viewModel<MainViewModel> {
         MainViewModel(navigationInteractor = get())
     }
+
+
+    viewModel<PlaylistInfoViewModel> {
+        PlaylistInfoViewModel(
+            playlistInteractor = get(),
+            savedStateHandle = get(),
+            sharingInteractor = get(),
+            navigationInteractor = get()
+        )
+    }
+
+    viewModel<EditPlaylistViewModel> {
+        EditPlaylistViewModel(
+            navigationInteractor = get(),
+            playlistInteractor = get(),
+            savedStateHandle = get()
+        )
+    }
+
 }

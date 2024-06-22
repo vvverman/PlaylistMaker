@@ -8,21 +8,27 @@ import com.bumptech.glide.load.resource.bitmap.CenterCrop
 import com.bumptech.glide.load.resource.bitmap.RoundedCorners
 import com.bumptech.glide.request.RequestOptions
 import com.example.playlistmaker.R
+import com.example.playlistmaker.domain.model.Track
+
 
 private const val IMAGE_SIZE = "512x512bb.jpg"
-private const val RADIUS_CORNERS = 8.0f
-
-fun ImageView.load(imageUrl: String, increaseQuality: Boolean = false) {
+fun ImageView.load(imageUrl: String?, increaseQuality: Boolean = false) {
     val requestOptions = RequestOptions()
         .placeholder(R.drawable.placeholder)
         .diskCacheStrategy(DiskCacheStrategy.ALL)
-    val density = Resources.getSystem().displayMetrics.density
-    val newImageUrl = if (increaseQuality) imageUrl.replaceAfterLast('/', IMAGE_SIZE) else imageUrl
+    val roundingCorners = resources.getDimensionPixelSize(R.dimen.corner_radius)
+    val newImageUrl = if (increaseQuality) imageUrl?.replaceAfterLast('/', IMAGE_SIZE) else imageUrl
 
     Glide.with(context)
         .applyDefaultRequestOptions(requestOptions)
         .load(newImageUrl)
-        .transform(CenterCrop(), RoundedCorners((RADIUS_CORNERS * density).toInt()))
+        .transform(CenterCrop(), RoundedCorners(roundingCorners))
         .into(this)
+}
+
+
+fun List<Track>.calculateTotalDuration(): Int {
+    val totalDurationInMillis = this.sumOf { it.trackTimeMillis }
+    return DateTimeFormatter.millisToMinutes(totalDurationInMillis).toInt()
 }
 

@@ -18,6 +18,8 @@ data class  FavoritesEntity
     val trackTimeMillis: Long,
     @ColumnInfo("artwork_url_100")
     val artworkUrl100: String,
+    @ColumnInfo("artwork_url_60")
+    val artworkUrl60: String,
     @ColumnInfo("genre")
     val genre: String?,
     @ColumnInfo("album_name")
@@ -42,6 +44,7 @@ data class  FavoritesEntity
             artistName = track.artistName,
             trackTimeMillis = track.trackTimeMillis,
             artworkUrl100 = track.artworkUrl100,
+            artworkUrl60 = track.artworkUrl60,
             genre = track.genre,
             albumName = track.albumName,
             country = track.country,
@@ -57,6 +60,7 @@ data class  FavoritesEntity
         artistName = artistName,
         trackTimeMillis = trackTimeMillis,
         artworkUrl100 = artworkUrl100,
+        artworkUrl60 = artworkUrl60,
         genre = genre,
         albumName = albumName,
         country = country,

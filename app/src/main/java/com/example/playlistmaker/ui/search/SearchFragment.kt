@@ -16,6 +16,8 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.playlistmaker.databinding.FragmentSearchBinding
 import com.example.playlistmaker.ui.player.PlayerActivity
 import com.example.playlistmaker.ui.search.view_model.SearchViewModel
+import android.util.Log
+
 
 class SearchFragment : Fragment() {
     private var binding: FragmentSearchBinding? = null
@@ -78,7 +80,8 @@ class SearchFragment : Fragment() {
                 }
                 return@setOnEditorActionListener false
             }
-            setOnFocusChangeListener { _, hasFocus -> viewModel.onSearchFocusChanged(hasFocus) }
+            setOnFocusChangeListener { _, hasFocus ->
+                viewModel.onSearchFocusChanged(hasFocus) }
         }
     }
 

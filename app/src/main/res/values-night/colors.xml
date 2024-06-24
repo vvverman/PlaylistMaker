@@ -45,6 +45,8 @@
 
     <color name="input_text_color">#FFFFFFFF</color>
 
+    <color name="colorPlaylistBackground">#E6E8EB</color>
+    <color name="colorCommonText">#1A1B22</color>
 
 
 

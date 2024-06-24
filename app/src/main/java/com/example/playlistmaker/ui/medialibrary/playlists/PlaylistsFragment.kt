@@ -13,12 +13,15 @@ import com.example.playlistmaker.databinding.FragmentPlaylistsBinding
 import com.example.playlistmaker.ui.medialibrary.playlists.view_model.PlaylistsViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import com.example.playlistmaker.ui.util.ResultKeyHolder
+import com.example.playlistmaker.ui.medialibrary.MedialibraryFragmentDirections
+
 
 class PlaylistsFragment : Fragment() {
 
     private var binding: FragmentPlaylistsBinding? = null
     private val viewModel: PlaylistsViewModel by viewModel()
-    private val playlistAdapter = PlaylistAdapter()
+    private lateinit var playlistAdapter: PlaylistAdapter
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,6 +39,7 @@ class PlaylistsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        initPlaylistsRecycler()
         initObservers()
         binding?.btnCreatePlaylist?.setOnClickListener { viewModel.onNewPlaylistButtonClicked() }
         binding?.playlists?.adapter = playlistAdapter
@@ -44,6 +48,13 @@ class PlaylistsFragment : Fragment() {
         super.onDestroyView()
         binding = null
     }
+
+    private fun initPlaylistsRecycler() {
+        playlistAdapter = PlaylistAdapter(viewModel::onPlaylistClicked)
+        binding?.playlists?.adapter = playlistAdapter
+    }
+
+
     private fun initObservers() {
         viewModel.playlists.observe(viewLifecycleOwner) {
             playlistAdapter.submitList(it)
@@ -53,13 +64,20 @@ class PlaylistsFragment : Fragment() {
         viewModel.event.observe(viewLifecycleOwner) {
             when (it) {
                 PlaylistsScreenEvent.NavigateToNewPlaylist -> navigateToNewPlaylist()
+                is PlaylistsScreenEvent.NavigateToPlaylistInfo -> navigateToPlaylistInfo(it.playlistId)
+
             }
         }
     }
 
     private fun navigateToNewPlaylist() {
         findNavController()
-            .navigate(R.id.action_mediaFragment_to_newPlaylistFragment)
+            .navigate(R.id.action_mediaFragment_to_createPlaylistFragment)
+    }
+
+    private fun navigateToPlaylistInfo(playlistId: String) {
+        val action = MedialibraryFragmentDirections.actionMediaFragmentToPlaylistInfoFragment(playlistId) // Исправлено имя фрагмента
+        findNavController().navigate(action)
     }
 
     private fun showPlaylistCreatedMessage(playlistName: String) {

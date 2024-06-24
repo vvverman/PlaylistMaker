@@ -3,6 +3,7 @@ package com.example.playlistmaker.data.search.impl
 
 import android.content.SharedPreferences
 import com.example.playlistmaker.data.db.favorites.FavoritesDao
+import com.example.playlistmaker.data.db.track.TrackDao
 import com.example.playlistmaker.data.network.NetworkClient
 import com.example.playlistmaker.data.search.model.TracksResult
 import com.example.playlistmaker.data.search.model.TracksSearchRequest
@@ -14,11 +15,13 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.first
 
+
 class TracksRepoImpl(
     private val networkClient: NetworkClient,
     private val sharedPreferences: SharedPreferences,
     private val sharedPreferencesConverter: SharedPreferenceConverter,
-    private val favoritesDao: FavoritesDao
+    private val favoritesDao: FavoritesDao,
+    private val trackDao: TrackDao
 ) : TracksRepo {
     companion object {
         const val KEY_TRACKS_HISTORY = "key_tracks_history"
@@ -98,4 +101,8 @@ class TracksRepoImpl(
     override fun savePlayingTrack(track: Track?) {
         playingTrack = track
     }
+
+
+    override suspend fun deleteTrack(trackId: Long) = trackDao.deleteTrack(trackId)
+
 }

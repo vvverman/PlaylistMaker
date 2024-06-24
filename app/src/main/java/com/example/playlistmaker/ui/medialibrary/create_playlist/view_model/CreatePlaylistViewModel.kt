@@ -1,4 +1,4 @@
-package com.example.playlistmaker.ui.medialibrary.new_playlist.view_model
+package com.example.playlistmaker.ui.medialibrary.create_playlist.view_model
 
 import android.net.Uri
 import androidx.lifecycle.LiveData
@@ -7,13 +7,13 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.playlistmaker.domain.main.NavigationInteractor
 import com.example.playlistmaker.domain.playlist.PlaylistInteractor
-import com.example.playlistmaker.ui.medialibrary.new_playlist.NewPlaylistEvent
+import com.example.playlistmaker.ui.medialibrary.create_playlist.CreatePlaylistEvent
 import com.example.playlistmaker.ui.util.SingleLiveEvent
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 
-class NewPlaylistViewModel(
+open class CreatePlaylistViewModel(
     private val navigationInteractor: NavigationInteractor,
     private val playlistInteractor: PlaylistInteractor
 ) : ViewModel() {
@@ -22,20 +22,20 @@ class NewPlaylistViewModel(
         const val KEY_PLAYLIST_COVER_URI = "key_playlist_cover_uri"
     }
 
-    private var playlistName = ""
-    private var playlistDescription: String? = null
+    protected var playlistName = ""
+    protected var playlistDescription: String? = null
 
-    private val _playlistCoverUri: MutableLiveData<Uri?> = MutableLiveData()
+    protected val _playlistCoverUri: MutableLiveData<Uri?> = MutableLiveData()
     val playlistCoverUri: LiveData<Uri?> = _playlistCoverUri
 
     private val _isButtonCreateEnabled = MutableLiveData<Boolean>(false)
     val isButtonCreateEnabled: LiveData<Boolean> = _isButtonCreateEnabled
 
-    val event = SingleLiveEvent<NewPlaylistEvent>()
+    val event = SingleLiveEvent<CreatePlaylistEvent>()
 
-    fun onBackPressed() {
+    open fun onBackPressed() {
         if (checkPlaylistCreationIsNotFinished()) {
-            event.value = NewPlaylistEvent.ShowBackConfirmationDialog
+            event.value = CreatePlaylistEvent.ShowBackConfirmationDialog
         } else {
             navigateBack()
         }
@@ -50,7 +50,7 @@ class NewPlaylistViewModel(
         playlistDescription = description
     }
 
-    fun onCreatePlaylistClicked() {
+    open fun onCompleteButtonClicked() {
         if (playlistName.isNotEmpty()) {
             viewModelScope.launch(Dispatchers.IO) {
                 playlistInteractor.addPlaylist(
@@ -59,7 +59,7 @@ class NewPlaylistViewModel(
                     playlistCoverUri.value
                 )
                 withContext(Dispatchers.Main) {
-                    event.value = NewPlaylistEvent.SetPlaylistCreatedResult(playlistName)
+                    event.value = CreatePlaylistEvent.SetPlaylistCreatedResult(playlistName)
                     navigateBack()
                 }
             }
@@ -79,7 +79,7 @@ class NewPlaylistViewModel(
     }
 
     private fun navigateBack() {
-        event.value = NewPlaylistEvent.NavigateBack
+        event.value = CreatePlaylistEvent.NavigateBack
         navigationInteractor.setBottomNavigationVisibility(true)
     }
 }

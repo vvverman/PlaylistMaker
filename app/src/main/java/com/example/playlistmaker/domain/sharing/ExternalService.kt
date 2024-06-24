@@ -1,4 +1,4 @@
-package com.example.playlistmaker.domain.share
+package com.example.playlistmaker.domain.sharing
 
 interface ExternalService {
     fun shareLink(url: String)

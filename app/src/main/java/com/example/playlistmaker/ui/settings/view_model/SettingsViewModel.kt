@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.map
 import com.example.playlistmaker.domain.settings.SettingsInteractor
 import com.example.playlistmaker.domain.settings.model.ThemeList.*
-import com.example.playlistmaker.domain.share.SharingInteractor
+import com.example.playlistmaker.domain.sharing.SharingInteractor
 
 class SettingsViewModel(
     private val settingsInteractor: SettingsInteractor,

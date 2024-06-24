@@ -6,8 +6,8 @@ import com.example.playlistmaker.domain.search.SearchInteractor
 import com.example.playlistmaker.domain.search.impl.SearchInteractorImpl
 import com.example.playlistmaker.domain.settings.SettingsInteractor
 import com.example.playlistmaker.domain.settings.impl.SettingsInteractorImpl
-import com.example.playlistmaker.domain.share.SharingInteractor
-import com.example.playlistmaker.domain.share.impl.SharingInteractorImpl
+import com.example.playlistmaker.domain.sharing.SharingInteractor
+import com.example.playlistmaker.domain.sharing.impl.SharingInteractorImpl
 import com.example.playlistmaker.ui.navigation.AgreementNavigator
 import com.example.playlistmaker.ui.navigation.impl.AgreementNavigatorImpl
 import com.example.playlistmaker.domain.favorites.FavoritesInteractor
@@ -50,7 +50,11 @@ val interactorModule = module {
     }
 
     single<PlaylistInteractor> {
-        PlaylistInteractorImpl(externalStorageRepo = get(), playlistRepo = get())
+        PlaylistInteractorImpl(
+            externalStorageRepo = get(),
+            playlistRepo = get(),
+            trackRepo = get()
+        )
     }
 
 }

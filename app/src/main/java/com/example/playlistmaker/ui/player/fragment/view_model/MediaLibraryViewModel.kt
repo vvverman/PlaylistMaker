@@ -101,7 +101,7 @@ class MediaLibraryViewModel(
         track?.let {
             if (it.id !in playlist.tracksIds.toSet()) {
                 viewModelScope.launch(Dispatchers.IO) {
-                    playlistInteractor.updatePlaylist(playlist, it)
+                    playlistInteractor.addTrackToPlaylist(playlist, it)
                     withContext(Dispatchers.Main) {
                         event.value = PlayerScreenEvent.ClosePlaylistsBottomSheet
                         event.value = PlayerScreenEvent.ShowTrackAddedMessage(playlist.name)
